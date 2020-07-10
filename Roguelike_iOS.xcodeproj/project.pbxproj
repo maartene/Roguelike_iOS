@@ -1,0 +1,478 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C28B24B84D24002058BA /* AppDelegate.swift */; };
+		DE63C28E24B84D24002058BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C28D24B84D24002058BA /* SceneDelegate.swift */; };
+		DE63C29024B84D24002058BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C28F24B84D24002058BA /* ContentView.swift */; };
+		DE63C29224B84D27002058BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE63C29124B84D27002058BA /* Assets.xcassets */; };
+		DE63C29524B84D27002058BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE63C29424B84D27002058BA /* Preview Assets.xcassets */; };
+		DE63C29824B84D27002058BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE63C29624B84D27002058BA /* LaunchScreen.storyboard */; };
+		DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2A224B84D27002058BA /* Roguelike_iOSTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DE63C29F24B84D27002058BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DE63C28024B84D24002058BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE63C28724B84D24002058BA;
+			remoteInfo = Roguelike_iOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DE63C28824B84D24002058BA /* Roguelike_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roguelike_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE63C28B24B84D24002058BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DE63C28D24B84D24002058BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DE63C28F24B84D24002058BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DE63C29124B84D27002058BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DE63C29424B84D27002058BA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DE63C29724B84D27002058BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DE63C29924B84D27002058BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE63C29E24B84D27002058BA /* Roguelike_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Roguelike_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE63C2A224B84D27002058BA /* Roguelike_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roguelike_iOSTests.swift; sourceTree = "<group>"; };
+		DE63C2A424B84D27002058BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DE63C28524B84D24002058BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE63C29B24B84D27002058BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DE63C27F24B84D24002058BA = {
+			isa = PBXGroup;
+			children = (
+				DE63C28A24B84D24002058BA /* Roguelike_iOS */,
+				DE63C2A124B84D27002058BA /* Roguelike_iOSTests */,
+				DE63C28924B84D24002058BA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DE63C28924B84D24002058BA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C28824B84D24002058BA /* Roguelike_iOS.app */,
+				DE63C29E24B84D27002058BA /* Roguelike_iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DE63C28A24B84D24002058BA /* Roguelike_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C28B24B84D24002058BA /* AppDelegate.swift */,
+				DE63C28D24B84D24002058BA /* SceneDelegate.swift */,
+				DE63C28F24B84D24002058BA /* ContentView.swift */,
+				DE63C29124B84D27002058BA /* Assets.xcassets */,
+				DE63C29624B84D27002058BA /* LaunchScreen.storyboard */,
+				DE63C29924B84D27002058BA /* Info.plist */,
+				DE63C29324B84D27002058BA /* Preview Content */,
+			);
+			path = Roguelike_iOS;
+			sourceTree = "<group>";
+		};
+		DE63C29324B84D27002058BA /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C29424B84D27002058BA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DE63C2A124B84D27002058BA /* Roguelike_iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C2A224B84D27002058BA /* Roguelike_iOSTests.swift */,
+				DE63C2A424B84D27002058BA /* Info.plist */,
+			);
+			path = Roguelike_iOSTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DE63C28724B84D24002058BA /* Roguelike_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE63C2A724B84D27002058BA /* Build configuration list for PBXNativeTarget "Roguelike_iOS" */;
+			buildPhases = (
+				DE63C28424B84D24002058BA /* Sources */,
+				DE63C28524B84D24002058BA /* Frameworks */,
+				DE63C28624B84D24002058BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Roguelike_iOS;
+			productName = Roguelike_iOS;
+			productReference = DE63C28824B84D24002058BA /* Roguelike_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DE63C29D24B84D27002058BA /* Roguelike_iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE63C2AA24B84D27002058BA /* Build configuration list for PBXNativeTarget "Roguelike_iOSTests" */;
+			buildPhases = (
+				DE63C29A24B84D27002058BA /* Sources */,
+				DE63C29B24B84D27002058BA /* Frameworks */,
+				DE63C29C24B84D27002058BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DE63C2A024B84D27002058BA /* PBXTargetDependency */,
+			);
+			name = Roguelike_iOSTests;
+			productName = Roguelike_iOSTests;
+			productReference = DE63C29E24B84D27002058BA /* Roguelike_iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DE63C28024B84D24002058BA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = thedreamweb;
+				TargetAttributes = {
+					DE63C28724B84D24002058BA = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					DE63C29D24B84D27002058BA = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = DE63C28724B84D24002058BA;
+					};
+				};
+			};
+			buildConfigurationList = DE63C28324B84D24002058BA /* Build configuration list for PBXProject "Roguelike_iOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DE63C27F24B84D24002058BA;
+			productRefGroup = DE63C28924B84D24002058BA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DE63C28724B84D24002058BA /* Roguelike_iOS */,
+				DE63C29D24B84D27002058BA /* Roguelike_iOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DE63C28624B84D24002058BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE63C29824B84D27002058BA /* LaunchScreen.storyboard in Resources */,
+				DE63C29524B84D27002058BA /* Preview Assets.xcassets in Resources */,
+				DE63C29224B84D27002058BA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE63C29C24B84D27002058BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DE63C28424B84D24002058BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */,
+				DE63C28E24B84D24002058BA /* SceneDelegate.swift in Sources */,
+				DE63C29024B84D24002058BA /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE63C29A24B84D27002058BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DE63C2A024B84D27002058BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE63C28724B84D24002058BA /* Roguelike_iOS */;
+			targetProxy = DE63C29F24B84D27002058BA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DE63C29624B84D27002058BA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DE63C29724B84D27002058BA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DE63C2A524B84D27002058BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DE63C2A624B84D27002058BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DE63C2A824B84D27002058BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Roguelike_iOS/Preview Content\"";
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Roguelike_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Roguelike-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DE63C2A924B84D27002058BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Roguelike_iOS/Preview Content\"";
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Roguelike_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Roguelike-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DE63C2AB24B84D27002058BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				INFOPLIST_FILE = Roguelike_iOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Roguelike-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Roguelike_iOS.app/Roguelike_iOS";
+			};
+			name = Debug;
+		};
+		DE63C2AC24B84D27002058BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				INFOPLIST_FILE = Roguelike_iOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Roguelike-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Roguelike_iOS.app/Roguelike_iOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DE63C28324B84D24002058BA /* Build configuration list for PBXProject "Roguelike_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE63C2A524B84D27002058BA /* Debug */,
+				DE63C2A624B84D27002058BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE63C2A724B84D27002058BA /* Build configuration list for PBXNativeTarget "Roguelike_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE63C2A824B84D27002058BA /* Debug */,
+				DE63C2A924B84D27002058BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE63C2AA24B84D27002058BA /* Build configuration list for PBXNativeTarget "Roguelike_iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE63C2AB24B84D27002058BA /* Debug */,
+				DE63C2AC24B84D27002058BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DE63C28024B84D24002058BA /* Project object */;
+}
