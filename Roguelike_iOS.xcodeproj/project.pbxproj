@@ -7,13 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE03AD4B24BA5BD100493335 /* AnyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */; };
+		DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD4E24BB060D00493335 /* WorldBox.swift */; };
+		DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */; };
 		DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C28B24B84D24002058BA /* AppDelegate.swift */; };
 		DE63C28E24B84D24002058BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C28D24B84D24002058BA /* SceneDelegate.swift */; };
-		DE63C29024B84D24002058BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C28F24B84D24002058BA /* ContentView.swift */; };
 		DE63C29224B84D27002058BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE63C29124B84D27002058BA /* Assets.xcassets */; };
 		DE63C29524B84D27002058BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE63C29424B84D27002058BA /* Preview Assets.xcassets */; };
 		DE63C29824B84D27002058BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE63C29624B84D27002058BA /* LaunchScreen.storyboard */; };
 		DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2A224B84D27002058BA /* Roguelike_iOSTests.swift */; };
+		DE63C2AF24B84D96002058BA /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2AE24B84D96002058BA /* MapController.swift */; };
+		DE63C2B124B84D9E002058BA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2B024B84D9E002058BA /* GameScene.swift */; };
+		DE63C2BB24B84DA7002058BA /* RLEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2B324B84DA7002058BA /* RLEntity.swift */; };
+		DE63C2BD24B84DA7002058BA /* VisibilityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2B624B84DA7002058BA /* VisibilityComponent.swift */; };
+		DE63C2BF24B84DA7002058BA /* WorldBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2B824B84DA7002058BA /* WorldBuilder.swift */; };
+		DE63C2C024B84DA7002058BA /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2B924B84DA7002058BA /* World.swift */; };
+		DE63C2C124B84DA7002058BA /* Coord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2BA24B84DA7002058BA /* Coord.swift */; };
+		DE63C2C324B84DAE002058BA /* RLSprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C224B84DAE002058BA /* RLSprites.swift */; };
+		DE63C2C924B84DBC002058BA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C424B84DBC002058BA /* Constants.swift */; };
+		DE63C2CA24B84DBC002058BA /* SpriteKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C624B84DBC002058BA /* SpriteKitView.swift */; };
+		DE63C2CB24B84DBC002058BA /* ConsoleWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C724B84DBC002058BA /* ConsoleWindowView.swift */; };
+		DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C824B84DBC002058BA /* ContentView.swift */; };
+		DE63C2D024B84F87002058BA /* PlayerStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */; };
+		DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */; };
+		DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,10 +44,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapper.swift; sourceTree = "<group>"; };
+		DE03AD4E24BB060D00493335 /* WorldBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldBox.swift; sourceTree = "<group>"; };
+		DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+UserDataUtils.swift"; sourceTree = "<group>"; };
 		DE63C28824B84D24002058BA /* Roguelike_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roguelike_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE63C28B24B84D24002058BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE63C28D24B84D24002058BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DE63C28F24B84D24002058BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DE63C29124B84D27002058BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE63C29424B84D27002058BA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DE63C29724B84D27002058BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +57,21 @@
 		DE63C29E24B84D27002058BA /* Roguelike_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Roguelike_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE63C2A224B84D27002058BA /* Roguelike_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roguelike_iOSTests.swift; sourceTree = "<group>"; };
 		DE63C2A424B84D27002058BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE63C2AE24B84D96002058BA /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		DE63C2B024B84D9E002058BA /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		DE63C2B324B84DA7002058BA /* RLEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLEntity.swift; sourceTree = "<group>"; };
+		DE63C2B624B84DA7002058BA /* VisibilityComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisibilityComponent.swift; sourceTree = "<group>"; };
+		DE63C2B824B84DA7002058BA /* WorldBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldBuilder.swift; sourceTree = "<group>"; };
+		DE63C2B924B84DA7002058BA /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		DE63C2BA24B84DA7002058BA /* Coord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coord.swift; sourceTree = "<group>"; };
+		DE63C2C224B84DAE002058BA /* RLSprites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLSprites.swift; sourceTree = "<group>"; };
+		DE63C2C424B84DBC002058BA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DE63C2C624B84DBC002058BA /* SpriteKitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteKitView.swift; sourceTree = "<group>"; };
+		DE63C2C724B84DBC002058BA /* ConsoleWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleWindowView.swift; sourceTree = "<group>"; };
+		DE63C2C824B84DBC002058BA /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatisticsView.swift; sourceTree = "<group>"; };
+		DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteUIHandler.swift; sourceTree = "<group>"; };
+		DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE03AD5024BB0FCA00493335 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C2C224B84DAE002058BA /* RLSprites.swift */,
+				DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DE63C27F24B84D24002058BA = {
 			isa = PBXGroup;
 			children = (
@@ -79,11 +122,14 @@
 		DE63C28A24B84D24002058BA /* Roguelike_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				DE63C28B24B84D24002058BA /* AppDelegate.swift */,
-				DE63C28D24B84D24002058BA /* SceneDelegate.swift */,
-				DE63C28F24B84D24002058BA /* ContentView.swift */,
+				DE03AD5024BB0FCA00493335 /* Views */,
+				DE63C2CD24B84DD3002058BA /* _App */,
+				DE63C2C524B84DBC002058BA /* UI */,
+				DE63C2B224B84DA7002058BA /* Model */,
+				DE63C2AD24B84D96002058BA /* Controllers */,
+				DE63C2C424B84DBC002058BA /* Constants.swift */,
+				DE63C2B024B84D9E002058BA /* GameScene.swift */,
 				DE63C29124B84D27002058BA /* Assets.xcassets */,
-				DE63C29624B84D27002058BA /* LaunchScreen.storyboard */,
 				DE63C29924B84D27002058BA /* Info.plist */,
 				DE63C29324B84D27002058BA /* Preview Content */,
 			);
@@ -105,6 +151,59 @@
 				DE63C2A424B84D27002058BA /* Info.plist */,
 			);
 			path = Roguelike_iOSTests;
+			sourceTree = "<group>";
+		};
+		DE63C2AD24B84D96002058BA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C2AE24B84D96002058BA /* MapController.swift */,
+				DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DE63C2B224B84DA7002058BA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C2B324B84DA7002058BA /* RLEntity.swift */,
+				DE63C2B424B84DA7002058BA /* Components */,
+				DE63C2B824B84DA7002058BA /* WorldBuilder.swift */,
+				DE63C2B924B84DA7002058BA /* World.swift */,
+				DE63C2BA24B84DA7002058BA /* Coord.swift */,
+				DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */,
+				DE03AD4E24BB060D00493335 /* WorldBox.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DE63C2B424B84DA7002058BA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C2B624B84DA7002058BA /* VisibilityComponent.swift */,
+				DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		DE63C2C524B84DBC002058BA /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C2C824B84DBC002058BA /* ContentView.swift */,
+				DE63C2C624B84DBC002058BA /* SpriteKitView.swift */,
+				DE63C2C724B84DBC002058BA /* ConsoleWindowView.swift */,
+				DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		DE63C2CD24B84DD3002058BA /* _App */ = {
+			isa = PBXGroup;
+			children = (
+				DE63C29624B84D27002058BA /* LaunchScreen.storyboard */,
+				DE63C28D24B84D24002058BA /* SceneDelegate.swift */,
+				DE63C28B24B84D24002058BA /* AppDelegate.swift */,
+			);
+			path = _App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,9 +307,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE03AD4B24BA5BD100493335 /* AnyWrapper.swift in Sources */,
+				DE63C2BB24B84DA7002058BA /* RLEntity.swift in Sources */,
+				DE63C2B124B84D9E002058BA /* GameScene.swift in Sources */,
+				DE63C2C324B84DAE002058BA /* RLSprites.swift in Sources */,
+				DE63C2D024B84F87002058BA /* PlayerStatisticsView.swift in Sources */,
+				DE63C2AF24B84D96002058BA /* MapController.swift in Sources */,
 				DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */,
+				DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */,
+				DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */,
+				DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */,
 				DE63C28E24B84D24002058BA /* SceneDelegate.swift in Sources */,
-				DE63C29024B84D24002058BA /* ContentView.swift in Sources */,
+				DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */,
+				DE63C2CB24B84DBC002058BA /* ConsoleWindowView.swift in Sources */,
+				DE63C2C024B84DA7002058BA /* World.swift in Sources */,
+				DE63C2CA24B84DBC002058BA /* SpriteKitView.swift in Sources */,
+				DE63C2C124B84DA7002058BA /* Coord.swift in Sources */,
+				DE63C2C924B84DBC002058BA /* Constants.swift in Sources */,
+				DE63C2BF24B84DA7002058BA /* WorldBuilder.swift in Sources */,
+				DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */,
+				DE63C2BD24B84DA7002058BA /* VisibilityComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +478,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Roguelike_iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
@@ -373,6 +490,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Roguelike-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -382,6 +500,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Roguelike_iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
@@ -393,6 +512,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Roguelike-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
