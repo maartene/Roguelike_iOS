@@ -38,7 +38,7 @@ final class MapController {
     func subscribeToWorldChanges(boxedWorld: WorldBox) {
         boxedWorld.$world.sink(receiveCompletion: { completion in
             print("Received completion value: \(completion).")
-        }, receiveValue: { [weak self ]world in
+        }, receiveValue: { [weak self] world in
             self?.update(world: world)
             }).store(in: &cancellables)
     }

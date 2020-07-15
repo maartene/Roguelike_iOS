@@ -8,20 +8,18 @@
 
 import SwiftUI
 
-struct StateView: View {
-    @ObservedObject var boxedWorld: WorldBox
-    
-    var body: some View {
-        ZStack {
-            background(Color.black).opacity(boxedWorld.state == .idle ? 0 : 0.5)
-            Text("Busy \(boxedWorld.state.rawValue)").foregroundColor(Color.white).opacity(boxedWorld.state == .idle ? 0 : 0.5)
-        }
-        
-    }
-}
-
 struct HUD: View {
     @ObservedObject var scene: GameScene
+    @ObservedObject var boxedWorld: WorldBox
+    
+    var action: [Action] {
+        if let tile = scene.selectedNode?.userData?["position"] as? Coord {
+            if let actions = boxedWorld.world.player.actionComponent?.getActionFor(tile: tile) {
+                return actions
+            }
+        }
+        return []
+    }
     
     var body: some View {
         ZStack {
@@ -29,14 +27,23 @@ struct HUD: View {
                 PlayerStatisticsView(boxedWorld: self.scene.boxedWorld)
                 Spacer()
                 HStack {
-                    Button(action: { self.scene.boxedWorld.save()}, label: { Text("Save")}).disabled(scene.worldState != .idle)
-                    Button(action: { self.scene.load()}, label: { Text("Load")}).disabled(scene.worldState != .idle)
+                    Button(action: { self.scene.boxedWorld.save()}, label: { Text("[ Save ]")}).disabled(boxedWorld.state != .idle)
+                        .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)
+                    Text(" ").font(.custom("Menlo-Regular", size: 24))
+                    Button(action: { self.scene.load()}, label: { Text("[ Load ]")}).disabled(boxedWorld.state != .idle)
+                        .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)
                 }
             }
-            /*if scene.worldState == .loading {
-                background(Color.black).opacity(0.5)
-                Text("Loading")
-            }*/
+            
+            if scene.selectedNode != nil {
+                ActionsView(boxedWorld: boxedWorld, offset: scene.selectedNode!.position, title: "ACTIONS:", actions: action, sceneSize: scene.size)
+            }
+            
+            
+            if boxedWorld.state == .loading || boxedWorld.state == .saving {
+                Color.black.opacity(0.75)
+                Text("\(boxedWorld.state.rawValue) - please wait").foregroundColor(Color.white).font(.custom("Menlo-Regular", size: 36))
+            }
         }
     }
 }
@@ -44,11 +51,12 @@ struct HUD: View {
 struct ContentView: View {
     
     var scene: GameScene
+    var boxedWorld: WorldBox
     
     var body: some View {
         ZStack {
             SpriteKitView(scene: self.scene)
-            HUD(scene: self.scene)
+            HUD(scene: self.scene, boxedWorld: boxedWorld)
         }.edgesIgnoringSafeArea(.all)
     }
 }
@@ -56,6 +64,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let scene = GameScene()
-        return ContentView(scene: scene)
+        return ContentView(scene: scene, boxedWorld: scene.boxedWorld)
     }
 }

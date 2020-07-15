@@ -27,6 +27,7 @@ struct World: Codable {
         
         var player = RLEntity(name: "Player", hue: 0.53, saturation: 1, startPosition: Coord(31, 10))
         player = VisibilityComponent.add(to: player, visionRange: 10)
+        player = ActionComponent.add(to: player, maxAP: 12, currentAP: 3)
         addEntity(entity: player)
         
         let apple = RLEntity(name: "Apple", hue: 0.36, saturation: 1, startPosition: Coord(31, 12))
@@ -36,9 +37,17 @@ struct World: Codable {
     
     mutating func update() {
         for entity in entities.values {
+            var updatedEntity = entity
+            
             if entity.visibilityComponent != nil {
                 replaceEntities(entities: VisibilityComponent.update(entity: entity, in: self))
             }
+            
+            updatedEntity = entities[updatedEntity.id]!
+
+            replaceEntities(entities: updatedEntity.actionComponent?.update(entity: updatedEntity, in: self) ?? [])
+            
+            
         }
         
         calculateLighting()
@@ -49,13 +58,16 @@ struct World: Codable {
     // calculate light intensity for:
     // 1. affected tiles around player
     // 2. tiles around lights that are visible from player position (LoS check)
-    private mutating func calculateLighting(){
+    mutating func calculateLighting(){
         for cellCoord in map.coordinates {
-            if map[cellCoord].visited {
+            if map[cellCoord].visited && allVisibleTiles.contains(cellCoord) == false {
                 let visitedBrightness = map[cellCoord].visitedBrightness
                 map[cellCoord].setLight(visitedBrightness)
+            } else {
+                map[cellCoord].setLight(0)
             }
         }
+        
         
         allVisibleTiles.removeAll()
         
@@ -71,7 +83,7 @@ struct World: Codable {
                     if distance <= visibilityRangeSquared {
                         let attenuation = 1.0 - (distance / visibilityRangeSquared)
                         let currentLight = map[coord].light
-                        let lightValue = min(currentLight + attenuation * attenuation, 1)
+                        let lightValue = max(min(currentLight + attenuation * attenuation, 1), map[coord].visitedBrightness)
                         //print(lightValue)
                         map[coord].setLight(lightValue)
                     }

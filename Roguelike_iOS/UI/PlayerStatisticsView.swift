@@ -18,8 +18,12 @@ struct PlayerStatisticsView: View {
     
     var playerInfoText: [String] {
         let line1 = "HP: ###/###  EXP:  #####   Lvl: ##"
-        let line2 = "MP: ###/###  Next: #####   \(player.position)"
+        let line2 = "MP: ###/###  Next: #####   AP: \(ap)"
         return [line1, line2]
+    }
+    
+    var ap: Int {
+        player.actionComponent?.currentAP ?? -1
     }
     
     var closeOffset: CGFloat {

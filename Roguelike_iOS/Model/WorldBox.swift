@@ -54,6 +54,9 @@ final class WorldBox: ObservableObject {
                 let encoder = JSONEncoder()
                 encoder.outputFormatting = .prettyPrinted
                 
+                // pretend to be doing *actual* work
+                sleep(1)
+                
                 let data = try encoder.encode(self.world)
                 /*let localPlayer = GKLocalPlayer.local
                 localPlayer.saveGameData(data, withName: "RogueLike", completionHandler: { saveGame, error in
@@ -88,7 +91,8 @@ final class WorldBox: ObservableObject {
             do {
                 let decoder = JSONDecoder()
                 
-                sleep(5)
+                // pretend to be doing *actual* work
+                sleep(1)
                 
                 let homeDir = FileManager.default.temporaryDirectory
                 let url = homeDir.appendingPathComponent("rogueLikeSave.json")

@@ -54,5 +54,14 @@ struct Coord: Hashable, CustomStringConvertible, Codable {
     var description: String {
         "(\(x),\(y))"
     }
+    
+    static func manhattanDistance(coord1: Coord, coord2: Coord) -> Int {
+        let vector = coord1 - coord2
+        return abs(vector.x) + abs(vector.y)
+    }
+    
+    func manhattanDistance(to coord: Coord) -> Int {
+        Coord.manhattanDistance(coord1: self, coord2: coord)
+    }
 }
 

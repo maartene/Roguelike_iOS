@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ConsoleWindowView: View {
-    @State var myFrame: CGRect = CGRect.zero
+//    @State var myFrame: CGRect = CGRect.zero
 
 
     let fontSize: CGFloat = 24

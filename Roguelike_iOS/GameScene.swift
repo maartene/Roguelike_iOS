@@ -21,21 +21,37 @@ class GameScene: SKScene, ObservableObject {
     var mapController: MapController!
     var spriteUIHandler: SpriteUIHandler!
     
-    var draggedNode: SKNode?
+    @Published var selectedNode: SKNode?
     
     var lastUpdateTime = 0.0
     var timer = 1.0
     
-    let messageLabel = SKLabelNode()
-    
-    @Published var worldState: WorldBox.WorldBoxState = .idle
-    
+    let highlight: SKSpriteNode
+        
     override init() {
-        let world = World(width: 80, height: 45)
+        print("regular init")
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
         boxedWorld = WorldBox(world: world)
+        highlight = SKSpriteNode(imageNamed: "highlight")
         
         super.init()
         
+        setup()
+        
+        
+    }
+        
+    override init(size: CGSize) {
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
+        boxedWorld = WorldBox(world: world)
+        highlight = SKSpriteNode(imageNamed: "highlight")
+        
+        super.init(size: size)
+        
+        setup()
+    }
+    
+    private func setup() {
         backgroundColor = SKColor.black
         
         mapController = MapController(scene: self)
@@ -47,24 +63,17 @@ class GameScene: SKScene, ObservableObject {
                 
         spriteUIHandler = SpriteUIHandler(scene: self, mapController: mapController)
         spriteUIHandler.addMovementArrows(to: boxedWorld.world.player)
-    }
-    
-    override init(size: CGSize) {
-        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
-        boxedWorld = WorldBox(world: world)
-        super.init(size: size)
         
-        backgroundColor = SKColor.black
         
-        mapController = MapController(scene: self)
-        mapController.mapViewWidth = Int(size.width) / cellSize
-        mapController.mapViewHeight = Int(size.height) / cellSize
-        mapController.subscribeToWorldChanges(boxedWorld: boxedWorld)
-        
-        //boxedWorld.update()
-                
-        spriteUIHandler = SpriteUIHandler(scene: self, mapController: mapController)
-        spriteUIHandler.addMovementArrows(to: boxedWorld.world.player)
+        highlight.color = SKColor.white
+        highlight.colorBlendFactor = 1.0
+        highlight.zPosition = HIGHLIGHT_Z_POSITION
+        let scaleAction = SKAction.scale(to: 1.1, duration: 0.75)
+        highlight.run(SKAction.repeatForever(SKAction.sequence([scaleAction, scaleAction.reversed()])))
+        if highlight.parent == nil {
+            addChild(highlight)
+        }
+        highlight.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -97,16 +106,21 @@ class GameScene: SKScene, ObservableObject {
         let scenePoint = convertPoint(fromView: touch.location(in: view))
         if let node = nodes(at: scenePoint).first {
             if let tileCoord = node.userData?["position"] {
-                print("Clicked tile with position \(tileCoord)")
+                print("Selected tile with position \(tileCoord)")
+                selectNode(node)
+            } else if let entityID = node.userData?["entityID"] {
+                print("Selected entity with id: \(entityID)")
+                selectNode(node)
             } else if let action = node.userData?["onClick"] as? (() -> ()) {
                 action()
                 //mapController.update(world: world)
             } else {
                 print("Clicked node: \(node)")
-                draggedNode = node
+                selectNode(nil)
             }
         } else {
             print("mouseDown \(touch)")
+            selectNode(nil)
         }
     }
     
@@ -117,6 +131,16 @@ class GameScene: SKScene, ObservableObject {
                 return
             }
             strongSelf.spriteUIHandler.addMovementArrows(to: strongSelf.boxedWorld.world.player)
+        }
+    }
+    
+    func selectNode(_ node: SKNode?) {
+        selectedNode = node
+        if let sn = node {
+            highlight.position = sn.position
+            highlight.isHidden = false
+        } else {
+            highlight.isHidden = true
         }
     }
     
@@ -193,20 +217,6 @@ class GameScene: SKScene, ObservableObject {
         
         let deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
-        
-        if boxedWorld.state != worldState {
-            worldState = boxedWorld.state
-            
-            if worldState == .idle {
-                messageLabel.removeFromParent()
-            } else if worldState == .loading || worldState == .saving {
-                messageLabel.text = "\(worldState.rawValue) -  please wait"
-                messageLabel.fontName = "Menlo-Regular"
-                messageLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-                addChild(messageLabel)
-            }
-            
-        }
         
 /*        if timer < 0 {
             timer = 0.25
