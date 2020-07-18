@@ -19,6 +19,7 @@ class GameScene: SKScene, ObservableObject {
     let cellSize = 32
         
     var mapController: MapController!
+    var fxController: FXController!
     var spriteUIHandler: SpriteUIHandler!
     
     @Published var selectedNode: SKNode?
@@ -59,10 +60,13 @@ class GameScene: SKScene, ObservableObject {
         mapController.mapViewHeight = Int(size.height) / cellSize
         mapController.subscribeToWorldChanges(boxedWorld: boxedWorld)
         
+        fxController = FXController(scene: self, mapController: mapController)
+        fxController.subscribeToWorldChanges(boxedWorld: boxedWorld)
+        
         boxedWorld.update()
                 
-        spriteUIHandler = SpriteUIHandler(scene: self, mapController: mapController)
-        spriteUIHandler.addMovementArrows(to: boxedWorld.world.player)
+        /*spriteUIHandler = SpriteUIHandler(scene: self, mapController: mapController)
+        spriteUIHandler.addMovementArrows(to: boxedWorld.world.player)*/
         
         
         highlight.color = SKColor.white
@@ -70,9 +74,6 @@ class GameScene: SKScene, ObservableObject {
         highlight.zPosition = HIGHLIGHT_Z_POSITION
         let scaleAction = SKAction.scale(to: 1.1, duration: 0.75)
         highlight.run(SKAction.repeatForever(SKAction.sequence([scaleAction, scaleAction.reversed()])))
-        if highlight.parent == nil {
-            addChild(highlight)
-        }
         highlight.isHidden = true
     }
     
@@ -130,16 +131,19 @@ class GameScene: SKScene, ObservableObject {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.spriteUIHandler.addMovementArrows(to: strongSelf.boxedWorld.world.player)
+            /*strongSelf.spriteUIHandler.addMovementArrows(to: strongSelf.boxedWorld.world.player)*/
         }
     }
     
     func selectNode(_ node: SKNode?) {
         selectedNode = node
         if let sn = node {
-            highlight.position = sn.position
+            highlight.removeFromParent()
+            //highlight.position = sn.position
+            sn.addChild(highlight)
             highlight.isHidden = false
         } else {
+            highlight.removeFromParent()
             highlight.isHidden = true
         }
     }

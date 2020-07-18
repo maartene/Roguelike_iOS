@@ -10,6 +10,8 @@
 		DE03AD4B24BA5BD100493335 /* AnyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */; };
 		DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD4E24BB060D00493335 /* WorldBox.swift */; };
 		DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */; };
+		DE2C7C5524BF349E0051225D /* AttackAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2C7C5424BF349E0051225D /* AttackAction.swift */; };
+		DE2C7C5724BF35B50051225D /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2C7C5624BF35B50051225D /* HealthComponent.swift */; };
 		DE5090E124BDCE3E00B02320 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5090E024BDCE3E00B02320 /* Action.swift */; };
 		DE5090E324BDD04600B02320 /* ActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5090E224BDD04600B02320 /* ActionComponent.swift */; };
 		DE5090E524BDD2DD00B02320 /* MoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5090E424BDD2DD00B02320 /* MoveAction.swift */; };
@@ -32,6 +34,7 @@
 		DE63C2CB24B84DBC002058BA /* ConsoleWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C724B84DBC002058BA /* ConsoleWindowView.swift */; };
 		DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C824B84DBC002058BA /* ContentView.swift */; };
 		DE63C2D024B84F87002058BA /* PlayerStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */; };
+		DE6E984E24C2D65A006EBFFB /* FXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E984D24C2D65A006EBFFB /* FXController.swift */; };
 		DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70122624BDF88D002F7481 /* WaitAction.swift */; };
 		DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */; };
 		DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */; };
@@ -52,6 +55,8 @@
 		DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapper.swift; sourceTree = "<group>"; };
 		DE03AD4E24BB060D00493335 /* WorldBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldBox.swift; sourceTree = "<group>"; };
 		DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+UserDataUtils.swift"; sourceTree = "<group>"; };
+		DE2C7C5424BF349E0051225D /* AttackAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackAction.swift; sourceTree = "<group>"; };
+		DE2C7C5624BF35B50051225D /* HealthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
 		DE5090E024BDCE3E00B02320 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		DE5090E224BDD04600B02320 /* ActionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionComponent.swift; sourceTree = "<group>"; };
 		DE5090E424BDD2DD00B02320 /* MoveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAction.swift; sourceTree = "<group>"; };
@@ -78,6 +83,7 @@
 		DE63C2C724B84DBC002058BA /* ConsoleWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleWindowView.swift; sourceTree = "<group>"; };
 		DE63C2C824B84DBC002058BA /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatisticsView.swift; sourceTree = "<group>"; };
+		DE6E984D24C2D65A006EBFFB /* FXController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXController.swift; sourceTree = "<group>"; };
 		DE70122624BDF88D002F7481 /* WaitAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitAction.swift; sourceTree = "<group>"; };
 		DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteUIHandler.swift; sourceTree = "<group>"; };
 		DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackComponent.swift; sourceTree = "<group>"; };
@@ -117,6 +123,7 @@
 				DE5090E024BDCE3E00B02320 /* Action.swift */,
 				DE5090E424BDD2DD00B02320 /* MoveAction.swift */,
 				DE70122624BDF88D002F7481 /* WaitAction.swift */,
+				DE2C7C5424BF349E0051225D /* AttackAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -178,6 +185,7 @@
 			children = (
 				DE63C2AE24B84D96002058BA /* MapController.swift */,
 				DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */,
+				DE6E984D24C2D65A006EBFFB /* FXController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -203,6 +211,7 @@
 				DE63C2B624B84DA7002058BA /* VisibilityComponent.swift */,
 				DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */,
 				DE5090E224BDD04600B02320 /* ActionComponent.swift */,
+				DE2C7C5624BF35B50051225D /* HealthComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -332,6 +341,7 @@
 			files = (
 				DE5090E524BDD2DD00B02320 /* MoveAction.swift in Sources */,
 				DE03AD4B24BA5BD100493335 /* AnyWrapper.swift in Sources */,
+				DE2C7C5724BF35B50051225D /* HealthComponent.swift in Sources */,
 				DE63C2BB24B84DA7002058BA /* RLEntity.swift in Sources */,
 				DE63C2B124B84D9E002058BA /* GameScene.swift in Sources */,
 				DE63C2C324B84DAE002058BA /* RLSprites.swift in Sources */,
@@ -343,6 +353,7 @@
 				DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */,
 				DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */,
 				DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */,
+				DE2C7C5524BF349E0051225D /* AttackAction.swift in Sources */,
 				DEEFEF7224BC943000C59126 /* ActionsView.swift in Sources */,
 				DE63C28E24B84D24002058BA /* SceneDelegate.swift in Sources */,
 				DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */,
@@ -351,6 +362,7 @@
 				DE63C2CA24B84DBC002058BA /* SpriteKitView.swift in Sources */,
 				DE63C2C124B84DA7002058BA /* Coord.swift in Sources */,
 				DE63C2C924B84DBC002058BA /* Constants.swift in Sources */,
+				DE6E984E24C2D65A006EBFFB /* FXController.swift in Sources */,
 				DE63C2BF24B84DA7002058BA /* WorldBuilder.swift in Sources */,
 				DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */,
 				DE5090E324BDD04600B02320 /* ActionComponent.swift in Sources */,

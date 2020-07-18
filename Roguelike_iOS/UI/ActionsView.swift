@@ -63,10 +63,8 @@ struct ActionsView: View {
                 HStack (spacing: 0) {
                     Text("\u{2551} ").foregroundColor(Color.white)
                     Button(action: {
-                        let updatedEntities = action.execute(by: self.player, in: self.boxedWorld.world)
-                        self.boxedWorld.world.replaceEntities(entities: updatedEntities)
-                        self.boxedWorld.world.calculateLighting()
-                    }, label: { Text(self.paddedLine(action.title)) }).disabled(action.canExecute(by: self.player, in: self.boxedWorld.world) == false).background(Color.yellow)
+                        self.boxedWorld.executeAction(action)
+                    }, label: { Text(self.paddedLine(action.title)) }).disabled(action.canExecute(in: self.boxedWorld.world) == false).background(Color.yellow)
                     Text(" \u{2551}").foregroundColor(Color.white)
                 }.font(.custom("Menlo-Regular", size: self.fontSize))
                 

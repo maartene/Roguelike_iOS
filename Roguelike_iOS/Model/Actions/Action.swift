@@ -9,20 +9,21 @@
 import Foundation
 
 protocol Action {
+    var owner: RLEntity { get }
     var title: String { get }
     var description: String { get }
     
-    func execute(by actor: RLEntity, in world: World) -> [RLEntity]
-    func canExecute(by actor: RLEntity, in world: World) -> Bool
+    func execute(in world: World) -> [RLEntity]
+    func canExecute(in world: World) -> Bool
 }
 
 extension Action {
-    func execute(by actor: RLEntity, in world: World) -> [RLEntity] {
-        print("\(actor.name) executed action: \(title).")
+    func execute(in world: World) -> [RLEntity] {
+        print("\(owner.name) executed action: \(title).")
         return []
     }
     
-    func canExecute(by actor: RLEntity, in world: World) -> Bool {
+    func canExecute(in world: World) -> Bool {
         return true
     }
 }

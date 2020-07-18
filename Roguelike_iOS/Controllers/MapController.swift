@@ -46,6 +46,7 @@ final class MapController {
     func update(world: World) {
         showMap(world: world)
         showEntities(world: world)
+        deleteSprites(world: world)
     }
     
     func reset() {
@@ -130,6 +131,17 @@ final class MapController {
                 sc.node.color = SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: CGFloat(max(world.map[entity.position].light, 0.5)), alpha: 1)
                 addChild(sc.node)
             }*/
+        }
+    }
+    
+    func deleteSprites(world: World) {
+        let spritesToDelete = entityNodeMap.filter { entry in
+            world.entities.keys.contains(entry.key) == false
+        }
+        
+        for entry in spritesToDelete {
+            entry.value.removeFromParent()
+            entityNodeMap.removeValue(forKey: entry.key)
         }
     }
     

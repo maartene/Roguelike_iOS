@@ -120,11 +120,8 @@ struct WorldBuilder {
                     let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)
                     let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
                     if world.map[Coord(posX, posY)].enterable {
-                        var lamp = RLEntity(name: "Lamp", hue: 0.16, saturation: 1, startPosition: Coord(posX,posY))
-                        lamp = VisibilityComponent.add(to: lamp, visionRange: 4)
-                        //newItem.levelIndex = mapLevel
-                        //newItem.renderOrder = .ITEM
-                        // only spawn entities on enterable tiles (i.e. not in the wall)
+                        let lamp = RLEntity.lamp(startPosition: Coord(posX,posY))
+
                         if world.map[lamp.position].enterable {
                             world.addEntity(entity: lamp)
                         }

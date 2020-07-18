@@ -29,17 +29,13 @@ struct VisibilityComponent {
         return changedEntity
     }
     
-    static func update(entity: RLEntity, in world: World) -> [RLEntity] {
-        guard entity.variables["VC"] != nil, let visionRange  = entity.variables["VC_visionRange"] as? Int else {
-            return [entity]
-        }
+    func update(entity: RLEntity, in world: World) -> [RLEntity] {
         
-        var visibilityComponent = VisibilityComponent(owner: entity, visionRange: visionRange)
-        
-        visibilityComponent.refreshVisibility(world: world)
+        var updatedComponent = self
+        updatedComponent.refreshVisibility(world: world)
         
         var updatedEntity = entity
-        updatedEntity.variables["VC_visibleTiles"] = visibilityComponent.visibleTiles
+        updatedEntity.variables["VC_visibleTiles"] = updatedComponent.visibleTiles
         return [updatedEntity]
     }
     
@@ -52,7 +48,7 @@ struct VisibilityComponent {
     }
     
     static func lineOfSight(from coord1: Coord, to coord2: Coord, in world: World) -> Bool {
-        let lineCoords = plotLine(from: coord1, to: coord2)
+        let lineCoords = Coord.plotLine(from: coord1, to: coord2)
         
         let containsBlocker = lineCoords.contains { coord in
             world.map[coord].blocksLight
@@ -206,81 +202,6 @@ struct VisibilityComponent {
             return start <= other.start && end >= other.end
         }
         
-    }
-    
-    private static func plotLineLow(x0: Int, y0: Int, x1: Int, y1:Int) -> Set<Coord> {
-        var result = Set<Coord>()
-        
-        let dx = Double(x1) - Double(x0)
-        var dy = Double(y1) - Double(y0)
-        var yi = 1.0
-
-        if dy < 0 {
-            yi = -1
-            dy = -dy
-        }
-        
-        var D: Double = 2*dy - dx
-        var y = Double(y0)
-
-        for x in x0 ... x1 {
-            result.insert(Coord(x, Int(y)))
-            if D > 0 {
-               y = y + yi
-               D = D - 2*dx
-            }
-            D = D + 2*dy
-        }
-        
-        return result
-    }
-
-    private static func plotLineHigh(x0: Int, y0: Int, x1: Int, y1: Int) -> Set<Coord> {
-        var result = Set<Coord>()
-        
-        var dx = Double(x1) - Double(x0)
-        let dy = Double(y1) - Double(y0)
-        
-        var xi = 1.0
-        
-        if dx < 0 {
-            xi = -1
-            dx = -dx
-        }
-        
-        var D: Double = 2*dx - dy
-        var x = Double(x0)
-
-        for y in y0 ... y1 {
-            result.insert(Coord(Int(x), y))
-            if D > 0 {
-               x = x + xi
-               D = D - 2*dy
-            }
-            D = D + 2*dx
-        }
-        return result
-    }
-
-    static func plotLine(from c0: Coord, to c1: Coord) -> Set<Coord> {
-        let x0 = c0.x
-        let y0 = c0.y
-        let x1 = c1.x
-        let y1 = c1.y
-        
-        if abs(y1 - y0) < abs(x1 - x0) {
-            if x0 > x1 {
-                return plotLineLow(x0: x1, y0: y1, x1: x0, y1: y0)
-            } else {
-                return plotLineLow(x0: x0, y0: y0, x1: x1, y1: y1)
-            }
-        } else {
-            if y0 > y1 {
-                return plotLineHigh(x0: x1, y0: y1, x1: x0, y1: y0)
-            } else {
-                return plotLineHigh(x0: x0, y0: y0, x1: x1, y1: y1)
-            }
-        }
     }
     
 }

@@ -39,11 +39,28 @@ struct ActionComponent {
     }
     
     func getActionsFor(entity: RLEntity) -> [Action] {
-        return []
+        var actions = [Action]()
+        if entity.id == owner.id {
+            
+        } else {
+            actions.append(MoveAction(owner: owner, targetLocation: entity.position))
+            if let attackComponent = owner.attackComponent {
+                actions.append(AttackAction(owner: owner, damage: attackComponent.damage, target: entity))
+            }
+        }
+        actions.append(WaitAction(owner: entity))
+        return actions
     }
     
     func getActionFor(tile: Coord) -> [Action] {
-        return [MoveAction(targetLocation: tile), WaitAction()]
+        var actions = [Action]()
+        if tile == owner.position {
+            
+        } else {
+            actions.append(MoveAction(owner: owner, targetLocation: tile))
+        }
+        actions.append(WaitAction(owner: owner))
+        return actions
     }
     
     func spendAP(amount: Int) -> RLEntity {

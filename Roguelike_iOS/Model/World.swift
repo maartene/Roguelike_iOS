@@ -20,28 +20,27 @@ struct World: Codable {
         
     let width: Int
     let height: Int
-    
+        
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
         
-        var player = RLEntity(name: "Player", hue: 0.53, saturation: 1, startPosition: Coord(31, 10))
-        player = VisibilityComponent.add(to: player, visionRange: 10)
-        player = ActionComponent.add(to: player, maxAP: 12, currentAP: 3)
+        let player = RLEntity.player(startPosition: Coord(31,10))
         addEntity(entity: player)
-        
-        let apple = RLEntity(name: "Apple", hue: 0.36, saturation: 1, startPosition: Coord(31, 12))
+
+        let apple = RLEntity.apple(startPosition: Coord(31,12))
         addEntity(entity: apple)
         //createRandomRooms(amount: 10)
+        
+        let skeleton = RLEntity.skeleton(startPosition: Coord(31,15))
+        addEntity(entity: skeleton)
     }
     
     mutating func update() {
         for entity in entities.values {
             var updatedEntity = entity
             
-            if entity.visibilityComponent != nil {
-                replaceEntities(entities: VisibilityComponent.update(entity: entity, in: self))
-            }
+            replaceEntities(entities: updatedEntity.visibilityComponent?.update(entity: updatedEntity, in: self) ?? [])
             
             updatedEntity = entities[updatedEntity.id]!
 
@@ -49,6 +48,8 @@ struct World: Codable {
             
             
         }
+        
+        pruneEntities()
         
         calculateLighting()
     }
@@ -109,6 +110,15 @@ struct World: Codable {
     mutating func replaceEntity(entity: RLEntity) {
         assert(entities[entity.id] != nil, "WARNING: world does not contain an entity with id \(entity.id). The entity will be added.")
         entities[entity.id] = entity
+    }
+    
+    mutating func pruneEntities() {
+        let entitiesToRemove = entities.values.filter {
+            $0.healthComponent?.isDead ?? false
+        }
+        for entityID in entitiesToRemove.map({$0.id}) {
+            entities.removeValue(forKey: entityID)
+        }
     }
     
     mutating func replaceEntities(entities: [RLEntity]) {
@@ -173,6 +183,10 @@ struct MapCell: Codable {
     
     mutating func setLight(_ intensity: Double) {
         light = intensity
+    }
+    
+    var lightedBrightness: CGFloat {
+        CGFloat(light * maxBrightness)
     }
 }
 

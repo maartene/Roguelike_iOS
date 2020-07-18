@@ -64,5 +64,32 @@ struct RLEntity: Codable {
     func update(in world: World) {
         print("updating")
     }
+    
+    static func player(startPosition: Coord) -> RLEntity {
+        var player = RLEntity(name: "Player", hue: 0.53, saturation: 1, startPosition: startPosition)
+        player = VisibilityComponent.add(to: player, visionRange: 10)
+        player = ActionComponent.add(to: player, maxAP: 5, currentAP: 3)
+        player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10)
+        player = AttackComponent.add(to: player, range: 5, damage: 3)
+        return player
+    }
+    
+    static func apple(startPosition: Coord) -> RLEntity {
+        let apple = RLEntity(name: "Apple", hue: 0.36, saturation: 1, startPosition: startPosition)
+
+        return apple
+    }
+    
+    static func lamp(startPosition: Coord) -> RLEntity {
+        var lamp = RLEntity(name: "Lamp", hue: 0.16, saturation: 1, startPosition: startPosition)
+        lamp = VisibilityComponent.add(to: lamp, visionRange: 4)
+        return lamp
+    }
+    
+    static func skeleton(startPosition: Coord) -> RLEntity {
+        var skeleton = RLEntity(name: "Skeleton", hue: 0, saturation: 0, startPosition: startPosition)
+        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5)
+        return skeleton
+    }
 }
 

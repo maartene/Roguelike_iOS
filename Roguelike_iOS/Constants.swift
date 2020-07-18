@@ -10,5 +10,6 @@ import Foundation
 import UIKit
 
 let ENTITY_Z_POSITION: CGFloat = 10
+let FX_Z_POSITION: CGFloat = 30
 let HIGHLIGHT_Z_POSITION: CGFloat = 40
 let UI_Z_POSITION: CGFloat = 50

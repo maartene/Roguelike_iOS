@@ -9,10 +9,11 @@
 import Foundation
 
 struct WaitAction: Action {
+    let owner: RLEntity
     let title = "Wait"
     let description = "This will let all other entities act."
     
-    func execute(by actor: RLEntity, in world: World) -> [RLEntity] {
+    func execute(in world: World) -> [RLEntity] {
         var updatedWorld = world
         updatedWorld.update()
         return Array(updatedWorld.entities.values)

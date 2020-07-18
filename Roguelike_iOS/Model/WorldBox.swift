@@ -19,6 +19,7 @@ final class WorldBox: ObservableObject {
     
     @Published var world: World
     @Published var state: WorldBoxState = .idle
+    @Published var executedActions = [Action]()
     
     init(world: World) {
         self.world = world
@@ -40,6 +41,22 @@ final class WorldBox: ObservableObject {
                 self.state = .idle
             }
         }
+    }
+    
+    func executeAction(_ action: Action) {
+        guard state == .idle else {
+            print("Can only execute in state 'idle'.")
+            return
+        }
+        
+        executedActions.append(action)
+        
+        let updatedEntities = action.execute(in: world)
+        world.replaceEntities(entities: updatedEntities)
+        world.pruneEntities()
+        world.calculateLighting()
+        
+        
     }
     
     func save() {

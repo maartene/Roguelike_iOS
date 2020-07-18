@@ -17,6 +17,12 @@ struct HUD: View {
             if let actions = boxedWorld.world.player.actionComponent?.getActionFor(tile: tile) {
                 return actions
             }
+        } else if let entityID = scene.selectedNode?.userData?["entityID"] as? UUID {
+            if let entity = boxedWorld.world.entities[entityID] {
+                if let actions = boxedWorld.world.player.actionComponent?.getActionsFor(entity: entity) {
+                    return actions
+                }
+            }
         }
         return []
     }
