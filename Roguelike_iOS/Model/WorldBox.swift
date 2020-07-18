@@ -20,6 +20,7 @@ final class WorldBox: ObservableObject {
     @Published var world: World
     @Published var state: WorldBoxState = .idle
     @Published var executedActions = [Action]()
+    @Published var removedEntities = [RLEntity]()
     
     init(world: World) {
         self.world = world
@@ -49,11 +50,14 @@ final class WorldBox: ObservableObject {
             return
         }
         
+        removedEntities = []
+        
         executedActions.append(action)
         
         let updatedEntities = action.execute(in: world)
         world.replaceEntities(entities: updatedEntities)
-        world.pruneEntities()
+        removedEntities = world.pruneEntities()
+        
         world.calculateLighting()
         
         

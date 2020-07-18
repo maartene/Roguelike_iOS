@@ -42,7 +42,7 @@ struct AttackAction: Action {
     }
     
     func execute(in world: World) -> [RLEntity] {
-        guard let actor = world.entities[owner.id] else {
+        guard var actor = world.entities[owner.id] else {
             print("NO EFFECT: owner no longer exists in the world.")
             return []
         }
@@ -57,6 +57,7 @@ struct AttackAction: Action {
         }
         
         let damagedTarget = updatedTarget.healthComponent?.takeDamage(amount: damage) ?? target
+        actor = actor.actionComponent?.spendAP(amount: 1) ?? actor
         print("Attacked \(damagedTarget) for \(damage) damage. Remaining hp: \(damagedTarget.healthComponent?.currentHealth ?? 0)/\(damagedTarget.healthComponent?.maxHealth ?? 0)")
         return [damagedTarget, actor]
     }

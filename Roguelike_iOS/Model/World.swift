@@ -112,13 +112,14 @@ struct World: Codable {
         entities[entity.id] = entity
     }
     
-    mutating func pruneEntities() {
+    mutating func pruneEntities() -> [RLEntity] {
         let entitiesToRemove = entities.values.filter {
             $0.healthComponent?.isDead ?? false
         }
         for entityID in entitiesToRemove.map({$0.id}) {
             entities.removeValue(forKey: entityID)
         }
+        return entitiesToRemove
     }
     
     mutating func replaceEntities(entities: [RLEntity]) {

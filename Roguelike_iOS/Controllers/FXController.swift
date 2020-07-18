@@ -11,7 +11,7 @@ import Combine
 import SpriteKit
 
 final class FXController {
-    let fxNode: SKNode
+    let fxNode: SKEffectNode
     
     weak var scene: GameScene?
     weak var mapController: MapController?
@@ -26,7 +26,11 @@ final class FXController {
         self.mapController = mapController
         self.cellSize = scene.cellSize
         
-        fxNode = SKNode()
+        fxNode = SKEffectNode()
+        let filter = CIFilter.init(name: "CIBloom")
+        assert(filter != nil)
+        fxNode.filter = filter
+        fxNode.shouldEnableEffects = true
         scene.addChild(fxNode)
     }
     
@@ -36,6 +40,10 @@ final class FXController {
             print("Received completion value: \(completion).")
         }, receiveValue: { [weak self] actions in
             self?.createEffect(for: actions)
+            }).store(in: &cancellables)
+        
+        boxedWorld.$removedEntities.sink(receiveValue: {[weak self] removedEntities in
+            self?.createEffect(for: removedEntities)
             }).store(in: &cancellables)
     }
     
@@ -63,7 +71,7 @@ final class FXController {
                     CGPoint(x: coord.x * cellSize / 2, y: coord.y * cellSize / 2)
                 }
                 
-                let tex = SKTexture(imageNamed: "doubleRes_25pct")
+                let tex = SKTexture(imageNamed: "doubleRes_full")
                 
                 tex.filteringMode = .nearest
                 
@@ -80,19 +88,9 @@ final class FXController {
                     pixel.run(SKAction.sequence([w, fi, SKAction.removeFromParent()]))
                 }
                 
+                projectile.run(SKAction.sequence([SKAction.wait(forDuration: 4), SKAction.removeFromParent()]))
+                
                 let touchedTiles = Coord.plotLine(from: action.owner.position, to: action.target.position)
-                                
-                struct FxTile: Hashable {
-                    let coord: Coord
-                    let originalColor: SKColor
-                    let highlightColor: SKColor
-                    
-                    init(coord: Coord, tile: MapCell, highlightBrightnessToAdd: CGFloat = 1) {
-                        self.coord = coord
-                        originalColor = SKColor(hue: CGFloat(tile.hue), saturation: CGFloat(tile.saturation), brightness: tile.lightedBrightness, alpha: 1)
-                        highlightColor = SKColor(hue: CGFloat(tile.hue), saturation: CGFloat(tile.saturation), brightness:    tile.lightedBrightness + highlightBrightnessToAdd * CGFloat(tile.maxBrightness), alpha: 1)
-                    }
-                }
                 
                 let fxedTiles = touchedTiles.map { coord -> FxTile in
                     FxTile(coord: coord, tile: world.map[coord], highlightBrightnessToAdd: 1)
@@ -118,13 +116,68 @@ final class FXController {
                         //let w = SKAction.wait(forDuration: Double(i) * 0.1)
                         let hl = SKAction.colorize(with: tile.highlightColor, colorBlendFactor: 1, duration: 0.15)
                         sprite.run(hl) {
-                            print("Resetting to original color: \(tile.originalColor)")
+                            //print("Resetting to original color: \(tile.originalColor)")
                             sprite.color = tile.originalColor
                         }
                     }
                 }
                 
             }
+        }
+    }
+    
+    func createEffect(for removedEntities: [RLEntity]) {
+        for entity in removedEntities {
+            explosion(at: entity.position, range: 1, color: SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1))
+        }
+    }
+    
+    func explosion(at coord: Coord, range: Int, color: SKColor = SKColor.white) {
+        for y in coord.y - range ... coord.y + range {
+            for x in coord.x - range ... coord.x + range {
+                if Coord(x, y).manhattanDistance(to: coord) <= range {
+                    if let sprite = mapController?.mapNodeMap[Coord(x,y)], let tile = boxedWorld?.world.map[coord] {
+                        let fxTile = FxTile(coord: coord, tile: tile, highlightBrightnessToAdd: 4)
+                        
+                        let hl = SKAction.colorize(with: fxTile.highlightColor, colorBlendFactor: 1, duration: 0.25)
+                        let w = SKAction.wait(forDuration: 0.5)
+                        sprite.run(SKAction.sequence([hl, w])) {
+                            sprite.color = fxTile.originalColor
+                        }
+                    }
+                }
+            }
+        }
+        
+        let screenCenter = mapController?.mapNodeMap[coord]?.position ?? CGPoint.zero
+        for r in 0 ... range * 2 {
+            let circleCoords = Array(Coord.circleBres(center: Coord.zero, radius: r))
+            for i in 0 ..< circleCoords.count {
+                let pixel = SKSpriteNode(imageNamed: "doubleRes_full")
+                pixel.zPosition = FX_Z_POSITION
+                pixel.colorBlendFactor = 1.0
+                pixel.color = color
+                pixel.alpha = 0
+                pixel.position = CGPoint(x: screenCenter.x + CGFloat(cellSize * circleCoords[i].x) / 2, y: screenCenter.y + CGFloat(cellSize * circleCoords[i].y / 2))
+                fxNode.addChild(pixel)
+                
+                let w = SKAction.wait(forDuration: Double(r) * 0.01)
+                let fi = SKAction.fadeIn(withDuration: 0.15)
+                let fo = SKAction.fadeOut(withDuration: 0.15)
+                pixel.run(SKAction.sequence([w,fi,fo,SKAction.removeFromParent()]))
+            }
+        }
+    }
+    
+    struct FxTile: Hashable {
+        let coord: Coord
+        let originalColor: SKColor
+        let highlightColor: SKColor
+        
+        init(coord: Coord, tile: MapCell, highlightBrightnessToAdd: CGFloat = 1) {
+            self.coord = coord
+            originalColor = SKColor(hue: CGFloat(tile.hue), saturation: CGFloat(tile.saturation), brightness: tile.lightedBrightness, alpha: 1)
+            highlightColor = SKColor(hue: CGFloat(tile.hue), saturation: CGFloat(tile.saturation), brightness:    tile.lightedBrightness + highlightBrightnessToAdd * CGFloat(tile.maxBrightness), alpha: 1)
         }
     }
 }

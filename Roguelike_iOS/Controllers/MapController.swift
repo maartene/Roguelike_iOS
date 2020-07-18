@@ -157,6 +157,7 @@ final class MapController {
         node.name = entity.name
         node.zPosition = ENTITY_Z_POSITION
         node.colorBlendFactor = 1
+        //node.color = SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1)
         node.setUserData(key: "entityID", value: entity.id)
         
         entityNodeMap[entity.id] = node

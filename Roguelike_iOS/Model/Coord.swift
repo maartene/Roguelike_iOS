@@ -177,5 +177,62 @@ struct Coord: Hashable, CustomStringConvertible, Codable {
             }
         }
     }
+    
+    // Function to put pixels
+    // at subsequence points
+    private static func drawCircle(xc: Int, yc: Int, x: Int, y: Int) -> Set<Coord>
+    {
+        var result = Set<Coord>()
+        result.insert(Coord(xc+x, yc+y))
+        result.insert(Coord(xc-x, yc+y))
+        result.insert(Coord(xc+x, yc-y))
+        result.insert(Coord(xc-x, yc-y))
+        
+        result.insert(Coord(xc+y, yc+x))
+        result.insert(Coord(xc-y, yc+x))
+        result.insert(Coord(xc+y, yc-x))
+        result.insert(Coord(xc-y, yc-x))
+        
+        return result
+    }
+    
+    // Function for circle-generation
+    // using Bresenham's algorithm
+    static func circleBres(center: Coord, radius r: Int) -> Set<Coord>
+    {
+        let xc = center.x
+        let yc = center.y
+        
+        var result = Set<Coord>()
+        
+        var x = 0
+        var y = r
+        var d = 3 - 2 * r
+        
+        result = result.union(drawCircle(xc: xc, yc: yc, x: x, y: y))
+        
+        while (y >= x)
+        {
+            // for each pixel we will
+            // draw all eight pixels
+              
+            x += 1
+      
+            // check for decision parameter
+            // and correspondingly
+            // update d, x, y
+            if (d > 0)
+            {
+                y -= 1
+                d = d + 4 * (x - y) + 10;
+            } else {
+                d = d + 4 * x + 6;
+            }
+            result = result.union(drawCircle(xc: xc, yc: yc, x: x, y: y))
+        }
+        
+        print("Circle coordinates: \(result)")
+        return result
+    }
 }
 
