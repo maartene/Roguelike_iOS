@@ -13,6 +13,15 @@ struct MoveAction: Action {
     let title = "Move to"
     let description = "Move to the target location. This uses 1 action points per 2 tiles movement."
     let targetLocation: Coord
+    let map: Map
+    let ignoreVisibility: Bool
+    
+    init(owner: RLEntity, targetLocation: Coord, map: Map, ignoreVisibility: Bool = false) {
+        self.owner = owner
+        self.targetLocation = targetLocation
+        self.map = map
+        self.ignoreVisibility = ignoreVisibility
+    }
     
     func canExecute(in world: World) -> Bool {
         guard let actor = world.entities[owner.id] else {
@@ -25,16 +34,13 @@ struct MoveAction: Action {
             return false
         }
         
-        guard actor.visibilityComponent?.visibleTiles.contains(targetLocation) ?? false else {
-            print("ACTION: Target location is not visible.")
+        guard map[targetLocation].enterable else {
+            print("ACTION: Target location is not enterable.")
             return false
         }
         
-        let distance = targetLocation.manhattanDistance(to: actor.position)
-        let cost = max(distance / 2, 1)
-        
-        guard cost <= actor.actionComponent?.currentAP ?? 0 else {
-            print("ACTION: Not enough action points. (requires \(cost), \(actor.name) has \(actor.actionComponent?.currentAP ?? 0)")
+        guard actor.visibilityComponent?.visibleTiles.contains(targetLocation) ?? false || ignoreVisibility else {
+            print("ACTION: Target location is not visible.")
             return false
         }
         
@@ -43,7 +49,7 @@ struct MoveAction: Action {
     
     func execute(in world: World) -> [RLEntity] {
         guard canExecute(in: world) else {
-            print("NO EFFECT: Cannot execute action: \(self)")
+            print("NO EFFECT: Cannot execute action: \(self.title) targetLocation: \(self.targetLocation)")
             return []
         }
         
@@ -52,15 +58,31 @@ struct MoveAction: Action {
             return []
         }
         
-        let distance = targetLocation.manhattanDistance(to: updatedActor.position)
-        
-        print("Move took \(distance)")
         updatedActor.position = targetLocation
-        updatedActor = updatedActor.actionComponent?.spendAP(amount: max(1, distance / 2)) ?? updatedActor
         updatedActor = updatedActor.visibilityComponent?.update(entity: updatedActor, in: world).first ?? updatedActor
         
         return [updatedActor]
     }
     
-    
+    func unpack() -> [Action] {
+        // FIXME: this should be based on proper pathfinding, instead on a direct line.
+        
+        if owner.position.manhattanDistance(to: targetLocation) > 1 {
+            var line = Coord.plotLine(from: owner.position, to: targetLocation)
+            
+            if line.count > 1 {
+                line.removeFirst()
+            }
+            
+            let actions = line.map { coord in MoveAction(owner: owner, targetLocation: coord, map: map, ignoreVisibility: ignoreVisibility) }
+            if actions.contains(where: { action in map[action.targetLocation].enterable == false }) {
+                return []
+            } else {
+                return actions
+            }
+            
+        } else {
+            return [self]
+        }
+    }
 }

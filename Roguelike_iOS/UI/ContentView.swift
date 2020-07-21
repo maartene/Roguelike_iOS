@@ -14,12 +14,12 @@ struct HUD: View {
     
     var action: [Action] {
         if let tile = scene.selectedNode?.userData?["position"] as? Coord {
-            if let actions = boxedWorld.world.player.actionComponent?.getActionFor(tile: tile) {
+            if let actions = boxedWorld.world.player.actionComponent?.getActionFor(tile: tile, on: boxedWorld.world.map) {
                 return actions
             }
         } else if let entityID = scene.selectedNode?.userData?["entityID"] as? UUID {
             if let entity = boxedWorld.world.entities[entityID] {
-                if let actions = boxedWorld.world.player.actionComponent?.getActionsFor(entity: entity) {
+                if let actions = boxedWorld.world.player.actionComponent?.getActionsFor(entity: entity, on: boxedWorld.world.map) {
                     return actions
                 }
             }
@@ -38,17 +38,28 @@ struct HUD: View {
                     Text(" ").font(.custom("Menlo-Regular", size: 24))
                     Button(action: { self.scene.load()}, label: { Text("[ Load ]")}).disabled(boxedWorld.state != .idle)
                         .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)
+                    /*Button(action: { self.scene.newGame()}, label: { Text("[ New Game ]")}).disabled(boxedWorld.state != .idle)
+                    .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)*/
                 }
             }
             
-            if scene.selectedNode != nil {
+            if scene.selectedNode != nil && action.count > 0 {
                 ActionsView(boxedWorld: boxedWorld, offset: scene.selectedNode!.position, title: "ACTIONS:", actions: action, sceneSize: scene.size)
             }
-            
             
             if boxedWorld.state == .loading || boxedWorld.state == .saving {
                 Color.black.opacity(0.75)
                 Text("\(boxedWorld.state.rawValue) - please wait").foregroundColor(Color.white).font(.custom("Menlo-Regular", size: 36))
+            }
+            if boxedWorld.state == .gameover {
+                Color.black.opacity(0.75)
+                VStack {
+                    Text("You died...").foregroundColor(Color.white).font(.custom("Menlo-Regular", size: 36))
+                    
+                    Button(action: {
+                        self.scene.newGame()
+                    }, label: { Text("[ New game ]") }).font(.custom("Menlo-Regular", size: 24)).background(Color.yellow).padding(.top)
+                }
             }
         }
     }

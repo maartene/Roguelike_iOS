@@ -28,12 +28,6 @@ struct AttackComponent {
         
         return changedEntity
     }
-    
-    func tryAttack(target: RLEntity) -> RLEntity {
-        var changedTarget = target
-        
-        return changedTarget
-    }
 }
 
 extension RLEntity {

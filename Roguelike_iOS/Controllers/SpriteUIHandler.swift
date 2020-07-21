@@ -38,7 +38,7 @@ final class SpriteUIHandler {
                         return
                     }
                     
-                    self?.scene?.boxedWorld.world.moveEntity(entity: updatedEntity, newPosition: updatedEntity.position + movementDirection)
+                    //self?.scene?.boxedWorld.world.moveEntity(entity: updatedEntity, newPosition: updatedEntity.position + movementDirection)
                     self?.scene?.boxedWorld.update()
                     return
                 }

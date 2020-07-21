@@ -35,6 +35,12 @@
 		DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2C824B84DBC002058BA /* ContentView.swift */; };
 		DE63C2D024B84F87002058BA /* PlayerStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */; };
 		DE6E984E24C2D65A006EBFFB /* FXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E984D24C2D65A006EBFFB /* FXController.swift */; };
+		DE6E987424C446E3006EBFFB /* AIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987324C446E3006EBFFB /* AIComponent.swift */; };
+		DE6E987624C47B98006EBFFB /* LensController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987524C47B98006EBFFB /* LensController.swift */; };
+		DE6E987824C4D878006EBFFB /* ActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987724C4D878006EBFFB /* ActionTests.swift */; };
+		DE6E987A24C5A582006EBFFB /* StatsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987924C5A582006EBFFB /* StatsComponent.swift */; };
+		DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987B24C781E7006EBFFB /* ComponentTests.swift */; };
+		DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987D24C78372006EBFFB /* WorldTests.swift */; };
 		DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70122624BDF88D002F7481 /* WaitAction.swift */; };
 		DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */; };
 		DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */; };
@@ -84,6 +90,12 @@
 		DE63C2C824B84DBC002058BA /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DE63C2CF24B84F87002058BA /* PlayerStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatisticsView.swift; sourceTree = "<group>"; };
 		DE6E984D24C2D65A006EBFFB /* FXController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXController.swift; sourceTree = "<group>"; };
+		DE6E987324C446E3006EBFFB /* AIComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIComponent.swift; sourceTree = "<group>"; };
+		DE6E987524C47B98006EBFFB /* LensController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensController.swift; sourceTree = "<group>"; };
+		DE6E987724C4D878006EBFFB /* ActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTests.swift; sourceTree = "<group>"; };
+		DE6E987924C5A582006EBFFB /* StatsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsComponent.swift; sourceTree = "<group>"; };
+		DE6E987B24C781E7006EBFFB /* ComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTests.swift; sourceTree = "<group>"; };
+		DE6E987D24C78372006EBFFB /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
 		DE70122624BDF88D002F7481 /* WaitAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitAction.swift; sourceTree = "<group>"; };
 		DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteUIHandler.swift; sourceTree = "<group>"; };
 		DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackComponent.swift; sourceTree = "<group>"; };
@@ -174,8 +186,11 @@
 		DE63C2A124B84D27002058BA /* Roguelike_iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				DE6E987D24C78372006EBFFB /* WorldTests.swift */,
 				DE63C2A224B84D27002058BA /* Roguelike_iOSTests.swift */,
 				DE63C2A424B84D27002058BA /* Info.plist */,
+				DE6E987724C4D878006EBFFB /* ActionTests.swift */,
+				DE6E987B24C781E7006EBFFB /* ComponentTests.swift */,
 			);
 			path = Roguelike_iOSTests;
 			sourceTree = "<group>";
@@ -186,6 +201,7 @@
 				DE63C2AE24B84D96002058BA /* MapController.swift */,
 				DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */,
 				DE6E984D24C2D65A006EBFFB /* FXController.swift */,
+				DE6E987524C47B98006EBFFB /* LensController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -212,6 +228,8 @@
 				DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */,
 				DE5090E224BDD04600B02320 /* ActionComponent.swift */,
 				DE2C7C5624BF35B50051225D /* HealthComponent.swift */,
+				DE6E987324C446E3006EBFFB /* AIComponent.swift */,
+				DE6E987924C5A582006EBFFB /* StatsComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -349,6 +367,7 @@
 				DE5090E124BDCE3E00B02320 /* Action.swift in Sources */,
 				DE63C2AF24B84D96002058BA /* MapController.swift in Sources */,
 				DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */,
+				DE6E987A24C5A582006EBFFB /* StatsComponent.swift in Sources */,
 				DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */,
 				DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */,
 				DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */,
@@ -362,7 +381,9 @@
 				DE63C2CA24B84DBC002058BA /* SpriteKitView.swift in Sources */,
 				DE63C2C124B84DA7002058BA /* Coord.swift in Sources */,
 				DE63C2C924B84DBC002058BA /* Constants.swift in Sources */,
+				DE6E987624C47B98006EBFFB /* LensController.swift in Sources */,
 				DE6E984E24C2D65A006EBFFB /* FXController.swift in Sources */,
+				DE6E987424C446E3006EBFFB /* AIComponent.swift in Sources */,
 				DE63C2BF24B84DA7002058BA /* WorldBuilder.swift in Sources */,
 				DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */,
 				DE5090E324BDD04600B02320 /* ActionComponent.swift in Sources */,
@@ -374,7 +395,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */,
 				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
+				DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */,
+				DE6E987824C4D878006EBFFB /* ActionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

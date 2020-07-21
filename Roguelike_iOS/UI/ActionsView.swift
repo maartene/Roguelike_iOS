@@ -63,12 +63,10 @@ struct ActionsView: View {
                 HStack (spacing: 0) {
                     Text("\u{2551} ").foregroundColor(Color.white)
                     Button(action: {
-                        self.boxedWorld.executeAction(action)
-                    }, label: { Text(self.paddedLine(action.title)) }).disabled(action.canExecute(in: self.boxedWorld.world) == false).background(Color.yellow)
+                        self.boxedWorld.queueActions(action.unpack())
+                    }, label: { Text(self.paddedLine(action.title)) }).disabled(action.canExecute(in: self.boxedWorld.world) == false || self.boxedWorld.actionQueue.count > 0).background(Color.yellow)
                     Text(" \u{2551}").foregroundColor(Color.white)
                 }.font(.custom("Menlo-Regular", size: self.fontSize))
-                
-                
             }
                 
             Text(self.bottomRow).font(.custom("Menlo-Regular", size: fontSize)).foregroundColor(Color.white)
@@ -82,6 +80,6 @@ struct ActionsView_Previews: PreviewProvider {
         let world = World(width: 10, height: 10)
         let boxedWorld = WorldBox(world: world)
         return ActionsView(boxedWorld: boxedWorld, offset: CGPoint.zero, title: "ACTIONS:", actions:
-            [], sceneSize: CGSize.zero)
+            [WaitAction(owner: world.player)], sceneSize: CGSize.zero)
     }
 }

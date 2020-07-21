@@ -67,10 +67,12 @@ struct RLEntity: Codable {
     
     static func player(startPosition: Coord) -> RLEntity {
         var player = RLEntity(name: "Player", hue: 0.53, saturation: 1, startPosition: startPosition)
-        player = VisibilityComponent.add(to: player, visionRange: 10)
-        player = ActionComponent.add(to: player, maxAP: 5, currentAP: 3)
-        player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10)
+        player = VisibilityComponent.add(to: player, addsLight: true, visionRange: 10)
+        player = ActionComponent.add(to: player)
+        player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10, defense: 1, xpOnDeath: 0)
         player = AttackComponent.add(to: player, range: 5, damage: 3)
+        player = StatsComponent.add(to: player)
+        print(player)
         return player
     }
     
@@ -82,14 +84,25 @@ struct RLEntity: Codable {
     
     static func lamp(startPosition: Coord) -> RLEntity {
         var lamp = RLEntity(name: "Lamp", hue: 0.16, saturation: 1, startPosition: startPosition)
-        lamp = VisibilityComponent.add(to: lamp, visionRange: 4)
+        lamp = VisibilityComponent.add(to: lamp, addsLight: true, visionRange: 4)
         return lamp
     }
     
     static func skeleton(startPosition: Coord) -> RLEntity {
         var skeleton = RLEntity(name: "Skeleton", hue: 0, saturation: 0, startPosition: startPosition)
-        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5)
+        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5, defense: 0, xpOnDeath: 1)
+        //skeleton = AIComponent.add(to: skeleton)
+        skeleton = ActionComponent.add(to: skeleton)
+        skeleton = AttackComponent.add(to: skeleton, range: 2, damage: 1)
+        skeleton = VisibilityComponent.add(to: skeleton, addsLight: false, visionRange: 4)
         return skeleton
+    }
+    
+    static func playerRemains(startPosition: Coord) -> RLEntity {
+        var player = RLEntity(name: "Player", hue: 0.09, saturation: 1, startPosition: startPosition)
+        player = VisibilityComponent.add(to: player, addsLight: true, visionRange: 3)
+        player = HealthComponent.add(to: player, maxHealth: 0, currentHealth: 0, defense: 0, xpOnDeath: 0)
+        return player
     }
 }
 

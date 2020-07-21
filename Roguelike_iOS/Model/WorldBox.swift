@@ -15,12 +15,15 @@ final class WorldBox: ObservableObject {
         case loading
         case saving
         case updating
+        case gameover
     }
     
     @Published var world: World
     @Published var state: WorldBoxState = .idle
-    @Published var executedActions = [Action]()
+    @Published var lastExecutedAction: Action?
     @Published var removedEntities = [RLEntity]()
+    
+    var actionQueue = [Action]()
     
     init(world: World) {
         self.world = world
@@ -44,6 +47,53 @@ final class WorldBox: ObservableObject {
         }
     }
     
+    func updateAI(entityID: UUID) {
+        guard state == .idle else {
+            print("Can only update in state 'idle'.")
+            return
+        }
+        
+        guard let entity = world.entities[entityID] else {
+            return
+        }
+        
+        guard let vc = entity.visibilityComponent, let ac = entity.attackComponent else {
+            return
+        }
+        // if entity can see the player
+        if vc.visibleTiles.contains(world.player.position) {
+                // are we close enough to attack the player?
+            if entity.position.manhattanDistance(to: world.player.position) <= ac.range {
+                // close enough, lets attack!
+                let attackAction = AttackAction(owner: entity, damage: ac.damage, target: world.player)
+                    actionQueue.insert(attackAction, at: 0)
+            } else {
+                // need to move closer
+                let movementLine = Coord.plotLine(from: entity.position, to: world.player.position)
+                
+                if movementLine.count > 1 {
+                    let moveAction = MoveAction(owner: entity, targetLocation: movementLine[1], map: world.map)
+                    actionQueue.insert(moveAction, at: 0)
+                }
+            }
+        }
+    }
+    
+    
+    func queueAction(_ action: Action) {
+        actionQueue.append(action)
+    }
+    
+    func queueActions(_ actions: [Action]) {
+        actionQueue.append(contentsOf: actions)
+    }
+    
+    func executeNextQueuedAction() {
+        if actionQueue.count > 0 {
+            executeAction(actionQueue.removeFirst())
+        }
+    }
+    
     func executeAction(_ action: Action) {
         guard state == .idle else {
             print("Can only execute in state 'idle'.")
@@ -52,15 +102,23 @@ final class WorldBox: ObservableObject {
         
         removedEntities = []
         
-        executedActions.append(action)
+        lastExecutedAction = action
         
         let updatedEntities = action.execute(in: world)
         world.replaceEntities(entities: updatedEntities)
+    
+        if (action.owner.id == world.player.id) {
+            for entityID in world.entities.keys.filter({ $0 != world.player.id }) {
+                updateAI(entityID: entityID)
+            }
+        }
+        
         removedEntities = world.pruneEntities()
+        if world.player.healthComponent?.isDead ?? false {
+            state = .gameover
+        }
         
         world.calculateLighting()
-        
-        
     }
     
     func save() {
@@ -96,6 +154,7 @@ final class WorldBox: ObservableObject {
                 }
             } catch {
                 print("Error: \(error)")
+                self.state = .idle
             }
         }
         
@@ -128,9 +187,12 @@ final class WorldBox: ObservableObject {
                     self.state = .idle
                 }
             } catch {
-                print("Error: \(error)")
+                DispatchQueue.main.async {
+                    print("Loading done")
+                    onLoadFinished?()
+                    self.state = .idle
+                }
             }
         }
-        
     }
 }

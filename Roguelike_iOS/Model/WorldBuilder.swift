@@ -86,14 +86,14 @@ struct WorldBuilder {
         
         // add entities to rooms
         rooms.forEach {
-            /*let numberOfMonsters = random.nextInt(upperBound: 2)
+            let numberOfMonsters = random.nextInt(upperBound: 1)
                 for _ in 0...numberOfMonsters {
                     let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)
                     let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
                     
                     let value = random.nextUniform()
                     var newMonster: RLEntity
-                    if value < 0.5 {
+                    /*if value < 0.5 {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Rat", world: self)
                     } else if value < 0.75 {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Skeleton", world: self)
@@ -101,20 +101,20 @@ struct WorldBuilder {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Goblin", world: self)
                     } else {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Troll", world: self)
-                    }
+                    }*/
                     
-                    newMonster.levelIndex = mapLevel
-                    newMonster.xPos = posX
-                    newMonster.yPos = posY
+                    newMonster = RLEntity.skeleton(startPosition: Coord(posX, posY))
                     
-                    newMonster.renderOrder = .ACTOR
+                    //newMonster.levelIndex = mapLevel
+                    
+                    //newMonster.renderOrder = .ACTOR
                     
                     // only spawn entities on enterable tiles (i.e. not in the wall)
-                    if map[posX, posY, mapLevel].enterable {
-                        entities.append(newMonster)
+                    if world.map[newMonster.position].enterable {
+                        world.addEntity(entity: newMonster)
                     }
                 }
-            */
+            
                 let numberOfItems = random.nextInt(upperBound: 1)
                 for _ in 0...numberOfItems {
                     let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)

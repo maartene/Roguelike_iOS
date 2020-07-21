@@ -28,28 +28,33 @@ struct World: Codable {
         let player = RLEntity.player(startPosition: Coord(31,10))
         addEntity(entity: player)
 
-        let apple = RLEntity.apple(startPosition: Coord(31,12))
-        addEntity(entity: apple)
+        //let apple = RLEntity.apple(startPosition: Coord(31,12))
+        //addEntity(entity: apple)
         //createRandomRooms(amount: 10)
         
-        let skeleton = RLEntity.skeleton(startPosition: Coord(31,15))
-        addEntity(entity: skeleton)
+        //let skeleton = RLEntity.skeleton(startPosition: Coord(31,15))
+        //addEntity(entity: skeleton)
+    }
+    
+    mutating func executeAction(_ action: Action) {
+        let updatedEntities = action.execute(in: self)
+        replaceEntities(entities: updatedEntities)
+        pruneEntities()
+        calculateLighting()
     }
     
     mutating func update() {
         for entity in entities.values {
-            var updatedEntity = entity
+            var updatedEntity = entities[entity.id] ?? entity
             
             replaceEntities(entities: updatedEntity.visibilityComponent?.update(entity: updatedEntity, in: self) ?? [])
             
             updatedEntity = entities[updatedEntity.id]!
 
-            replaceEntities(entities: updatedEntity.actionComponent?.update(entity: updatedEntity, in: self) ?? [])
-            
-            
+            //replaceEntities(entities: updatedEntity.aiComponent?.update(entity: updatedEntity, in: self) ?? [])
         }
         
-        pruneEntities()
+        //pruneEntities()
         
         calculateLighting()
     }
@@ -73,7 +78,7 @@ struct World: Codable {
         allVisibleTiles.removeAll()
         
         for vc in entities.values.compactMap({ $0.visibilityComponent }) {
-            if VisibilityComponent.lineOfSight(from: player.position, to: vc.owner.position, in: self) {
+            if VisibilityComponent.lineOfSight(from: player.position, to: vc.owner.position, in: self) && vc.addsLight {
             
                 let visibilityRangeSquared = Double(vc.visionRange * vc.visionRange)
                     //vc.refreshVisibility(world: self)
@@ -93,14 +98,14 @@ struct World: Codable {
         }
     }
         
-    mutating func moveEntity(entity: RLEntity, newPosition: Coord) {
+/*    mutating func moveEntity(entity: RLEntity, newPosition: Coord) {
         if map[newPosition].enterable {
             var changedEntity = entity
             changedEntity.position = newPosition
             replaceEntity(entity: changedEntity)
         }
         
-    }
+    }*/
     
     mutating func addEntity(entity: RLEntity) {
         assert(entities[entity.id] == nil, "WARNING: world already contains an entity with id \(entity.id). This entity will be replaced with the one passed.")
@@ -117,6 +122,9 @@ struct World: Codable {
             $0.healthComponent?.isDead ?? false
         }
         for entityID in entitiesToRemove.map({$0.id}) {
+            if entityID == player.id {
+                addEntity(entity: RLEntity.playerRemains(startPosition: player.position))
+            }
             entities.removeValue(forKey: entityID)
         }
         return entitiesToRemove

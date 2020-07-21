@@ -14,9 +14,17 @@ struct AttackAction: Action {
     let description = "Attack a target with non-elemental damage."
     let damage: Int
     let target: RLEntity
-    
+        
     func canExecute(in world: World) -> Bool {
-        let actor = world.entities[owner.id] ?? owner
+        guard let actor = world.entities[owner.id] else {
+            print("ACTION: owner no longer exists in the world.")
+            return false
+        }
+        
+        guard actor.healthComponent?.isDead ?? false == false else {
+            print("ACTION: owner is dead.")
+            return false
+        }
         
         guard let target = world.entities[target.id] else {
             print("ACTION: target no longer exists in the world.")
@@ -32,12 +40,7 @@ struct AttackAction: Action {
             print("ACTION: cannot attack a dead target.")
             return false
         }
-        
-        guard actor.actionComponent?.currentAP ?? 1 > 0 else {
-            print("ACTION: entity \(actor) does not have enough action points to execute action \(self).")
-            return false
-        }
-        
+                
         return true
     }
     
@@ -57,8 +60,13 @@ struct AttackAction: Action {
         }
         
         let damagedTarget = updatedTarget.healthComponent?.takeDamage(amount: damage) ?? target
-        actor = actor.actionComponent?.spendAP(amount: 1) ?? actor
-        print("Attacked \(damagedTarget) for \(damage) damage. Remaining hp: \(damagedTarget.healthComponent?.currentHealth ?? 0)/\(damagedTarget.healthComponent?.maxHealth ?? 0)")
+        print("Attacked \(damagedTarget.name) \(damagedTarget.id) for \(damage) damage. Remaining hp: \(damagedTarget.healthComponent?.currentHealth ?? 0)/\(damagedTarget.healthComponent?.maxHealth ?? 0)")
+        
+        // try and add xp to target
+        if damagedTarget.healthComponent?.isDead ?? false {
+            actor = actor.statsComponent?.addXP(damagedTarget.healthComponent!.xpOnDeath) ?? actor
+        }
+        
         return [damagedTarget, actor]
     }
 }

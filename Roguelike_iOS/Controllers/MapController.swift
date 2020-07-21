@@ -45,7 +45,7 @@ final class MapController {
     
     func update(world: World) {
         showMap(world: world)
-        showEntities(world: world)
+        showEntities(world: world)        
         deleteSprites(world: world)
     }
     

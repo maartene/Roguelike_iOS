@@ -15,6 +15,8 @@ protocol Action {
     
     func execute(in world: World) -> [RLEntity]
     func canExecute(in world: World) -> Bool
+    
+    func unpack() -> [Action]
 }
 
 extension Action {
@@ -25,5 +27,9 @@ extension Action {
     
     func canExecute(in world: World) -> Bool {
         return true
+    }
+    
+    func unpack() -> [Action] {
+        [self]
     }
 }

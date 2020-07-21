@@ -27,20 +27,24 @@ final class FXController {
         self.cellSize = scene.cellSize
         
         fxNode = SKEffectNode()
-        let filter = CIFilter.init(name: "CIBloom")
+        let filter = CIFilter.init(name: "CIBloom", parameters: ["inputRadius": NSNumber(value: 15),
+        "inputIntensity": NSNumber(value: 1)])
         assert(filter != nil)
         fxNode.filter = filter
         fxNode.shouldEnableEffects = true
+        fxNode.blendMode = .add
         scene.addChild(fxNode)
     }
     
     func subscribeToWorldChanges(boxedWorld: WorldBox) {
         self.boxedWorld = boxedWorld
-        boxedWorld.$executedActions.sink(receiveCompletion: { completion in
+        boxedWorld.$lastExecutedAction.sink(receiveCompletion: { completion in
             print("Received completion value: \(completion).")
-        }, receiveValue: { [weak self] actions in
-            self?.createEffect(for: actions)
-            }).store(in: &cancellables)
+        }, receiveValue: { [weak self] lastExecutedAction in
+            if let lea = lastExecutedAction {
+                self?.createEffect(for: [lea])
+            }
+        }).store(in: &cancellables)
         
         boxedWorld.$removedEntities.sink(receiveValue: {[weak self] removedEntities in
             self?.createEffect(for: removedEntities)
@@ -63,9 +67,9 @@ final class FXController {
                 let doubleResTargetCoord = targetCoord * 2
                 
                 
-                let lineCoords = Coord.plotLine(from: Coord(0,0), to: doubleResTargetCoord)
-                
-                let sortedLineCoords = Coord.sortCoords(lineCoords, byDistanceTo: action.owner.position)
+                let sortedLineCoords = Coord.plotLine(from: Coord(0,0), to: doubleResTargetCoord)
+
+                // ß®print(sortedLineCoords)
                 
                 let screenCoords: [CGPoint] = sortedLineCoords.map { coord -> CGPoint in
                     CGPoint(x: coord.x * cellSize / 2, y: coord.y * cellSize / 2)
@@ -122,6 +126,15 @@ final class FXController {
                     }
                 }
                 
+            } else if let action = newAction as? MoveAction {
+                return
+                if action.owner.id != world.player.id {
+                    if let sprite = mapController?.entityNodeMap[action.owner.id], let targetLocationSprite = mapController?.mapNodeMap[action.targetLocation] {
+                    
+                        let m = SKAction.move(to: targetLocationSprite.position, duration: 1)
+                        sprite.run(m)
+                    }
+                }
             }
         }
     }

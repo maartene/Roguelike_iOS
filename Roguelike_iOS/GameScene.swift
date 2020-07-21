@@ -29,6 +29,9 @@ class GameScene: SKScene, ObservableObject {
     
     let highlight: SKSpriteNode
         
+    let nextActionDelay: TimeInterval = 0.2
+    var actionTimer: TimeInterval = 0
+    
     override init() {
         print("regular init")
         let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
@@ -125,8 +128,22 @@ class GameScene: SKScene, ObservableObject {
         }
     }
     
+    func newGame() {
+        mapController.reset()
+        selectedNode = nil
+        
+        var world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
+        world.update()
+        
+        boxedWorld.world = world
+        boxedWorld.state = .idle
+//        boxedWorld.executeAction(WaitAction(owner: boxedWorld.world.player))
+    }
+    
     func load() {
         mapController.reset()
+        selectedNode = nil
+        
         boxedWorld.load { [weak self] in
             guard let strongSelf = self else {
                 return
@@ -221,6 +238,12 @@ class GameScene: SKScene, ObservableObject {
         
         let deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
+        
+        actionTimer -= deltaTime
+        if actionTimer <= 0 {
+            boxedWorld.executeNextQueuedAction()
+            actionTimer = nextActionDelay
+        }
         
 /*        if timer < 0 {
             timer = 0.25

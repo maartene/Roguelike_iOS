@@ -12,18 +12,21 @@ import GameplayKit
 struct VisibilityComponent {
     let visionRange: Int
     let owner: RLEntity
+    let addsLight: Bool
     var visibleTiles = Set<Coord>()
     
-    fileprivate init(owner: RLEntity, visionRange: Int = 3) {
+    fileprivate init(owner: RLEntity, addsLight: Bool, visionRange: Int = 3) {
         self.owner = owner
+        self.addsLight = addsLight
         self.visionRange = visionRange
     }
     
-    static func add(to entity: RLEntity, visionRange: Int) -> RLEntity {
+    static func add(to entity: RLEntity, addsLight: Bool, visionRange: Int) -> RLEntity {
         var changedEntity = entity
         
         changedEntity.variables["VC"] = true
         changedEntity.variables["VC_visionRange"] = visionRange
+        changedEntity.variables["VC_addsLight"] = addsLight
         changedEntity.variables["VC_visibleTiles"] = Set<Coord>()
         
         return changedEntity
@@ -210,11 +213,12 @@ extension RLEntity {
     var visibilityComponent: VisibilityComponent? {
         guard (variables["VC"] as? Bool) ?? false == true,
             let visionRange = variables["VC_visionRange"] as? Int,
+            let addsLight = variables["VC_addsLight"] as? Bool,
             let visibleTiles = variables["VC_visibleTiles"] as? Set<Coord> else {
                 return nil
         }
         
-        var vc = VisibilityComponent(owner: self, visionRange: visionRange)
+        var vc = VisibilityComponent(owner: self, addsLight: addsLight, visionRange: visionRange)
         vc.visibleTiles = visibleTiles
         return vc
     }

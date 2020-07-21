@@ -10,40 +10,25 @@ import Foundation
 
 struct ActionComponent {
     let owner: RLEntity
-    let maxAP: Int
-    let currentAP: Int
     
-    fileprivate init(owner: RLEntity, maxAP: Int, currentAP: Int) {
+    fileprivate init(owner: RLEntity) {
         self.owner = owner
-        self.maxAP = maxAP
-        self.currentAP = currentAP
     }
     
-    static func add(to entity: RLEntity, maxAP: Int, currentAP: Int) -> RLEntity {
+    static func add(to entity: RLEntity) -> RLEntity {
         var changedEntity = entity
         
         changedEntity.variables["ActC"] = true
-        changedEntity.variables["ActC_maxAP"] = maxAP
-        changedEntity.variables["ActC_currentAP"] = min(maxAP, currentAP)
         
         return changedEntity
     }
     
-    func update(entity: RLEntity, in world: World) -> [RLEntity] {
-        var updatedAP = currentAP + 2
-        updatedAP = min(maxAP, updatedAP)
-        
-        var changedEntity = entity
-        changedEntity.variables["ActC_currentAP"] = updatedAP
-        return [changedEntity]
-    }
-    
-    func getActionsFor(entity: RLEntity) -> [Action] {
+    func getActionsFor(entity: RLEntity, on map: Map) -> [Action] {
         var actions = [Action]()
         if entity.id == owner.id {
             
         } else {
-            actions.append(MoveAction(owner: owner, targetLocation: entity.position))
+            actions.append(MoveAction(owner: owner, targetLocation: entity.position, map: map))
             if let attackComponent = owner.attackComponent {
                 actions.append(AttackAction(owner: owner, damage: attackComponent.damage, target: entity))
             }
@@ -52,34 +37,24 @@ struct ActionComponent {
         return actions
     }
     
-    func getActionFor(tile: Coord) -> [Action] {
+    func getActionFor(tile: Coord, on map: Map) -> [Action] {
         var actions = [Action]()
         if tile == owner.position {
             
         } else {
-            actions.append(MoveAction(owner: owner, targetLocation: tile))
+            actions.append(MoveAction(owner: owner, targetLocation: tile, map: map ))
         }
         actions.append(WaitAction(owner: owner))
         return actions
-    }
-    
-    func spendAP(amount: Int) -> RLEntity {
-        var updatedOwner = owner
-        
-        updatedOwner.variables["ActC_currentAP"] = currentAP - amount
-        
-        return updatedOwner
     }
 }
 
 extension RLEntity {
     var actionComponent: ActionComponent? {
-        guard (variables["ActC"] as? Bool) ?? false == true,
-            let maxAP = variables["ActC_maxAP"] as? Int,
-            let currentAP = variables["ActC_currentAP"] as? Int else {
+        guard (variables["ActC"] as? Bool) ?? false == true else {
                 return nil
         }
         
-        return ActionComponent(owner: self, maxAP: maxAP, currentAP: currentAP)
+        return ActionComponent(owner: self)
     }
 }

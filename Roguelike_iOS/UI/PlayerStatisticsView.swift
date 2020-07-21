@@ -10,20 +10,36 @@ import SwiftUI
 
 struct PlayerStatisticsView: View {
     @ObservedObject var boxedWorld: WorldBox
-    @State private var isShown = false
+    @State private var isShown = true
     
     var player: RLEntity {
         boxedWorld.world.player
     }
     
     var playerInfoText: [String] {
-        let line1 = "HP: ###/###  EXP:  #####   Lvl: ##"
-        let line2 = "MP: ###/###  Next: #####   AP: \(ap)"
+        let line1 = "HP: \(currentHP)/\(maxHP)  EXP:  \(xp)   Lvl: \(level)"
+        let line2 = "MP: ###/###  Next: \(nextXP)   "
         return [line1, line2]
     }
     
-    var ap: Int {
-        player.actionComponent?.currentAP ?? -1
+    var currentHP: Int {
+        player.healthComponent?.currentHealth ?? -1
+    }
+    
+    var maxHP: Int {
+        player.healthComponent?.maxHealth ?? -1
+    }
+    
+    var xp: Int {
+        player.statsComponent?.currentXP ?? -1
+    }
+    
+    var nextXP: Int {
+        player.statsComponent?.nextLevelXP ?? -1
+    }
+    
+    var level: Int {
+        player.statsComponent?.currentLevel ?? -1
     }
     
     var closeOffset: CGFloat {
