@@ -21,6 +21,7 @@ class GameScene: SKScene, ObservableObject {
     var mapController: MapController!
     var fxController: FXController!
     var spriteUIHandler: SpriteUIHandler!
+
     
     @Published var selectedNode: SKNode?
     
@@ -31,6 +32,8 @@ class GameScene: SKScene, ObservableObject {
         
     let nextActionDelay: TimeInterval = 0.2
     var actionTimer: TimeInterval = 0
+    
+    var musicNode: SKAudioNode?
     
     override init() {
         print("regular init")
@@ -76,8 +79,23 @@ class GameScene: SKScene, ObservableObject {
         highlight.colorBlendFactor = 1.0
         highlight.zPosition = HIGHLIGHT_Z_POSITION
         let scaleAction = SKAction.scale(to: 1.1, duration: 0.75)
-        highlight.run(SKAction.repeatForever(SKAction.sequence([scaleAction, scaleAction.reversed()])))
+        let scaleAction2 = SKAction.scale(to: 1.0, duration: 0.75)
+        highlight.run(SKAction.repeatForever(SKAction.sequence([scaleAction, scaleAction2])))
         highlight.isHidden = true
+        
+        if let musicURL = Bundle.main.url(forResource: "Roguelike_lv01", withExtension: "m4a") {
+            musicNode = SKAudioNode(url: musicURL)
+            let muteAction = SKAction.changeVolume(to: 0, duration: 0)
+            let fadeIn = SKAction.changeVolume(to: 0.5, duration: 1)
+            
+            let sequence = SKAction.sequence([SKAction.pause(), muteAction, SKAction.play(), fadeIn])
+            
+            musicNode?.autoplayLooped = true
+            musicNode?.run(sequence)
+            if let mn = musicNode {
+                addChild(mn)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

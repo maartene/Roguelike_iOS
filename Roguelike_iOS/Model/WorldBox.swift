@@ -61,11 +61,11 @@ final class WorldBox: ObservableObject {
             return
         }
         // if entity can see the player
-        if vc.visibleTiles.contains(world.player.position) {
+        if vc.visibleTiles.contains(world.player.position) || entity.healthComponent?.currentHealth ?? 0 < entity.healthComponent?.maxHealth ?? 0 {
                 // are we close enough to attack the player?
             if entity.position.manhattanDistance(to: world.player.position) <= ac.range {
                 // close enough, lets attack!
-                let attackAction = AttackAction(owner: entity, damage: ac.damage, target: world.player)
+                let attackAction = AttackAction(owner: entity, damage: ac.damage, range: ac.range, target: world.player)
                     actionQueue.insert(attackAction, at: 0)
             } else {
                 // need to move closer
@@ -118,7 +118,7 @@ final class WorldBox: ObservableObject {
             state = .gameover
         }
         
-        world.calculateLighting()
+        world.update()
     }
     
     func save() {

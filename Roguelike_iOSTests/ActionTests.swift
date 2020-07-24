@@ -54,7 +54,7 @@ class ActionTests: XCTestCase {
         world.addEntity(entity: skeleton)
         XCTAssertTrue(world.map[skeleton.position].name != "void", "Skeleton should not be in the void.")
         
-        let attackAction = AttackAction(owner: world.player, damage: ac.damage, target: skeleton)
+        let attackAction = AttackAction(owner: world.player, damage: ac.damage, range: 5, target: skeleton)
         
         let skeletonHP = skeleton.healthComponent?.currentHealth ?? 0
         world.executeAction(attackAction)

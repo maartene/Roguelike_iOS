@@ -57,4 +57,30 @@ class ComponentTests: XCTestCase {
         XCTAssertGreaterThan(updatedPlayer.statsComponent?.currentXP ?? 0, world.player.statsComponent?.currentXP ?? 0)
     }
     
+    func testLevelUp() throws {
+        guard world.player.statsComponent != nil else {
+            XCTFail("Player should have a StatsComponent assigned.")
+            return
+        }
+        
+        let updatedPlayer = world.player.statsComponent!.addXP(world.player.statsComponent!.nextLevelXP)
+        XCTAssertGreaterThan(updatedPlayer.statsComponent!.currentLevel, world.player.statsComponent!.currentLevel)
+        XCTAssertGreaterThan(updatedPlayer.statsComponent!.unspentPoints, world.player.statsComponent!.unspentPoints)
+    }
+    
+    func testSpendingPointsImprovesStats() throws {
+        guard world.player.statsComponent != nil else {
+            XCTFail("Player should have a StatsComponent assigned.")
+            return
+        }
+        
+        var updatedPlayer = world.player
+        updatedPlayer.variables["SC_unspentPoints"] = 1
+        XCTAssertEqual(updatedPlayer.statsComponent!.unspentPoints, 1)
+        
+        let statName = StatsComponent.scStats.first!
+        let spendingPlayer = updatedPlayer.statsComponent!.spendPoint(on: statName)
+        XCTAssertGreaterThan(spendingPlayer.variables[statName] as? Int ?? 0, world.player.variables[statName] as? Int ?? 0)
+        XCTAssertEqual(spendingPlayer.statsComponent!.unspentPoints, 0)
+    }
 }

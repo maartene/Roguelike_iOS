@@ -33,6 +33,11 @@ struct HUD: View {
                 PlayerStatisticsView(boxedWorld: self.scene.boxedWorld)
                 Spacer()
                 HStack {
+                    SpendStatPointsViewContainer(boxedWorld: self.scene.boxedWorld)
+                    Spacer()
+                }
+                Spacer()
+                HStack {
                     Button(action: { self.scene.boxedWorld.save()}, label: { Text("[ Save ]")}).disabled(boxedWorld.state != .idle)
                         .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)
                     Text(" ").font(.custom("Menlo-Regular", size: 24))

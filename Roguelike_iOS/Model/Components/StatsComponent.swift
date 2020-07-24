@@ -9,6 +9,7 @@
 import Foundation
 
 struct StatsComponent {
+    static let scStats = ["SC_strength", "SC_intelligence", "SC_dexterity"]
     let owner: RLEntity
     var currentXP: Int
     var currentLevel: Int
@@ -48,10 +49,10 @@ struct StatsComponent {
         updatedEntity.variables["SC_intelligence"] = 0
         updatedEntity.variables["SC_dexterity"] = 0
         
-        return recalculateStats(for: updatedEntity)
+        return recalculateStats(for: updatedEntity, maximizingCurrentHealth: true)
     }
     
-    private static func recalculateStats(for entity: RLEntity) -> RLEntity {
+    private static func recalculateStats(for entity: RLEntity, maximizingCurrentHealth: Bool = false) -> RLEntity {
         var updatedEntity = entity
         
         // attack
@@ -66,7 +67,10 @@ struct StatsComponent {
         updatedEntity.variables["AC_damage"] = damage
         updatedEntity.variables["HC_defense"] = defense
         updatedEntity.variables["HC_maxHealth"] = maxHealth
-        updatedEntity.variables["HC_currentHealth"] = maxHealth
+        
+        if maximizingCurrentHealth {
+            updatedEntity.variables["HC_currentHealth"] = maxHealth
+        }
         
         return updatedEntity
     }
@@ -74,14 +78,38 @@ struct StatsComponent {
     func addXP(_ amount: Int) -> RLEntity {
         var updatedEntity = owner
         
-        updatedEntity.variables["SC_currentXP"] = currentXP + amount
+        let newXP = currentXP + amount
+        updatedEntity.variables["SC_currentXP"] = newXP
         
-        if currentXP > nextLevelXP {
+        if newXP >= nextLevelXP {
             updatedEntity.variables["SC_currentLevel"] = currentLevel + 1
             updatedEntity.variables["SC_unspentPoints"] = unspentPoints + 1
         }
         
         return updatedEntity
+    }
+    
+    func spendPoint(on stat: String) -> RLEntity {
+        guard StatsComponent.scStats.contains(stat) else {
+            print("WARNING: \(stat) is not a support statistic from StatsComponent. Owner not changed.")
+            return owner
+        }
+        
+        guard unspentPoints > 0 else {
+            print("Not enought unspent points to increase stat \(stat). Owner not changed.")
+            return owner
+        }
+        
+        var changedEntity = owner
+        if let currentAmount = changedEntity.variables[stat] as? Int {
+            changedEntity.variables[stat] = currentAmount + 1
+        } else {
+            changedEntity.variables[stat] = 1
+        }
+        
+        changedEntity.variables["SC_unspentPoints"] = unspentPoints - 1
+    
+        return StatsComponent.recalculateStats(for: changedEntity)
     }
 }
 

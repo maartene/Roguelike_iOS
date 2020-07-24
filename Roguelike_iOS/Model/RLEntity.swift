@@ -90,7 +90,7 @@ struct RLEntity: Codable {
     
     static func skeleton(startPosition: Coord) -> RLEntity {
         var skeleton = RLEntity(name: "Skeleton", hue: 0, saturation: 0, startPosition: startPosition)
-        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5, defense: 0, xpOnDeath: 1)
+        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5, defense: 0, xpOnDeath: 20)
         //skeleton = AIComponent.add(to: skeleton)
         skeleton = ActionComponent.add(to: skeleton)
         skeleton = AttackComponent.add(to: skeleton, range: 2, damage: 1)

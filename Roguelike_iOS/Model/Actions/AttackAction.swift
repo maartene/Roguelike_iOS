@@ -13,6 +13,7 @@ struct AttackAction: Action {
     let title = "Attack"
     let description = "Attack a target with non-elemental damage."
     let damage: Int
+    let range: Int
     let target: RLEntity
         
     func canExecute(in world: World) -> Bool {
@@ -30,12 +31,18 @@ struct AttackAction: Action {
             print("ACTION: target no longer exists in the world.")
             return false
         }
-        
-        guard let healthComponent = target.healthComponent else {
-            print("ACTION: can only attack a target with a health component.")
+                
+        guard let healthComponent = actor.healthComponent else {
+            print("ACTION: target requires an health component.")
             return false
         }
         
+        let sqrDistance = Coord.sqr_distance(target.position, owner.position)
+        guard sqrDistance <= Double(range * range) else {
+            print("ACTION: target out of range.")
+            return false
+        }
+                
         guard healthComponent.isDead == false else {
             print("ACTION: cannot attack a dead target.")
             return false

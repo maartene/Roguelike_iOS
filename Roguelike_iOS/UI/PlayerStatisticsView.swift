@@ -52,7 +52,7 @@ struct PlayerStatisticsView: View {
                 Image(self.isShown ? "upArrow_32" : "downArrow_32")
                     .offset(x: 0, y: -8)
                     .onTapGesture(perform: { self.isShown.toggle()
-                        print("")
+                        //print("")
                     })
             }.offset(x: 0, y: self.isShown ? 0 : closeOffset)
                 .animation(.easeOut(duration: 0.25))

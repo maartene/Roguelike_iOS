@@ -39,8 +39,7 @@ struct World: Codable {
     mutating func executeAction(_ action: Action) {
         let updatedEntities = action.execute(in: self)
         replaceEntities(entities: updatedEntities)
-        pruneEntities()
-        calculateLighting()
+        update()
     }
     
     mutating func update() {

@@ -33,7 +33,7 @@ struct HealthComponent {
         changedEntity.variables["HC"] = true
         changedEntity.variables["HC_maxHealth"] = maxHealth
         changedEntity.variables["HC_currentHealth"] = min(maxHealth, currentHealth)
-        changedEntity.variables["HC_xpOnDeath"] = min(maxHealth, currentHealth)
+        changedEntity.variables["HC_xpOnDeath"] = xpOnDeath
         changedEntity.variables["HC_defense"] = defense
         
         return changedEntity
@@ -42,7 +42,7 @@ struct HealthComponent {
     func takeDamage(amount: Int) -> RLEntity {
         var updatedEntity = owner
         
-        updatedEntity.variables["HC_currentHealth"] = currentHealth - (amount - defense)
+        updatedEntity.variables["HC_currentHealth"] = currentHealth - max(1,(amount - defense))
         
         return updatedEntity
     }
