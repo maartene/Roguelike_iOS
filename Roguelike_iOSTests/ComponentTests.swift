@@ -83,4 +83,38 @@ class ComponentTests: XCTestCase {
         XCTAssertGreaterThan(spendingPlayer.variables[statName] as? Int ?? 0, world.player.variables[statName] as? Int ?? 0)
         XCTAssertEqual(spendingPlayer.statsComponent!.unspentPoints, 0)
     }
+    
+    func testConsumeItem() throws {
+        let apple = RLEntity.apple(startPosition: Coord.zero)
+        XCTAssertNotNil(apple.consumableEffect)
+        
+        var player = RLEntity.player(startPosition: Coord.zero)
+        player.variables["HC_currentHealth"] = (player.variables["HC_maxHealth"] as? Int ?? 2) - 1
+        XCTAssertNotNil(player.healthComponent)
+        
+        if let consumeResult = apple.consumableEffect?.consume(target: player) {
+            XCTAssertGreaterThan(consumeResult.updatedTarget.healthComponent!.currentHealth, player.healthComponent!.currentHealth)
+            XCTAssertNil(consumeResult.consumedItem.consumableEffect)
+        }
+    }
+    
+    func testAddItemToInventory() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        
+        guard player.inventoryComponent != nil else {
+            XCTFail("Player should have an inventory component.")
+            return
+        }
+        
+        let apple = RLEntity.apple(startPosition: Coord.zero)
+        
+        let updatedPlayer = player.inventoryComponent!.addItem(apple)
+        
+        XCTAssertGreaterThan(updatedPlayer.inventoryComponent!.items.count, player.inventoryComponent!.items.count)
+        XCTAssertTrue(updatedPlayer.inventoryComponent!.items.contains(where: { item in
+            item.id == apple.id
+        }))
+    }
+    
+    
 }

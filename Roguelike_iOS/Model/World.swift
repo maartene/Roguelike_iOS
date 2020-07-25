@@ -46,11 +46,11 @@ struct World: Codable {
         for entity in entities.values {
             var updatedEntity = entities[entity.id] ?? entity
             
-            replaceEntities(entities: updatedEntity.visibilityComponent?.update(entity: updatedEntity, in: self) ?? [])
+            updatedEntity = updatedEntity.visibilityComponent?.update(in: self) ?? updatedEntity
+            updatedEntity = updatedEntity.healthComponent?.update() ?? updatedEntity
+            updatedEntity = updatedEntity.statsComponent?.update() ?? updatedEntity
             
-            updatedEntity = entities[updatedEntity.id]!
-
-            //replaceEntities(entities: updatedEntity.aiComponent?.update(entity: updatedEntity, in: self) ?? [])
+            replaceEntity(entity: updatedEntity)
         }
         
         //pruneEntities()

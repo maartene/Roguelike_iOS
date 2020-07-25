@@ -32,14 +32,14 @@ struct VisibilityComponent {
         return changedEntity
     }
     
-    func update(entity: RLEntity, in world: World) -> [RLEntity] {
+    func update(in world: World) -> RLEntity {
         
         var updatedComponent = self
         updatedComponent.refreshVisibility(world: world)
         
-        var updatedEntity = entity
+        var updatedEntity = owner
         updatedEntity.variables["VC_visibleTiles"] = updatedComponent.visibleTiles
-        return [updatedEntity]
+        return updatedEntity
     }
     
     private mutating func refreshVisibility(world: World) {

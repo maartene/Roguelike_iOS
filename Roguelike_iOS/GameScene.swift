@@ -93,7 +93,7 @@ class GameScene: SKScene, ObservableObject {
             musicNode?.autoplayLooped = true
             musicNode?.run(sequence)
             if let mn = musicNode {
-                addChild(mn)
+                // addChild(mn)
             }
         }
     }

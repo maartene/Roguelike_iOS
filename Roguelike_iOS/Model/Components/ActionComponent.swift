@@ -26,11 +26,7 @@ struct ActionComponent {
     func getActionsFor(entity: RLEntity, on map: Map) -> [Action] {
         var actions = [Action]()
         if entity.id == owner.id {
-            if let sc = entity.statsComponent {
-                if sc.unspentPoints > 0 {
-                    actions.append(SpendStatPointAction(owner: entity, stat: "SC_strength"))
-                }
-            }
+            // nothing yet
         } else {
             actions.append(MoveAction(owner: owner, targetLocation: entity.position, map: map))
             if let attackComponent = owner.attackComponent {

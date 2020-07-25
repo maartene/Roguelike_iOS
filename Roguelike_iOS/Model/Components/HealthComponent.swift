@@ -46,6 +46,14 @@ struct HealthComponent {
         
         return updatedEntity
     }
+    
+    func update() -> RLEntity {
+        var updatedOwner = owner
+        if currentHealth > maxHealth {
+            updatedOwner.variables["HC_currentHealth"] = maxHealth
+        }
+        return updatedOwner
+    }
 }
 
 extension RLEntity {

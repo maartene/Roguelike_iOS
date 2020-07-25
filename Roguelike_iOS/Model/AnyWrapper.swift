@@ -47,6 +47,7 @@ enum AnyWrapper: Codable {
     case coord(value: Coord)
     case stringlyTypedDict(value: [String: AnyWrapper])
     case coordSet(value: Set<Coord>)
+    case entity(value: RLEntity)
     
     static func wrapperFor(_ value: Any) throws -> AnyWrapper {
         if let v = value as? String {
@@ -69,6 +70,8 @@ enum AnyWrapper: Codable {
             return .stringlyTypedDict(value: wrappedDict)
         } else if let v = value as? Set<Coord> {
             return .coordSet(value: v)
+        } else if let v = value as? RLEntity {
+            return .entity(value: v)
         } else {
             throw AnyWrapperErrors.cannotConvertError
         }
@@ -87,6 +90,8 @@ enum AnyWrapper: Codable {
         case .uuid(let value):
             return value
         case .coord(let value):
+            return value
+        case .entity(let value):
             return value
         case .array(let array):
             return array.map {wrappedItem in wrappedItem.value}
@@ -118,6 +123,9 @@ enum AnyWrapper: Codable {
             try container.encode(value, forKey: .value)
         case .coord(let value):
             try container.encode("coord", forKey: .type)
+            try container.encode(value, forKey: .value)
+        case .entity(let value):
+            try container.encode("entity", forKey: .type)
             try container.encode(value, forKey: .value)
         case .array(let array):
             try container.encode("array", forKey: .type)
@@ -154,6 +162,9 @@ enum AnyWrapper: Codable {
         case "coord":
             let v = try values.decode(Coord.self, forKey: .value)
             self = .coord(value: v)
+        case "entity":
+            let v = try values.decode(RLEntity.self, forKey: .value)
+            self = .entity(value: v)
         case "array":
             let v = try values.decode([AnyWrapper].self, forKey: .value)
             self = .array(value: v)

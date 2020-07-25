@@ -59,7 +59,7 @@ struct MoveAction: Action {
         }
         
         updatedActor.position = targetLocation
-        updatedActor = updatedActor.visibilityComponent?.update(entity: updatedActor, in: world).first ?? updatedActor
+        updatedActor = updatedActor.visibilityComponent?.update(in: world) ?? updatedActor
         
         return [updatedActor]
     }

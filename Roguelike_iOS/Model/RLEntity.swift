@@ -72,13 +72,14 @@ struct RLEntity: Codable {
         player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10, defense: 1, xpOnDeath: 0)
         player = AttackComponent.add(to: player, range: 5, damage: 3)
         player = StatsComponent.add(to: player)
-        print(player)
+        player = InventoryComponent.add(to: player, size: 10)
+        //print(player)
         return player
     }
     
     static func apple(startPosition: Coord) -> RLEntity {
-        let apple = RLEntity(name: "Apple", hue: 0.36, saturation: 1, startPosition: startPosition)
-
+        var apple = RLEntity(name: "Apple", hue: 0.36, saturation: 1, startPosition: startPosition)
+        apple = ConsumableEffectComponent.add(to: apple, statChange: ["HC_currentHealth": 7])
         return apple
     }
     

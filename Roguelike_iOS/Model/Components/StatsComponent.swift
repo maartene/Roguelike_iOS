@@ -52,6 +52,10 @@ struct StatsComponent {
         return recalculateStats(for: updatedEntity, maximizingCurrentHealth: true)
     }
     
+    func update() -> RLEntity {
+        StatsComponent.recalculateStats(for: owner)
+    }
+    
     private static func recalculateStats(for entity: RLEntity, maximizingCurrentHealth: Bool = false) -> RLEntity {
         var updatedEntity = entity
         
