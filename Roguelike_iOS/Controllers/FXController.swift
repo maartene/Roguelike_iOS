@@ -53,7 +53,7 @@ final class FXController {
             }).store(in: &cancellables)*/
         
         EventSystem.main.$lastEvent.sink(receiveValue: {[weak self] event in
-            print("received event: \(event)")
+            self?.createEffect(for: event)
             }).store(in: &cancellables)
     }
     
@@ -152,6 +152,15 @@ final class FXController {
             } else {
                 // do nothing
             }
+        }
+    }
+    
+    func createEffect(for event: RLEvent) {
+        switch event {
+        case .entityDied(let entity):
+            explosion(at: entity.position, range: 1, color: SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1))
+        default:
+            print("Create effect for \(event)")
         }
     }
     
