@@ -88,6 +88,7 @@ struct StatsComponent {
         if newXP >= nextLevelXP {
             updatedEntity.variables["SC_currentLevel"] = currentLevel + 1
             updatedEntity.variables["SC_unspentPoints"] = unspentPoints + 1
+            EventSystem.main.fireEvent(.levelup(updatedEntity))
         }
         
         return updatedEntity

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct InventoryView: View {
     @ObservedObject var boxedWorld: WorldBox
@@ -14,6 +15,12 @@ struct InventoryView: View {
     
     var items: [RLEntity] {
         boxedWorld.world.player.inventoryComponent?.items ?? []
+    }
+    
+    func getImage(itemName: String) -> CGImage {
+        let tex = RLSprites.getSpriteTextureFor(tileName: itemName)
+        tex?.filteringMode = .nearest
+        return tex!.cgImage()
     }
     
     var body: some View {
@@ -39,6 +46,7 @@ struct InventoryView: View {
                             }
                         }
                     }
+                    
                 }
             }
         }.font(.custom("Menlo-Regular", size: self.fontSize)).foregroundColor(Color.white)

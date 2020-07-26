@@ -50,6 +50,7 @@
 		DEB7ECBB24C96C1100052669 /* SpendStatPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */; };
 		DEBABCD024CD817E0039DC7A /* PickupItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */; };
 		DEBABCD224CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */; };
+		DEBABCD524CE20810039DC7A /* EventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD424CE20810039DC7A /* EventSystem.swift */; };
 		DEBCA90324C9DC1B0080B630 /* Roguelike_lv01.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DEBCA90224C9DBE30080B630 /* Roguelike_lv01.m4a */; };
 		DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */; };
 		DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */; };
@@ -114,6 +115,7 @@
 		DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointsView.swift; sourceTree = "<group>"; };
 		DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupItemAction.swift; sourceTree = "<group>"; };
 		DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumeFromInventoryAction.swift; sourceTree = "<group>"; };
+		DEBABCD424CE20810039DC7A /* EventSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
 		DEBCA90224C9DBE30080B630 /* Roguelike_lv01.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = Roguelike_lv01.m4a; path = Assets/Roguelike_lv01.m4a; sourceTree = SOURCE_ROOT; };
 		DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteUIHandler.swift; sourceTree = "<group>"; };
 		DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackComponent.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		DE63C2B224B84DA7002058BA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DEBABCD324CE206A0039DC7A /* EventSystem */,
 				DE5090E624BDD53D00B02320 /* Actions */,
 				DE63C2B324B84DA7002058BA /* RLEntity.swift */,
 				DE63C2B424B84DA7002058BA /* Components */,
@@ -289,6 +292,14 @@
 			children = (
 			);
 			path = SFX;
+			sourceTree = "<group>";
+		};
+		DEBABCD324CE206A0039DC7A /* EventSystem */ = {
+			isa = PBXGroup;
+			children = (
+				DEBABCD424CE20810039DC7A /* EventSystem.swift */,
+			);
+			path = EventSystem;
 			sourceTree = "<group>";
 		};
 		DEBCA90124C9DBD80080B630 /* Music */ = {
@@ -416,6 +427,7 @@
 				DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */,
 				DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */,
 				DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */,
+				DEBABCD524CE20810039DC7A /* EventSystem.swift in Sources */,
 				DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */,
 				DE2C7C5524BF349E0051225D /* AttackAction.swift in Sources */,
 				DEEFEF7224BC943000C59126 /* ActionsView.swift in Sources */,

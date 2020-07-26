@@ -120,7 +120,7 @@ struct WorldBuilder {
                     let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)
                     let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
                     if world.map[Coord(posX, posY)].enterable {
-                        if Double.random(in: 0 ... 1.0) < 0.5 {
+                        if random.nextBool() {
                             let lamp = RLEntity.lamp(startPosition: Coord(posX,posY))
 
                             if world.map[lamp.position].enterable {

@@ -19,6 +19,8 @@ final class FXController {
     
     let cellSize: Int
     
+    var eventIndex = 0
+    
     private var cancellables = Set<AnyCancellable>()
     
     init(scene: GameScene, mapController: MapController) {
@@ -46,8 +48,12 @@ final class FXController {
             }
         }).store(in: &cancellables)
         
-        boxedWorld.$removedEntities.sink(receiveValue: {[weak self] removedEntities in
+        /*boxedWorld.$removedEntities.sink(receiveValue: {[weak self] removedEntities in
             self?.createEffect(for: removedEntities)
+            }).store(in: &cancellables)*/
+        
+        EventSystem.main.$lastEvent.sink(receiveValue: {[weak self] event in
+            print("received event: \(event)")
             }).store(in: &cancellables)
     }
     

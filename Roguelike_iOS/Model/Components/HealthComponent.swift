@@ -44,6 +44,10 @@ struct HealthComponent {
         
         updatedEntity.variables["HC_currentHealth"] = currentHealth - max(1,(amount - defense))
         
+        if amount >= currentHealth {
+            EventSystem.main.fireEvent(.entityDied(owner))
+        }
+        
         return updatedEntity
     }
     
