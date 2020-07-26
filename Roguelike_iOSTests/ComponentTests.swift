@@ -49,7 +49,7 @@ class ComponentTests: XCTestCase {
     }
 
     func testAddXP() throws {
-        guard let sc = world.player.statsComponent else {
+        guard world.player.statsComponent != nil else {
             XCTFail("Player should have a StatsComponent assigned.")
             return
         }

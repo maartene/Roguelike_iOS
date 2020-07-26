@@ -113,10 +113,10 @@ final class WorldBox: ObservableObject {
             }
         }
         
-        removedEntities = world.pruneEntities()
+        /*removedEntities = world.pruneEntities()
         if world.player.healthComponent?.isDead ?? false {
             state = .gameover
-        }
+        }*/
         
         world.update()
     }

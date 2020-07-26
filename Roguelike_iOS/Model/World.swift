@@ -53,7 +53,7 @@ struct World: Codable {
             replaceEntity(entity: updatedEntity)
         }
         
-        //pruneEntities()
+        _ = pruneEntities()
         
         calculateLighting()
     }
