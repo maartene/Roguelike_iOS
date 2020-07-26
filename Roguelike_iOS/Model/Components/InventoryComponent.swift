@@ -46,6 +46,19 @@ struct InventoryComponent {
         
         return changedEntity
     }
+    
+    func removeItem(_ item: RLEntity) -> RLEntity {
+        guard items.contains(where: {$0.id == item.id }) else {
+            print("ItemComponent - removeItem - trying to remove an item that is not part of inventory.")
+            return owner
+        }
+        
+        var changedItems = items
+        changedItems.removeAll(where: {$0.id == item.id })
+        var changedEntity = owner
+        changedEntity.variables["IC_items"] = changedItems
+        return changedEntity
+    }
 }
 
 extension RLEntity {

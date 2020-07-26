@@ -112,13 +112,14 @@ struct World: Codable {
     }
     
     mutating func replaceEntity(entity: RLEntity) {
-        assert(entities[entity.id] != nil, "WARNING: world does not contain an entity with id \(entity.id). The entity will be added.")
+        //assert(entities[entity.id] != nil, "WARNING: world does not contain an entity with id \(entity.id). The entity will be added.")
         entities[entity.id] = entity
     }
     
     mutating func pruneEntities() -> [RLEntity] {
         let entitiesToRemove = entities.values.filter {
-            $0.healthComponent?.isDead ?? false
+            $0.healthComponent?.isDead ?? false ||
+            $0.variables["SHOULD_REMOVE"] as? Bool ?? false == true
         }
         for entityID in entitiesToRemove.map({$0.id}) {
             if entityID == player.id {

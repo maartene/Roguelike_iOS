@@ -35,6 +35,7 @@ struct HUD: View {
                 HStack {
                     SpendStatPointsViewContainer(boxedWorld: self.scene.boxedWorld)
                     Spacer()
+                    InventoryView(boxedWorld: self.scene.boxedWorld)
                 }
                 Spacer()
                 HStack {

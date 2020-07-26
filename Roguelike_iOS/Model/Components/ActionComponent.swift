@@ -29,8 +29,11 @@ struct ActionComponent {
             // nothing yet
         } else {
             actions.append(MoveAction(owner: owner, targetLocation: entity.position, map: map))
-            if let attackComponent = owner.attackComponent {
+            if let attackComponent = owner.attackComponent, entity.healthComponent != nil {
                 actions.append(AttackAction(owner: owner, damage: attackComponent.damage, range: attackComponent.range, target: entity))
+            }
+            if owner.inventoryComponent != nil, entity.consumableEffect != nil {
+                actions.append(PickupAction(owner: owner, item: entity))
             }
         }
         actions.append(WaitAction(owner: owner))

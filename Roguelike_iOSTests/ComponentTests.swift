@@ -116,5 +116,49 @@ class ComponentTests: XCTestCase {
         }))
     }
     
+    func testRemoveItemFromInventory() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        
+        guard player.inventoryComponent != nil else {
+            XCTFail("Player should have an inventory component.")
+            return
+        }
+        
+        let apple = RLEntity.apple(startPosition: Coord.zero)
+        
+        let updatedPlayer = player.inventoryComponent!.addItem(apple)
+        
+        XCTAssertGreaterThan(updatedPlayer.inventoryComponent!.items.count, player.inventoryComponent!.items.count)
+        XCTAssertTrue(updatedPlayer.inventoryComponent!.items.contains(where: { item in
+            item.id == apple.id
+        }))
+        
+        let removingPlayer = player.inventoryComponent!.removeItem(apple)
+        XCTAssertLessThan(removingPlayer.inventoryComponent!.items.count, updatedPlayer.inventoryComponent!.items.count)
+        XCTAssertFalse(removingPlayer.inventoryComponent!.items.contains(where: { item in
+            item.id == apple.id
+        }))
+    }
     
+    func testInventoryFull() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        
+        guard player.inventoryComponent != nil else {
+            XCTFail("Player should have an inventory component.")
+            return
+        }
+        
+        let apple = RLEntity.apple(startPosition: Coord.zero)
+        
+        var updatedPlayer = player
+        for _ in 0 ..< player.inventoryComponent!.size {
+            updatedPlayer = updatedPlayer.inventoryComponent!.addItem(apple)
+        }
+        
+        XCTAssertEqual(updatedPlayer.inventoryComponent!.items.count, updatedPlayer.inventoryComponent!.size)
+        
+        updatedPlayer = updatedPlayer.inventoryComponent!.addItem(apple)
+        
+        XCTAssertEqual(updatedPlayer.inventoryComponent!.items.count, updatedPlayer.inventoryComponent!.size)
+    }
 }

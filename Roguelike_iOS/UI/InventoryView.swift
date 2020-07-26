@@ -9,7 +9,13 @@
 import SwiftUI
 
 struct InventoryView: View {
+    @ObservedObject var boxedWorld: WorldBox
     let fontSize: CGFloat = 24
+    
+    var items: [RLEntity] {
+        boxedWorld.world.player.inventoryComponent?.items ?? []
+    }
+    
     var body: some View {
         VStack {
             Text("Inventory: ")
@@ -19,14 +25,20 @@ struct InventoryView: View {
             Text("Body:   Light Armor")
             Text("Legs:   Pants      ")
             Text("-------------------------")
-            HStack {
-                ZStack(alignment: .leading) {
-                    Image("Helmet")
-                    Text("   Helmet        ")
-                }
-                ZStack(alignment: .leading) {
-                    Image("Helmet")
-                    Text("   Helmet        ")
+            ForEach(items, id: \.id) { item in
+                HStack {
+                    ZStack(alignment: .leading) {
+                        Image(item.name)
+                        HStack(spacing: 0) {
+                            Text("   \(item.name)    ")
+                            if item.consumableEffect != nil {
+                                Button("[ Consume ]") {
+                                    let consumeAction = ConsumeFromInventoryAction(owner: self.boxedWorld.world.player, item: item)
+                                    self.boxedWorld.executeAction(consumeAction)
+                                }.background(Color.yellow)
+                            }
+                        }
+                    }
                 }
             }
         }.font(.custom("Menlo-Regular", size: self.fontSize)).foregroundColor(Color.white)
@@ -36,6 +48,8 @@ struct InventoryView: View {
 
 struct InventoryView_Previews: PreviewProvider {
     static var previews: some View {
-        InventoryView()
+        let world = World(width: 10, height: 10)
+        let boxedWorld = WorldBox(world: world)
+        return InventoryView(boxedWorld: boxedWorld)
     }
 }

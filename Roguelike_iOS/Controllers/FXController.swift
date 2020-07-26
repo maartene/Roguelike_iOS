@@ -141,7 +141,11 @@ final class FXController {
     
     func createEffect(for removedEntities: [RLEntity]) {
         for entity in removedEntities {
+            if entity.healthComponent != nil {
             explosion(at: entity.position, range: 1, color: SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1))
+            } else {
+                // do nothing
+            }
         }
     }
     

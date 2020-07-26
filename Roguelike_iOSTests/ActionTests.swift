@@ -62,6 +62,22 @@ class ActionTests: XCTestCase {
         XCTAssertLessThan(world.entities[skeleton.id]?.healthComponent?.currentHealth ?? 0, skeletonHP, "Skeleton should have less HP by now.")
     }
     
+    func testPickupItem() throws {
+        let apple = RLEntity.apple(startPosition: Coord(1, 0))
+        world.addEntity(entity: apple)
+        
+        let pickupAction = PickupAction(owner: world.player, item: apple)
+        
+        XCTAssertTrue(world.entities.contains(where: { $0.key == apple.id }))
+        XCTAssertFalse(world.player.inventoryComponent?.items.contains(where: {$0.id == apple.id}) ?? true)
+        
+        world.executeAction(pickupAction)
+        _ = world.pruneEntities()
+        
+        XCTAssertFalse(world.entities.contains(where: { $0.key == apple.id }))
+        XCTAssertTrue(world.player.inventoryComponent?.items.contains(where: {$0.id == apple.id }) ?? false)
+    }
+    
     /*func testUpdateAddsAP() throws {
         guard let actc = world.player.actionComponent else {
             XCTAssert(false, "Player should have an ActionComponent assigned.")
@@ -75,4 +91,34 @@ class ActionTests: XCTestCase {
         
         XCTAssertGreaterThan(world.player.actionComponent?.currentAP ?? -1, beforeAP)
     }*/
+    
+    
+    func testConsumeItemFromInventory() throws {
+        let apple = RLEntity.apple(startPosition: Coord(1, 0))
+        world.addEntity(entity: apple)
+        
+        let pickupAction = PickupAction(owner: world.player, item: apple)
+        
+        XCTAssertTrue(world.entities.contains(where: { $0.key == apple.id }))
+        XCTAssertFalse(world.player.inventoryComponent?.items.contains(where: {$0.id == apple.id}) ?? true)
+        
+        world.executeAction(pickupAction)
+        _ = world.pruneEntities()
+        
+        XCTAssertFalse(world.entities.contains(where: { $0.key == apple.id }))
+        XCTAssertTrue(world.player.inventoryComponent?.items.contains(where: {$0.id == apple.id }) ?? false)
+        
+        var updatedPlayer = world.player
+        updatedPlayer.variables["HC_currentHealth"] = 1
+        XCTAssertLessThan(updatedPlayer.variables["HC_currentHealth"] as! Int, world.player.variables["HC_maxHealth"] as! Int)
+        world.replaceEntity(entity: updatedPlayer)
+        
+        let consumeAction = ConsumeFromInventoryAction(owner: world.player, item: apple)
+        world.executeAction(consumeAction)
+        
+        XCTAssertFalse(world.entities.contains(where: { $0.key == apple.id }))
+        XCTAssertFalse(world.player.inventoryComponent?.items.contains(where: {$0.id == apple.id}) ?? true)
+        XCTAssertGreaterThan(world.player.variables["HC_currentHealth"] as! Int, updatedPlayer.variables["HC_currentHealth"] as! Int)
+        
+    }
 }

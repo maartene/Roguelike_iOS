@@ -48,6 +48,8 @@
 		DEB34CC724CCA702001C3721 /* ConsumableEffectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */; };
 		DEB34CC924CCCA1D001C3721 /* AnyWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */; };
 		DEB7ECBB24C96C1100052669 /* SpendStatPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */; };
+		DEBABCD024CD817E0039DC7A /* PickupItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */; };
+		DEBABCD224CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */; };
 		DEBCA90324C9DC1B0080B630 /* Roguelike_lv01.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DEBCA90224C9DBE30080B630 /* Roguelike_lv01.m4a */; };
 		DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */; };
 		DEEFEF7024BB9BC400C59126 /* AttackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */; };
@@ -110,6 +112,8 @@
 		DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumableEffectComponent.swift; sourceTree = "<group>"; };
 		DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapperTests.swift; sourceTree = "<group>"; };
 		DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointsView.swift; sourceTree = "<group>"; };
+		DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupItemAction.swift; sourceTree = "<group>"; };
+		DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumeFromInventoryAction.swift; sourceTree = "<group>"; };
 		DEBCA90224C9DBE30080B630 /* Roguelike_lv01.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = Roguelike_lv01.m4a; path = Assets/Roguelike_lv01.m4a; sourceTree = SOURCE_ROOT; };
 		DEEFEF6D24BB26F400C59126 /* SpriteUIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteUIHandler.swift; sourceTree = "<group>"; };
 		DEEFEF6F24BB9BC400C59126 /* AttackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackComponent.swift; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				DE70122624BDF88D002F7481 /* WaitAction.swift */,
 				DE2C7C5424BF349E0051225D /* AttackAction.swift */,
 				DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */,
+				DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */,
+				DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -401,6 +407,7 @@
 				DE63C2BB24B84DA7002058BA /* RLEntity.swift in Sources */,
 				DE63C2B124B84D9E002058BA /* GameScene.swift in Sources */,
 				DE63C2C324B84DAE002058BA /* RLSprites.swift in Sources */,
+				DEBABCD224CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift in Sources */,
 				DE63C2D024B84F87002058BA /* PlayerStatisticsView.swift in Sources */,
 				DE5090E124BDCE3E00B02320 /* Action.swift in Sources */,
 				DE63C2AF24B84D96002058BA /* MapController.swift in Sources */,
@@ -425,6 +432,7 @@
 				DEB34CC724CCA702001C3721 /* ConsumableEffectComponent.swift in Sources */,
 				DEB34CC524CC71B3001C3721 /* Item.swift in Sources */,
 				DEB34CC324CC7189001C3721 /* InventoryComponent.swift in Sources */,
+				DEBABCD024CD817E0039DC7A /* PickupItemAction.swift in Sources */,
 				DEB7ECBB24C96C1100052669 /* SpendStatPointsView.swift in Sources */,
 				DE63C2BF24B84DA7002058BA /* WorldBuilder.swift in Sources */,
 				DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */,
