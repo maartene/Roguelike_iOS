@@ -11,7 +11,8 @@ import SwiftUI
 struct ConsoleWindowView: View {
 //    @State var myFrame: CGRect = CGRect.zero
 
-
+    var title = "Window"
+    
     let fontSize: CGFloat = 24
     let lines: [String]
     
@@ -21,9 +22,17 @@ struct ConsoleWindowView: View {
         }
     }
     
-    var topRow: String {
+    /*var topRow: String {
         var result = "\u{2554}"
         result += String(repeatElement("\u{2550}", count: longestLineCount + 2))
+        result += "\u{2557}"
+        return result
+    }*/
+    
+    var topRow: String {
+        var result = "\u{2554}"
+        result += " " + title + " "
+        result += String(repeatElement("\u{2550}", count: max(1, longestLineCount + 4 - title.count - 4)))
         result += "\u{2557}"
         return result
     }

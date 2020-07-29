@@ -72,7 +72,11 @@ struct RLEntity: Codable {
         player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10, defense: 1, xpOnDeath: 0)
         player = AttackComponent.add(to: player, range: 5, damage: 3)
         player = StatsComponent.add(to: player)
-        player = InventoryComponent.add(to: player, size: 10)
+        player = InventoryComponent.add(to: player, size: 10, pickupRange: 2)
+        player = EquipmentComponent.add(to: player)
+        
+        //let sword = RLEntity.sword(startPosition: startPosition)
+        //player = player.inventoryComponent!.addItem(sword)
         //print(player)
         return player
     }
@@ -104,6 +108,18 @@ struct RLEntity: Codable {
         player = VisibilityComponent.add(to: player, addsLight: true, visionRange: 3)
         player = HealthComponent.add(to: player, maxHealth: 0, currentHealth: 0, defense: 0, xpOnDeath: 0)
         return player
+    }
+    
+    static func sword(startPosition: Coord) -> RLEntity {
+        var sword = RLEntity(name: "Sword", saturation: 0.05, startPosition: startPosition)
+        sword = EquipableEffectComponent.add(to: sword, statChange: ["AC_damage" : 1], occupiesSlot: .leftArm)
+        return sword
+    }
+    
+    static func helmet(startPosition: Coord) -> RLEntity {
+        var helmet = RLEntity(name: "Helmet", hue: 0.7, saturation: 0.2, startPosition: startPosition)
+        helmet = EquipableEffectComponent.add(to: helmet, statChange: ["HC_defense": 1], occupiesSlot: .head)
+        return helmet
     }
 }
 

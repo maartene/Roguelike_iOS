@@ -43,6 +43,7 @@ struct RLSprites {
                           "RightArrow_Short_OL": Coord(24, 10),
                           "DownArrow_Short_OL": Coord(25, 10),
                           "LeftArrow_Short_OL": Coord(26, 10),
+                          "Sword": Coord(0,1),
     ]
     
     static private var instance = RLSprites()

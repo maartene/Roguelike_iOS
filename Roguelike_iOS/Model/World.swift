@@ -49,6 +49,7 @@ struct World: Codable {
             updatedEntity = updatedEntity.visibilityComponent?.update(in: self) ?? updatedEntity
             updatedEntity = updatedEntity.healthComponent?.update() ?? updatedEntity
             updatedEntity = updatedEntity.statsComponent?.update() ?? updatedEntity
+            updatedEntity = updatedEntity.equipmentComponent?.update() ?? updatedEntity
             
             replaceEntity(entity: updatedEntity)
         }

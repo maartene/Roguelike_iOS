@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PlayerStatisticsView: View {
     @ObservedObject var boxedWorld: WorldBox
-    @State private var isShown = true
+    @State private var isShown = false
     
     var player: RLEntity {
         boxedWorld.world.player
@@ -48,7 +48,7 @@ struct PlayerStatisticsView: View {
     
     var body: some View {
             VStack {
-                ConsoleWindowView(lines: self.playerInfoText)
+                ConsoleWindowView(title: "Vitals", lines: self.playerInfoText)
                 Image(self.isShown ? "upArrow_32" : "downArrow_32")
                     .offset(x: 0, y: -8)
                     .onTapGesture(perform: { self.isShown.toggle()

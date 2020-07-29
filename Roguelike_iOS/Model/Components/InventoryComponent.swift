@@ -13,25 +13,28 @@ struct InventoryComponent {
     
     var size: Int
     var items: [RLEntity]
+    var pickupRange: Int
     
-    fileprivate init(owner: RLEntity, size: Int, items: [RLEntity]) {
+    fileprivate init(owner: RLEntity, size: Int, pickupRange: Int, items: [RLEntity]) {
         self.owner = owner
         self.size = size
         self.items = items
+        self.pickupRange = pickupRange
     }
     
-    static func add(to entity: RLEntity, size: Int) -> RLEntity {
+    static func add(to entity: RLEntity, size: Int, pickupRange: Int) -> RLEntity {
         var changedEntity = entity
         
         changedEntity.variables["IC"] = true
         changedEntity.variables["IC_size"] = size
+        changedEntity.variables["IC_pickupRange"] = pickupRange
         changedEntity.variables["IC_items"] = [RLEntity]()
         
         return changedEntity
     }
     
     func addItem(_ item: RLEntity) -> RLEntity {
-        guard item.consumableEffect != nil else {
+        guard item.consumableEffect != nil || item.equipableEffect != nil else {
             print("ItemComponent: addItem - trying to add an entity without a consumable effect nor equipment. This entity cannot be added to inventory as it is not an item.")
             return owner
         }
@@ -65,10 +68,11 @@ extension RLEntity {
     var inventoryComponent: InventoryComponent? {
         guard self.variables["IC"] as? Bool ?? false == true,
             let items = variables["IC_items"] as? [RLEntity],
-            let size = variables["IC_size"] as? Int else {
+            let size = variables["IC_size"] as? Int,
+            let pickupRange = variables["IC_pickupRange"] as? Int else {
             return nil
         }
     
-        return InventoryComponent(owner: self, size: size, items: items)
+        return InventoryComponent(owner: self, size: size, pickupRange: pickupRange, items: items)
     }
 }

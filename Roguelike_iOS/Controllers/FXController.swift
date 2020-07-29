@@ -159,8 +159,30 @@ final class FXController {
         switch event {
         case .entityDied(let entity):
             explosion(at: entity.position, range: 1, color: SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1))
+        case .levelup(let entity):
+            scaleSpriteEffect(for: entity)
         default:
             print("Create effect for \(event)")
+        }
+    }
+    
+    func scaleSpriteEffect(for entity: RLEntity) {
+        if let sprite = mapController?.entityNodeMap[entity.id] {
+            if let tex = sprite.texture {
+                tex.filteringMode = .nearest
+                let fxSprite = SKSpriteNode(texture: tex)
+                fxSprite.color = SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1)
+                fxSprite.blendMode = .screen
+                fxSprite.colorBlendFactor = 1
+                fxSprite.zPosition = FX_Z_POSITION
+                fxSprite.position = sprite.position
+                
+                let scaleAction = SKAction.scale(to: 10, duration: 1)
+                let fadeOutAction = SKAction.fadeOut(withDuration: 1)
+                let actions = SKAction.group([scaleAction, fadeOutAction])
+                fxSprite.run(SKAction.sequence([actions, SKAction.removeFromParent()]))
+                fxNode.addChild(fxSprite)
+            }
         }
     }
     

@@ -115,22 +115,26 @@ struct WorldBuilder {
                     }
                 }
             
-                let numberOfItems = random.nextInt(upperBound: 2)
+                let numberOfItems = random.nextInt(upperBound: 4)
                 for _ in 0...numberOfItems {
                     let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)
                     let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
                     if world.map[Coord(posX, posY)].enterable {
-                        if random.nextBool() {
+                        let value = random.nextUniform()
+                        if value < 0.5 {
                             let lamp = RLEntity.lamp(startPosition: Coord(posX,posY))
-
                             if world.map[lamp.position].enterable {
                                 world.addEntity(entity: lamp)
                             }
-                        } else {
+                        } else if value < 0.75 {
                             let apple = RLEntity.apple(startPosition: Coord(posX, posY))
-                            
                             if world.map[apple.position].enterable {
                                 world.addEntity(entity: apple)
+                            }
+                        } else {
+                            let sword = RLEntity.sword(startPosition: Coord(posX, posY))
+                            if world.map[sword.position].enterable {
+                                world.addEntity(entity: sword)
                             }
                         }
                     }

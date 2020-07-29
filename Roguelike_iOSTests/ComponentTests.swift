@@ -161,4 +161,158 @@ class ComponentTests: XCTestCase {
         
         XCTAssertEqual(updatedPlayer.inventoryComponent!.items.count, updatedPlayer.inventoryComponent!.size)
     }
+    
+    func testEquipSwordIncreasesDamage() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard let eec = sword.equipableEffect else {
+            XCTFail("Sword needs an eec attached.")
+            return
+        }
+        
+        let equippingPlayer = eec.applyEquipmentEffects(to: player)
+        XCTAssertGreaterThan(equippingPlayer.variables["AC_damage"] as? Int ?? 0, player.variables["AC_damage"] as? Int ?? 0)
+    }
+    
+    /*func testEquipSwordResetsDamage() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard let eec = sword.equipableEffect else {
+            XCTFail("Sword needs an eec attached.")
+            return
+        }
+        
+        let equippingPlayer = eec.applyEquipmentEffects(to: player)
+        XCTAssertGreaterThan(equippingPlayer.variables["AC_damage"] as? Int ?? 0, player.variables["AC_damage"] as? Int ?? 0)
+        
+        let unequippingPlayer = eec.removeEquipmentEffects(to: equippingPlayer)
+        
+        XCTAssertLessThan(unequippingPlayer.variables["AC_damage"] as? Int ?? 0, equippingPlayer.variables["AC_damage"] as? Int ?? 0)
+        XCTAssertEqual(unequippingPlayer.variables["AC_damage"] as? Int ?? 0, player.variables["AC_damage"] as? Int ?? 0)
+        
+    }*/
+    
+    func testEquipSwordTest() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard player.equipmentComponent != nil else {
+            XCTFail("Player requires an EquipmentComponent.")
+            return
+        }
+        
+        XCTAssertTrue(player.equipmentComponent!.slotIsEmpty(.leftArm))
+        let equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        XCTAssertFalse(equippingPlayer.equipmentComponent!.slotIsEmpty(.leftArm))
+    }
+    
+    func testEquipSwordIncreasesDamageTest() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard player.equipmentComponent != nil else {
+            XCTFail("Player requires an EquipmentComponent.")
+            return
+        }
+        
+        XCTAssertTrue(player.equipmentComponent!.slotIsEmpty(.leftArm))
+        var equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        XCTAssertFalse(equippingPlayer.equipmentComponent!.slotIsEmpty(.leftArm))
+        
+        equippingPlayer = equippingPlayer.statsComponent?.update() ?? equippingPlayer
+        equippingPlayer = equippingPlayer.equipmentComponent?.update() ?? equippingPlayer
+        
+        XCTAssertGreaterThan(equippingPlayer.variables["AC_damage"] as? Int ?? 0, player.variables["AC_damage"] as? Int ?? 0)
+        
+    }
+    
+    func testUnequipSwordTest() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard player.equipmentComponent != nil else {
+            XCTFail("Player requires an EquipmentComponent.")
+            return
+        }
+        
+        XCTAssertTrue(player.equipmentComponent!.slotIsEmpty(.leftArm))
+        let equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        XCTAssertFalse(equippingPlayer.equipmentComponent!.slotIsEmpty(.leftArm))
+        
+        if let unequipResult = equippingPlayer.equipmentComponent?.unequipItem(in: .leftArm) {
+            XCTAssertTrue(unequipResult.updatedEntity.equipmentComponent?.slotIsEmpty(.leftArm) ?? false)
+            XCTAssertEqual(unequipResult.item?.id, sword.id)
+        } else {
+            XCTFail("Result was nil.")
+        }
+    }
+    
+    func testUnEquipSwordDecreasesDamageTest() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard player.equipmentComponent != nil else {
+            XCTFail("Player requires an EquipmentComponent.")
+            return
+        }
+        
+        XCTAssertTrue(player.equipmentComponent!.slotIsEmpty(.leftArm))
+        var equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        XCTAssertFalse(equippingPlayer.equipmentComponent!.slotIsEmpty(.leftArm))
+        
+        equippingPlayer = equippingPlayer.statsComponent?.update() ?? equippingPlayer
+        equippingPlayer = equippingPlayer.equipmentComponent?.update() ?? equippingPlayer
+        
+        if let unequipResult = equippingPlayer.equipmentComponent?.unequipItem(in: .leftArm) {
+            XCTAssertTrue(unequipResult.updatedEntity.equipmentComponent?.slotIsEmpty(.leftArm) ?? false)
+            XCTAssertEqual(unequipResult.item?.id, sword.id)
+            
+            var unequippingPlayer = unequipResult.updatedEntity.statsComponent?.update() ?? equippingPlayer
+            unequippingPlayer = unequippingPlayer.equipmentComponent?.update() ?? equippingPlayer
+                        
+            XCTAssertLessThan(unequippingPlayer.variables["AC_damage"] as? Int ?? 0, equippingPlayer.variables["AC_damage"] as? Int ?? 0)
+            XCTAssertEqual(unequippingPlayer.variables["AC_damage"] as? Int ?? 0, player.variables["AC_damage"] as? Int ?? -1)
+        } else {
+            XCTFail("Result was nil.")
+        }
+        
+        
+    }
+    
+    func testCannotEquipOccupiedSlot() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        guard player.equipmentComponent != nil else {
+            XCTFail("Player requires an EquipmentComponent.")
+            return
+        }
+        
+        XCTAssertTrue(player.equipmentComponent!.slotIsEmpty(.leftArm))
+        let equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        XCTAssertFalse(equippingPlayer.equipmentComponent!.slotIsEmpty(.leftArm))
+        
+        let sword2 = RLEntity.sword(startPosition: Coord.zero)
+        let equippingPlayer2 = equippingPlayer.equipmentComponent?.equipItem(sword2, in: .leftArm) ?? equippingPlayer
+        
+        XCTAssertEqual(equippingPlayer2.equipmentComponent!.equippedSlots[.leftArm, default: sword2]?.id, sword.id)
+    }
+    
+    func testCannotEquipWrongSlotType() throws {
+        let player = RLEntity.player(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        //print(player.equipmentComponent!.equippedSlots)
+        
+        guard player.equipmentComponent != nil else {
+            XCTFail("Player requires an EquipmentComponent.")
+            return
+        }
+        
+        XCTAssertTrue(player.equipmentComponent!.slotIsEmpty(.body))
+        let equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .body)
+        XCTAssertTrue(equippingPlayer.equipmentComponent!.slotIsEmpty(.body))
+    }
 }

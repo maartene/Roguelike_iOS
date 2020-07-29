@@ -63,7 +63,7 @@ class ActionTests: XCTestCase {
     }
     
     func testPickupItem() throws {
-        let apple = RLEntity.apple(startPosition: Coord(1, 0))
+        let apple = RLEntity.apple(startPosition: playerStartPosition)
         world.addEntity(entity: apple)
         
         let pickupAction = PickupAction(owner: world.player, item: apple)
@@ -94,7 +94,7 @@ class ActionTests: XCTestCase {
     
     
     func testConsumeItemFromInventory() throws {
-        let apple = RLEntity.apple(startPosition: Coord(1, 0))
+        let apple = RLEntity.apple(startPosition: playerStartPosition)
         world.addEntity(entity: apple)
         
         let pickupAction = PickupAction(owner: world.player, item: apple)
@@ -119,6 +119,60 @@ class ActionTests: XCTestCase {
         XCTAssertFalse(world.entities.contains(where: { $0.key == apple.id }))
         XCTAssertFalse(world.player.inventoryComponent?.items.contains(where: {$0.id == apple.id}) ?? true)
         XCTAssertGreaterThan(world.player.variables["HC_currentHealth"] as! Int, updatedPlayer.variables["HC_currentHealth"] as! Int)
+        
+    }
+    
+    func testEquipFromInventory() throws {
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        let playerWithSword = world.player.inventoryComponent!.addItem(sword)
+        
+        world.replaceEntity(entity: playerWithSword)
+        
+        XCTAssertNil(world.player.equipmentComponent!.equippedSlots[.leftArm, default: nil])
+        XCTAssertTrue(world.player.inventoryComponent!.items.contains(where: {$0.id == sword.id}))
+        
+        let equipAction = EquipFromInventoryAction(owner: world.player, item: sword, slot: .leftArm)
+        world.executeAction(equipAction)
+        
+        let equippedItem = world.player.equipmentComponent!.equippedSlots[.leftArm]!
+        XCTAssertNotNil(equippedItem)
+        XCTAssertEqual(equippedItem!.id, sword.id)
+        XCTAssertFalse(world.player.inventoryComponent!.items.contains(where: {$0.id == sword.id}))
+    }
+    
+    func testEquipFromInventoryInOccupiedSlot() throws {
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        let playerWithEquippedSword = world.player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        world.replaceEntity(entity: playerWithEquippedSword)
+        XCTAssertFalse(world.player.equipmentComponent!.slotIsEmpty(.leftArm))
+        
+        let sword2 = RLEntity.sword(startPosition: Coord.zero)
+        let playerWithSword = world.player.inventoryComponent!.addItem(sword2)
+        
+        world.replaceEntity(entity: playerWithSword)
+        XCTAssertTrue(world.player.inventoryComponent!.items.contains(where: {$0.id == sword2.id}))
+        
+        let equipAction = EquipFromInventoryAction(owner: world.player, item: sword2, slot: .leftArm)
+        world.executeAction(equipAction)
+        
+        let equippedItem = world.player.equipmentComponent!.equippedSlots[.leftArm, default: nil]
+        XCTAssertEqual(equippedItem?.id ?? UUID(), sword2.id)
+        XCTAssertTrue(world.player.inventoryComponent!.items.contains(where: {$0.id == sword.id}))
+    }
+    
+    func testUnequipToInventory() throws {
+        let sword = RLEntity.sword(startPosition: Coord.zero)
+        
+        let playerWithEquippedSword = world.player.equipmentComponent!.equipItem(sword, in: .leftArm)
+        world.replaceEntity(entity: playerWithEquippedSword)
+        XCTAssertFalse(world.player.equipmentComponent!.slotIsEmpty(.leftArm))
+        
+        let unequipAction = UnequipToInventoryAction(owner: world.player, slot: .leftArm)
+        world.executeAction(unequipAction)
+        XCTAssertTrue(world.player.equipmentComponent!.slotIsEmpty(.leftArm))
+        XCTAssertTrue(world.player.inventoryComponent!.items.contains(where: {$0.id == sword.id }))
         
     }
 }

@@ -33,7 +33,12 @@ struct PickupAction: Action {
             return false
         }
         
-        guard item.consumableEffect != nil else {
+        guard Coord.sqr_distance(item.position, actor.position) <= ic.pickupRange.squared else {
+            print("PickupAction: item out of reach.")
+            return false
+        }
+        
+        guard item.consumableEffect != nil || item.equipableEffect != nil else {
             print("PickupAction: \(item.name) is not an item.")
             return false
         }

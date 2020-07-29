@@ -32,7 +32,7 @@ struct ActionComponent {
             if let attackComponent = owner.attackComponent, entity.healthComponent != nil {
                 actions.append(AttackAction(owner: owner, damage: attackComponent.damage, range: attackComponent.range, target: entity))
             }
-            if owner.inventoryComponent != nil, entity.consumableEffect != nil {
+            if owner.inventoryComponent != nil, entity.consumableEffect != nil || entity.equipableEffect != nil {
                 actions.append(PickupAction(owner: owner, item: entity))
             }
         }
