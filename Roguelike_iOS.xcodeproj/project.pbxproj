@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DE0217D824D1388F00FAAB57 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0217D724D1388F00FAAB57 /* Utils.swift */; };
+		DE0217DA24D34C5700FAAB57 /* LootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0217D924D34C5700FAAB57 /* LootManager.swift */; };
+		DE0217DC24D3506000FAAB57 /* LootManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0217DB24D3506000FAAB57 /* LootManagerTests.swift */; };
 		DE03AD4B24BA5BD100493335 /* AnyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */; };
 		DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD4E24BB060D00493335 /* WorldBox.swift */; };
 		DE03AD5224BB0FDF00493335 /* SKNode+UserDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */; };
@@ -72,6 +74,8 @@
 
 /* Begin PBXFileReference section */
 		DE0217D724D1388F00FAAB57 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		DE0217D924D34C5700FAAB57 /* LootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LootManager.swift; sourceTree = "<group>"; };
+		DE0217DB24D3506000FAAB57 /* LootManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LootManagerTests.swift; sourceTree = "<group>"; };
 		DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapper.swift; sourceTree = "<group>"; };
 		DE03AD4E24BB060D00493335 /* WorldBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldBox.swift; sourceTree = "<group>"; };
 		DE03AD5124BB0FDF00493335 /* SKNode+UserDataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+UserDataUtils.swift"; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				DE6E987724C4D878006EBFFB /* ActionTests.swift */,
 				DE6E987B24C781E7006EBFFB /* ComponentTests.swift */,
 				DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */,
+				DE0217DB24D3506000FAAB57 /* LootManagerTests.swift */,
 			);
 			path = Roguelike_iOSTests;
 			sourceTree = "<group>";
@@ -252,6 +257,7 @@
 				DE63C2BA24B84DA7002058BA /* Coord.swift */,
 				DE03AD4A24BA5BD100493335 /* AnyWrapper.swift */,
 				DE03AD4E24BB060D00493335 /* WorldBox.swift */,
+				DE0217D924D34C5700FAAB57 /* LootManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE0217DA24D34C5700FAAB57 /* LootManager.swift in Sources */,
 				DE5090E524BDD2DD00B02320 /* MoveAction.swift in Sources */,
 				DE03AD4B24BA5BD100493335 /* AnyWrapper.swift in Sources */,
 				DE2C7C5724BF35B50051225D /* HealthComponent.swift in Sources */,
@@ -471,6 +478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEB34CC924CCCA1D001C3721 /* AnyWrapperTests.swift in Sources */,
+				DE0217DC24D3506000FAAB57 /* LootManagerTests.swift in Sources */,
 				DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */,
 				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
 				DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */,

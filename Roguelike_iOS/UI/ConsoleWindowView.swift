@@ -12,14 +12,17 @@ struct ConsoleWindowView: View {
 //    @State var myFrame: CGRect = CGRect.zero
 
     var title = "Window"
+    var windowWidth = 0
     
     let fontSize: CGFloat = 24
     let lines: [String]
     
     var longestLineCount: Int {
-        lines.reduce(0) { result, line in
+        let longestLine = lines.reduce(0) { result, line in
             max(result, line.count)
         }
+        
+        return max(windowWidth, longestLine)
     }
     
     /*var topRow: String {

@@ -51,8 +51,8 @@ struct PlayerStatisticsView: View {
                 ConsoleWindowView(title: "Vitals", lines: self.playerInfoText)
                 Image(self.isShown ? "upArrow_32" : "downArrow_32")
                     .offset(x: 0, y: -8)
-                    .onTapGesture(perform: { self.isShown.toggle()
-                        //print("")
+                    .onTapGesture(perform: {
+                        self.isShown.toggle()
                     })
             }.offset(x: 0, y: self.isShown ? 0 : closeOffset)
                 .animation(.easeOut(duration: 0.25))

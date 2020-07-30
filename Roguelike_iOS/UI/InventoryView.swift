@@ -10,7 +10,8 @@ import SwiftUI
 import SpriteKit
 
 struct ItemInfo: View {
-    let item: RLEntity
+    @Binding var item: RLEntity?
+    var windowWidth = 35
     
     func addExplicitSign(_ value: Int) -> String {
         if value >= 0 {
@@ -21,6 +22,10 @@ struct ItemInfo: View {
     }
     
     var itemText: [String] {
+        guard let item = item else {
+            return []
+        }
+        
         var result = [String]()
         
         if let equipment = item.equipableEffect {
@@ -38,7 +43,9 @@ struct ItemInfo: View {
     }
     
     var body: some View {
-        ConsoleWindowView(title: item.name, lines: itemText)
+        ConsoleWindowView(title: item?.name ?? "unknown", windowWidth: windowWidth, lines: itemText).onTapGesture {
+            self.item = nil
+        }
     }
     
 }
@@ -156,7 +163,7 @@ struct InventoryView: View {
             }
             Text(bottomRow)
             if showItemDetails != nil {
-                ItemInfo(item: showItemDetails!)
+                ItemInfo(item: $showItemDetails, windowWidth: windowWidth)
             }
         }.font(.custom("Menlo-Regular", size: self.fontSize)).foregroundColor(Color.white)
             .background(Color.black.opacity(0.75))
