@@ -60,6 +60,10 @@ struct InventoryView: View {
         boxedWorld.world.player.inventoryComponent?.items ?? []
     }
     
+    var gold: Int {
+        boxedWorld.world.player.inventoryComponent?.gold ?? 0
+    }
+    
     func getImage(itemName: String) -> CGImage {
         let tex = RLSprites.getSpriteTextureFor(tileName: itemName)
         tex?.filteringMode = .nearest
@@ -161,6 +165,8 @@ struct InventoryView: View {
                     
                 }
             }
+            Text("\u{255F}" + String(repeatElement("\u{2500}", count: windowWidth + 2)) + "\u{2562}")
+            Text("\u{2551} " + paddedLine("Gold: \(gold)") + " \u{2551}")
             Text(bottomRow)
             if showItemDetails != nil {
                 ItemInfo(item: $showItemDetails, windowWidth: windowWidth)

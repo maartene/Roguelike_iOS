@@ -41,10 +41,31 @@ class WorldTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
-    func testPerformanceExample() throws {
+    func testUpdateEntities() throws {
         // This is an example of a performance test case.
+        for _ in 0 ... 1000 {
+            let entity = RLEntity.skeleton(startPosition: Coord.zero)
+            world.addEntity(entity: entity)
+        }
         self.measure {
             // Put the code you want to measure the time of here.
+            world.update()
+        }
+    }
+    
+    func testUpdateEntitiesInclAI() throws {
+        // This is an example of a performance test case.
+        for _ in 0 ... 1000 {
+            let entity = RLEntity.skeleton(startPosition: Coord.zero)
+            world.addEntity(entity: entity)
+        }
+        
+        let boxedWorld = WorldBox(world: world)
+        
+        self.measure {
+            // Put the code you want to measure the time of here.
+            let waitAction = WaitAction(owner: world.player)
+            boxedWorld.executeAction(waitAction)
         }
     }
     

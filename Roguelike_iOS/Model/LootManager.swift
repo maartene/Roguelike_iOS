@@ -8,14 +8,39 @@
 
 import Foundation
 import GameplayKit
+import Combine
 
 final class LootManager {
     
     private let random: GKRandomSource
     
-    init(seed: [UInt8] = [0,1,2,3]) {
+    private var cancellables = Set<AnyCancellable>()
+    var boxedWorld: WorldBox
+    
+    init(boxedWorld: WorldBox, seed: [UInt8] = [0,1,2,3]) {
         let data = Data(seed)
         random = GKARC4RandomSource(seed: data)
+        self.boxedWorld = boxedWorld
+    }
+    
+    func registerToDieEvents() {
+        EventSystem.main.$lastEvent.sink(receiveCompletion: { complete in
+            print("Received complete message: \(complete).")
+        }, receiveValue: { [weak self] event in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            switch event {
+            case .entityDied(let entity):
+                let loot = strongSelf.gimmeSomeLoot(at: entity.position)
+                let createEntityAction = CreateEntityAction(owner: entity, entity: loot)
+                strongSelf.boxedWorld.executeAction(createEntityAction)
+            default:
+                // do nothing
+                print("No use for event: \(event)")
+            }
+            }).store(in: &cancellables)
     }
     
     func gimmeSomeLoot(at position: Coord) -> RLEntity {
@@ -24,12 +49,14 @@ final class LootManager {
         // but what is it?
         let value = random.nextUniform()
         switch value {
-        case 0 ..< 0.3:
+        case 0 ..< 0.1:
             loot = RLEntity.sword(startPosition: position)
-        case 0.3 ..< 0.6:
+        case 0.1 ..< 0.2:
             loot = RLEntity.helmet(startPosition: position)
-        default:
+        case 0.2 ..< 0.4:
             loot = RLEntity.apple(startPosition: position)
+        default:
+            loot = RLEntity.gold(startPosition: position)
         }
          
         

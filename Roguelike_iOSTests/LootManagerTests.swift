@@ -22,7 +22,8 @@ class LootManagerTests: XCTestCase {
     }
 
     func testGenerateLoot() throws {
-        let lootManager = LootManager(seed: seed)
+        let boxedWorld = WorldBox(world: World(width: 10, height: 10))
+        let lootManager = LootManager(boxedWorld: boxedWorld, seed: seed)
         
         for _ in 0 ..< 50 {
             let loot = lootManager.gimmeSomeLoot(at: Coord.zero)

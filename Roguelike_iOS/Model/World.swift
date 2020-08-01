@@ -9,7 +9,17 @@
 import Foundation
 import GameplayKit
 
+struct Floor: Codable {
+    //let floorNumber: Int
+    let baseEnemyLevel: Int
+    let enemyTypes: [RLEntity]
+    let map: Map
+}
+
 struct World: Codable {
+    
+    let floors = [Floor]()
+    
     var map = Map()
     var entities = [UUID: RLEntity]()
     var allVisibleTiles = Set<Coord>()

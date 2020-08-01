@@ -21,6 +21,7 @@ class GameScene: SKScene, ObservableObject {
     var mapController: MapController!
     var fxController: FXController!
     var spriteUIHandler: SpriteUIHandler!
+    var lootManager: LootManager!
 
     
     @Published var selectedNode: SKNode?
@@ -68,6 +69,9 @@ class GameScene: SKScene, ObservableObject {
         
         fxController = FXController(scene: self, mapController: mapController)
         fxController.subscribeToWorldChanges(boxedWorld: boxedWorld)
+        
+        lootManager = LootManager(boxedWorld: boxedWorld)
+        lootManager.registerToDieEvents()
         
         boxedWorld.update()
                 

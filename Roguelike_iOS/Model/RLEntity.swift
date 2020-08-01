@@ -23,7 +23,7 @@ struct RLEntity: Codable {
     
     let id: UUID
     var position: Coord
-    let name: String
+    var name: String
     let hue: Double
     let saturation: Double
     var variables = [String: Any]()
@@ -120,6 +120,12 @@ struct RLEntity: Codable {
         var helmet = RLEntity(name: "Helmet", hue: 0.7, saturation: 0.2, startPosition: startPosition)
         helmet = EquipableEffectComponent.add(to: helmet, statChange: ["HC_defense": 1], occupiesSlot: .head)
         return helmet
+    }
+    
+    static func gold(startPosition: Coord) -> RLEntity {
+        var gold = RLEntity(name: "Gold", hue: 0.3, saturation: 1, startPosition: startPosition)
+        gold = GoldComponent.add(to: gold, amount: 10)
+        return gold
     }
 }
 

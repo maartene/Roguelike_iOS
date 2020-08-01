@@ -28,12 +28,10 @@ struct RLSprites {
                           "Double_Wall_NES_": Coord(17, 27),
                           "Double_Wall_NESW": Coord(16, 27),
                           "Player": Coord(25, 30),
-                          "Skeleton": Coord(27, 26),
                           "Lamp": Coord(3, 16),
                           "FullSquare": Coord(32, 26),
                           "DitherSquare_16th": Coord(33, 26),
                           "EmptySquare": Coord(0, 31),
-                          "Apple": Coord(15, 2),
                           "Brick_Wall": Coord(10, 14),
                           "UpArrow_OL": Coord(28, 11),
                           "RightArrow_OL": Coord(29, 11),
@@ -43,7 +41,21 @@ struct RLSprites {
                           "RightArrow_Short_OL": Coord(24, 10),
                           "DownArrow_Short_OL": Coord(25, 10),
                           "LeftArrow_Short_OL": Coord(26, 10),
+                          
+                          // Pickups
+                          "Apple": Coord(15, 2),
+                          "Gold": Coord(15,20),
+                          // Equipment
                           "Sword": Coord(0,1),
+                          "Helmet": Coord(1,9),
+                          // Monsters
+                          "Skeleton": Coord(27, 26),
+                          "Evil Knight": Coord(31,31),
+                          "Spider": Coord(28,26),
+                          "Ghost": Coord(27,25),
+                          "Bat": Coord(26,23),
+                          "Snake": Coord(28,23),
+                          
     ]
     
     static private var instance = RLSprites()

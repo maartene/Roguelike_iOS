@@ -35,6 +35,9 @@ struct ActionComponent {
             if owner.inventoryComponent != nil, entity.consumableEffect != nil || entity.equipableEffect != nil {
                 actions.append(PickupAction(owner: owner, item: entity))
             }
+            if owner.inventoryComponent != nil, entity.goldComponent != nil {
+                actions.append(PickupGoldAction(owner: owner, goldEntity: entity))
+            }
         }
         actions.append(WaitAction(owner: owner))
         return actions

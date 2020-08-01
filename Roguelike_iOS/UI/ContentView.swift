@@ -39,6 +39,7 @@ struct HUD: View {
                 }
                 Spacer()
                 HStack {
+                    Text("Entities: \(self.scene.boxedWorld.world.entities.count)     ").font(.custom("Menlo-Regular", size: 24)).foregroundColor(Color.white)
                     Button(action: { self.scene.boxedWorld.save()}, label: { Text("[ Save ]")}).disabled(boxedWorld.state != .idle)
                         .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)
                     Text(" ").font(.custom("Menlo-Regular", size: 24))
