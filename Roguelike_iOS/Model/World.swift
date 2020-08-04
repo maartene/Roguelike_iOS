@@ -8,11 +8,12 @@
 
 import Foundation
 import GameplayKit
+import Combine
 
 struct Floor: Codable {
     //let floorNumber: Int
     let baseEnemyLevel: Int
-    let enemyTypes: [RLEntity]
+    let enemyTypes: [String]
     var map: Map
     
     mutating func updateMapCell(at coord: Coord, with cell: MapCell) {
@@ -21,6 +22,12 @@ struct Floor: Codable {
 }
 
 struct World: Codable {
+    enum CodingKeys: CodingKey {
+        case floors
+        case entities
+        case width
+        case height
+    }
     
     var floors = [Floor]()
     
@@ -47,6 +54,8 @@ struct World: Codable {
     
     let width: Int
     let height: Int
+    
+    let lootManager = LootManager()
         
     init(width: Int, height: Int) {
         self.width = width
@@ -56,16 +65,19 @@ struct World: Codable {
         
         let player = RLEntity.player(startPosition: Coord(31,10), floorIndex: 0)
         addEntity(entity: player)
-
+        
         //let apple = RLEntity.apple(startPosition: Coord(31,12))
         //addEntity(entity: apple)
         //createRandomRooms(amount: 10)
         
         //let skeleton = RLEntity.skeleton(startPosition: Coord(31,15))
         //addEntity(entity: skeleton)
+        
+        
     }
     
     mutating func executeAction(_ action: Action) {
+        print("World: executeAction - \(action)")
         let updatedEntities = action.execute(in: self)
         replaceEntities(entities: updatedEntities)
         update()
@@ -192,6 +204,16 @@ struct World: Codable {
             return mapCell.name + suffix
         default:
             return mapCell.name
+        }
+    }
+    
+    mutating func processEvent(_ event: RLEvent) {
+        switch event {
+        case .entityDied(let entity):
+            let loot = lootManager.gimmeSomeLoot(at: entity.position, on: entity.floorIndex)
+            addEntity(entity: loot)
+        default:
+            return
         }
     }
 }

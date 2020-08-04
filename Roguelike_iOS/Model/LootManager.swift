@@ -14,16 +14,16 @@ final class LootManager {
     
     private let random: GKRandomSource
     
-    private var cancellables = Set<AnyCancellable>()
-    var boxedWorld: WorldBox
+    //private var cancellables = Set<AnyCancellable>()
+    //var boxedWorld: WorldBox
     
-    init(boxedWorld: WorldBox, seed: [UInt8] = [0,1,2,3]) {
+    init(seed: [UInt8] = [0,1,2,3]) {
         let data = Data(seed)
         random = GKARC4RandomSource(seed: data)
-        self.boxedWorld = boxedWorld
+        //self.boxedWorld = boxedWorld
     }
     
-    func registerToDieEvents() {
+    /*func registerToDieEvents() {
         EventSystem.main.$lastEvent.sink(receiveCompletion: { complete in
             print("Received complete message: \(complete).")
         }, receiveValue: { [weak self] event in
@@ -41,7 +41,7 @@ final class LootManager {
                 print("No use for event: \(event)")
             }
             }).store(in: &cancellables)
-    }
+    }*/
     
     func gimmeSomeLoot(at position: Coord, on floor: Int) -> RLEntity {
         var loot: RLEntity

@@ -31,7 +31,7 @@ class GameScene: SKScene, ObservableObject {
     
     let highlight: SKSpriteNode
         
-    let nextActionDelay: TimeInterval = 0.2
+    let nextActionDelay: TimeInterval = 0.05
     var actionTimer: TimeInterval = 0
     
     var musicNode: SKAudioNode?
@@ -70,8 +70,8 @@ class GameScene: SKScene, ObservableObject {
         fxController = FXController(scene: self, mapController: mapController)
         fxController.subscribeToWorldChanges(boxedWorld: boxedWorld)
         
-        lootManager = LootManager(boxedWorld: boxedWorld)
-        lootManager.registerToDieEvents()
+//        lootManager = LootManager(boxedWorld: boxedWorld)
+//        lootManager.registerToDieEvents()
         
         boxedWorld.update()
                 

@@ -24,9 +24,18 @@ final class WorldBox: ObservableObject {
 //    @Published var removedEntities = [RLEntity]()
     
     var actionQueue = [Action]()
+    var cancellables = Set<AnyCancellable>()
+    
+    var updatedWorld: World?
     
     init(world: World) {
         self.world = world
+        
+        EventSystem.main.$lastEvent.sink(receiveCompletion: { completion in
+            print("Received completion event \(completion)")
+        }, receiveValue: { [weak self] event in
+            self?.updatedWorld?.processEvent(event)
+            }).store(in: &cancellables)
     }
     
     func update() {
@@ -36,11 +45,11 @@ final class WorldBox: ObservableObject {
         }
         
         state = .updating
-        var updatedWorld = world
+        updatedWorld = world
         DispatchQueue.global().async {
-            updatedWorld.update()
+            self.updatedWorld?.update()
             DispatchQueue.main.async {
-                self.world = updatedWorld
+                self.world = self.updatedWorld!
                 //print("Update done.")
                 self.state = .idle
             }
@@ -105,7 +114,9 @@ final class WorldBox: ObservableObject {
             return
         }
         
-        var updatedWorld = world
+        print("WorldBox: executeAction - \(action)")
+        
+        updatedWorld = world
         state = .updating
         
         DispatchQueue.global().async {
@@ -113,12 +124,12 @@ final class WorldBox: ObservableObject {
                     
                 
                 
-                let updatedEntities = action.execute(in: updatedWorld)
-                updatedWorld.replaceEntities(entities: updatedEntities)
+            let updatedEntities = action.execute(in: self.updatedWorld!)
+            self.updatedWorld?.replaceEntities(entities: updatedEntities)
             
-                if (action.owner.id == updatedWorld.player.id) {
-                    for entity in updatedWorld.entitiesOnCurrentFloor.filter({ $0.id != updatedWorld.player.id }) {
-                        self.updateAI(entityID: entity.id, in: updatedWorld)
+            if (action.owner.id == self.updatedWorld!.player.id) {
+                for entity in self.updatedWorld!.entitiesOnCurrentFloor.filter({ $0.id != self.updatedWorld!.player.id }) {
+                    self.updateAI(entityID: entity.id, in: self.updatedWorld!)
                     }
                 }
                 
@@ -127,16 +138,16 @@ final class WorldBox: ObservableObject {
                     state = .gameover
                 }*/
                 
-                updatedWorld.update()
+            self.updatedWorld!.update()
                 
                 DispatchQueue.main.async {
                     self.lastExecutedAction = action
-                    self.world = updatedWorld
+                    self.world = self.updatedWorld!
                     self.state = .idle
                 }
         }
         
-        world = updatedWorld
+        world = updatedWorld!
     }
     
     func save() {

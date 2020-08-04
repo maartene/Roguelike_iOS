@@ -56,6 +56,7 @@
 		DEB34CC724CCA702001C3721 /* ConsumableEffectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */; };
 		DEB34CC924CCCA1D001C3721 /* AnyWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */; };
 		DEB7ECBB24C96C1100052669 /* SpendStatPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */; };
+		DEBA631E24D9E1BE006275C3 /* MobCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA631D24D9E1BE006275C3 /* MobCreator.swift */; };
 		DEBABCD024CD817E0039DC7A /* PickupItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */; };
 		DEBABCD224CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */; };
 		DEBABCD524CE20810039DC7A /* EventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD424CE20810039DC7A /* EventSystem.swift */; };
@@ -132,6 +133,7 @@
 		DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumableEffectComponent.swift; sourceTree = "<group>"; };
 		DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapperTests.swift; sourceTree = "<group>"; };
 		DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointsView.swift; sourceTree = "<group>"; };
+		DEBA631D24D9E1BE006275C3 /* MobCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobCreator.swift; sourceTree = "<group>"; };
 		DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupItemAction.swift; sourceTree = "<group>"; };
 		DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumeFromInventoryAction.swift; sourceTree = "<group>"; };
 		DEBABCD424CE20810039DC7A /* EventSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				DE03AD4E24BB060D00493335 /* WorldBox.swift */,
 				DE0217D924D34C5700FAAB57 /* LootManager.swift */,
 				DE3B6D5424D6A37C00CCE796 /* Rarity.swift */,
+				DEBA631D24D9E1BE006275C3 /* MobCreator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */,
 				DEBABCD524CE20810039DC7A /* EventSystem.swift in Sources */,
 				DE0217D824D1388F00FAAB57 /* Utils.swift in Sources */,
+				DEBA631E24D9E1BE006275C3 /* MobCreator.swift in Sources */,
 				DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */,
 				DE2C7C5524BF349E0051225D /* AttackAction.swift in Sources */,
 				DEEFEF7224BC943000C59126 /* ActionsView.swift in Sources */,

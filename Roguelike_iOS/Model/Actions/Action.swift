@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Action {
+protocol Action: CustomStringConvertible {
     var owner: RLEntity { get }
     var title: String { get }
     var description: String { get }
@@ -31,5 +31,11 @@ extension Action {
     
     func unpack() -> [Action] {
         [self]
+    }
+}
+
+extension Action {
+    var description: String {
+        "\(title) owner: \(owner.name) (id: \(owner.id)"
     }
 }

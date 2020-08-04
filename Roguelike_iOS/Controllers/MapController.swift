@@ -41,7 +41,7 @@ final class MapController {
         boxedWorld.$world.sink(receiveCompletion: { completion in
             print("Received completion value: \(completion).")
         }, receiveValue: { [weak self] world in
-            print("update world received")
+            //print("update world received")
             self?.update(world: world)
             }).store(in: &cancellables)
         
@@ -154,7 +154,7 @@ final class MapController {
     
     func deleteSprites(world: World) {
         let spritesToDelete = entityNodeMap.filter { entry in
-            world.entities.keys.contains(entry.key) == false
+            world.entitiesOnCurrentFloor.contains(where: {$0.id == entry.key}) == false
         }
         
         for entry in spritesToDelete {

@@ -56,7 +56,7 @@ struct StatsComponent {
         StatsComponent.recalculateStats(for: owner)
     }
     
-    private static func recalculateStats(for entity: RLEntity, maximizingCurrentHealth: Bool = false) -> RLEntity {
+    static func recalculateStats(for entity: RLEntity, maximizingCurrentHealth: Bool = false) -> RLEntity {
         var updatedEntity = entity
         
         // attack

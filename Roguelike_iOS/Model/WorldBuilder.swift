@@ -11,6 +11,8 @@ import GameplayKit
 
 struct WorldBuilder {
     
+    //static floorEnemies = [0: ["Skeleton"], ]
+    
     var world: World
     
     let width: Int
@@ -32,9 +34,11 @@ struct WorldBuilder {
         let world = World(width: width, height: height)
         var builder = WorldBuilder(world: world)
         
+        builder.world.floors.removeAll()
+        
         for floor in 0 ..< floorCount {
-            builder.world.floors.append(Floor(baseEnemyLevel: 0, enemyTypes: [], map: Map()))
-            builder.createRandomRooms(amount: 20, mapLevel: floor)
+            builder.world.floors.append(Floor(baseEnemyLevel: floor, enemyTypes: ["Skeleton"], map: Map()))
+            builder.createRandomRooms(amount: 10, mapLevel: floor)
         }
         
         // create stairs
@@ -116,7 +120,8 @@ struct WorldBuilder {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Troll", world: self)
                     }*/
                     
-                    newMonster = RLEntity.skeleton(startPosition: Coord(posX, posY), floorIndex: mapLevel)
+                    newMonster = MobCreator.createMob(at: Coord(posX, posY), on: world.floors[mapLevel], floorIndex: mapLevel)
+                    //newMonster = RLEntity.skeleton(startPosition: Coord(posX, posY), floorIndex: mapLevel)
                     
                     //newMonster.levelIndex = mapLevel
                     

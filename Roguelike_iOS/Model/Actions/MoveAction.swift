@@ -11,7 +11,7 @@ import Foundation
 struct MoveAction: Action {
     let owner: RLEntity
     let title = "Move to"
-    let description = "Move to the target location. This uses 1 action points per 2 tiles movement."
+    let description = "Move to the target location."
     let targetLocation: Coord
     let map: Map
     let ignoreVisibility: Bool
