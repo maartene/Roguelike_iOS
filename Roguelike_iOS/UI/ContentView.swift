@@ -14,12 +14,12 @@ struct HUD: View {
     
     var action: [Action] {
         if let tile = scene.selectedNode?.userData?["position"] as? Coord {
-            if let actions = boxedWorld.world.player.actionComponent?.getActionFor(tile: tile, on: boxedWorld.world.map) {
+            if let actions = boxedWorld.world.player.actionComponent?.getActionFor(tile: tile, on: boxedWorld.world.currentFloor.map) {
                 return actions
             }
         } else if let entityID = scene.selectedNode?.userData?["entityID"] as? UUID {
             if let entity = boxedWorld.world.entities[entityID] {
-                if let actions = boxedWorld.world.player.actionComponent?.getActionsFor(entity: entity, on: boxedWorld.world.map) {
+                if let actions = boxedWorld.world.player.actionComponent?.getActionsFor(entity: entity, on: boxedWorld.world.currentFloor.map) {
                     return actions
                 }
             }
@@ -39,7 +39,7 @@ struct HUD: View {
                 }
                 Spacer()
                 HStack {
-                    Text("Entities: \(self.scene.boxedWorld.world.entities.count)     ").font(.custom("Menlo-Regular", size: 24)).foregroundColor(Color.white)
+                    Text("Floor: \(self.scene.boxedWorld.world.currentFloorIndex) Entities: \(self.scene.boxedWorld.world.entities.count)     ").font(.custom("Menlo-Regular", size: 24)).foregroundColor(Color.white)
                     Button(action: { self.scene.boxedWorld.save()}, label: { Text("[ Save ]")}).disabled(boxedWorld.state != .idle)
                         .font(.custom("Menlo-Regular", size: 24)).background(Color.yellow)
                     Text(" ").font(.custom("Menlo-Regular", size: 24))

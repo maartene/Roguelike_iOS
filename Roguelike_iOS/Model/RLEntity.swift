@@ -15,34 +15,35 @@ struct RLEntity: Codable {
     enum CodingKeys: CodingKey {
         case id
         case position
+        case floorIndex
         case name
-        case hue
-        case saturation
         case variables
+        case color
     }
     
     let id: UUID
     var position: Coord
-    var name: String
-    let hue: Double
-    let saturation: Double
+    var floorIndex: Int
+    let name: String
+    let color: ColorInfo
+    
     var variables = [String: Any]()
     
-    init(name: String, hue: Double = 0.5, saturation: Double = 1, startPosition: Coord = Coord.zero) {
+    init(name: String, color: SKColor = SKColor.white, floorIndex: Int, startPosition: Coord = Coord.zero) {
         self.id = UUID()
         self.name = name
-        self.hue = hue
-        self.saturation = saturation
+        self.color = ColorInfo(color)
         self.position = startPosition
+        self.floorIndex = floorIndex
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(position, forKey: .position)
+        try container.encode(floorIndex, forKey: .floorIndex)
         try container.encode(name, forKey: .name)
-        try container.encode(hue, forKey: .hue)
-        try container.encode(saturation, forKey: .saturation)
+        try container.encode(color, forKey: .color)
         
         let wrappedVariables = try AnyWrapper.wrapperFor(variables)
         try container.encode(wrappedVariables, forKey: .variables)
@@ -52,10 +53,10 @@ struct RLEntity: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(UUID.self, forKey: .id)
         position = try values.decode(Coord.self, forKey: .position)
+        floorIndex = try values.decode(Int.self, forKey: .floorIndex)
         name = try values.decode(String.self, forKey: .name)
-        hue = try values.decode(Double.self, forKey: .hue)
-        saturation = try values.decode(Double.self, forKey: .saturation)
-
+        color = try values.decode(ColorInfo.self, forKey: .color)
+        
         // load preliminary values
         let wrappedVariables = try values.decode(AnyWrapper.self, forKey: .variables)
         variables = wrappedVariables.value as! [String: Any]
@@ -65,8 +66,8 @@ struct RLEntity: Codable {
         print("updating")
     }
     
-    static func player(startPosition: Coord) -> RLEntity {
-        var player = RLEntity(name: "Player", hue: 0.53, saturation: 1, startPosition: startPosition)
+    static func player(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var player = RLEntity(name: "Player", color: SKColor.rarityPlayer, floorIndex: floorIndex, startPosition: startPosition)
         player = VisibilityComponent.add(to: player, addsLight: true, visionRange: 10)
         player = ActionComponent.add(to: player)
         player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10, defense: 1, xpOnDeath: 0)
@@ -81,21 +82,21 @@ struct RLEntity: Codable {
         return player
     }
     
-    static func apple(startPosition: Coord) -> RLEntity {
-        var apple = RLEntity(name: "Apple", hue: 0.36, saturation: 1, startPosition: startPosition)
+    static func apple(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var apple = RLEntity(name: "Apple", color: SKColor.green, floorIndex: floorIndex, startPosition: startPosition)
         apple = ConsumableEffectComponent.add(to: apple, statChange: ["HC_currentHealth": 7])
         return apple
     }
     
-    static func lamp(startPosition: Coord) -> RLEntity {
-        var lamp = RLEntity(name: "Lamp", hue: 0.16, saturation: 1, startPosition: startPosition)
+    static func lamp(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var lamp = RLEntity(name: "Lamp", color: SKColor.yellow, floorIndex: floorIndex, startPosition: startPosition)
         lamp = VisibilityComponent.add(to: lamp, addsLight: true, visionRange: 4)
         return lamp
     }
     
-    static func skeleton(startPosition: Coord) -> RLEntity {
-        var skeleton = RLEntity(name: "Skeleton", hue: 0, saturation: 0, startPosition: startPosition)
-        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5, defense: 0, xpOnDeath: 20)
+    static func skeleton(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var skeleton = RLEntity(name: "Skeleton", color: SKColor.gray, floorIndex: floorIndex, startPosition: startPosition)
+        skeleton = HealthComponent.add(to: skeleton, maxHealth: 5, currentHealth: 5, defense: 0, xpOnDeath: 5)
         //skeleton = AIComponent.add(to: skeleton)
         skeleton = ActionComponent.add(to: skeleton)
         skeleton = AttackComponent.add(to: skeleton, range: 2, damage: 1)
@@ -103,29 +104,61 @@ struct RLEntity: Codable {
         return skeleton
     }
     
-    static func playerRemains(startPosition: Coord) -> RLEntity {
-        var player = RLEntity(name: "Player", hue: 0.09, saturation: 1, startPosition: startPosition)
+    static func playerRemains(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var player = RLEntity(name: "Player", color: SKColor.red, floorIndex: floorIndex, startPosition: startPosition)
         player = VisibilityComponent.add(to: player, addsLight: true, visionRange: 3)
         player = HealthComponent.add(to: player, maxHealth: 0, currentHealth: 0, defense: 0, xpOnDeath: 0)
         return player
     }
     
-    static func sword(startPosition: Coord) -> RLEntity {
-        var sword = RLEntity(name: "Sword", saturation: 0.05, startPosition: startPosition)
+    static func sword(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var sword = RLEntity(name: "Sword", color: SKColor.rarityCommon, floorIndex: floorIndex, startPosition: startPosition)
         sword = EquipableEffectComponent.add(to: sword, statChange: ["AC_damage" : 1], occupiesSlot: .leftArm)
         return sword
     }
     
-    static func helmet(startPosition: Coord) -> RLEntity {
-        var helmet = RLEntity(name: "Helmet", hue: 0.7, saturation: 0.2, startPosition: startPosition)
+    static func helmet(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var helmet = RLEntity(name: "Helmet", color: SKColor.rarityCommon, floorIndex: floorIndex, startPosition: startPosition)
         helmet = EquipableEffectComponent.add(to: helmet, statChange: ["HC_defense": 1], occupiesSlot: .head)
         return helmet
     }
     
-    static func gold(startPosition: Coord) -> RLEntity {
-        var gold = RLEntity(name: "Gold", hue: 0.3, saturation: 1, startPosition: startPosition)
+    static func gold(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var gold = RLEntity(name: "Gold", color: SKColor.yellow, floorIndex: floorIndex, startPosition: startPosition)
         gold = GoldComponent.add(to: gold, amount: 10)
         return gold
     }
 }
 
+struct ColorInfo: Codable {
+    let hue: CGFloat
+    let saturation: CGFloat
+    let brightness: CGFloat
+    let alpha: CGFloat
+    
+    var toColor: SKColor {
+        return SKColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
+    }
+    
+    init(hue: CGFloat, saturation: CGFloat, brightness: CGFloat, alpha: CGFloat = 1) {
+        self.hue = hue
+        self.saturation = saturation
+        self.brightness = brightness
+        self.alpha = alpha
+    }
+    
+    init(hue: Double, saturation: Double, brightness: Double, alpha: Double = 1) {
+        self.hue = CGFloat(hue)
+        self.saturation = CGFloat(saturation)
+        self.brightness = CGFloat(brightness)
+        self.alpha = CGFloat(alpha)
+    }
+    
+    init(_ skColor: SKColor) {
+        let hsb = skColor.hsb
+        self.hue = hsb.hue
+        self.saturation = hsb.saturation
+        self.brightness = hsb.brightness
+        self.alpha = hsb.alpha
+    }
+}

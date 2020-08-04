@@ -37,6 +37,11 @@ struct AttackAction: Action {
             return false
         }
         
+        guard target.floorIndex == actor.floorIndex else {
+            print("AttackAction - Cannot Execute: target is not on the same floor.")
+            return false
+        }
+        
         let sqrDistance = Coord.sqr_distance(target.position, owner.position)
         guard sqrDistance <= Double(range * range) else {
             print("ACTION: target out of range.")

@@ -13,6 +13,7 @@ enum RLEvent {
     case idle
     case entityDied(RLEntity)
     case levelup(RLEntity)
+    case changedFloors(Int)
 }
 
 class EventSystem: ObservableObject {

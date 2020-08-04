@@ -29,6 +29,9 @@ struct ActionComponent {
             // nothing yet
         } else {
             actions.append(MoveAction(owner: owner, targetLocation: entity.position, map: map))
+            if let stairsComponent = entity.stairsComponent {
+                actions.append(TakeStairsAction(owner: owner, stairs: entity, targetFloor: stairsComponent.targetFloor, targetLocation: stairsComponent.targetLocation))
+            }
             if let attackComponent = owner.attackComponent, entity.healthComponent != nil {
                 actions.append(AttackAction(owner: owner, damage: attackComponent.damage, range: attackComponent.range, target: entity))
             }

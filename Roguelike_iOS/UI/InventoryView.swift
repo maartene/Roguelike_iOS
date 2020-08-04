@@ -137,7 +137,7 @@ struct InventoryView: View {
             ForEach(items, id: \.id) { item in
                 HStack {
                     ZStack(alignment: .leading) {
-                        Image(item.name).offset(x: 16, y: 0).colorMultiply(Color(hue: item.hue, saturation: item.saturation, brightness: 1))
+                        Image(item.name).offset(x: 16, y: 0).colorMultiply(Color(hue: Double(item.color.hue), saturation: Double(item.color.saturation), brightness: 1))
                         HStack(spacing: 0) {
                             if item.consumableEffect != nil {
                                 Text("\u{2551} " + "  \(self.paddedLine(item.name, extraPadding: -13))").onTapGesture {
@@ -203,9 +203,9 @@ struct InventoryViewContainer: View {
 struct InventoryView_Previews: PreviewProvider {
     static var previews: some View {
         var world = World(width: 10, height: 10)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
-        let helmet = RLEntity.helmet(startPosition: Coord.zero)
-        let apple = RLEntity.apple(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
+        let helmet = RLEntity.helmet(startPosition: Coord.zero, floorIndex: 0)
+        let apple = RLEntity.apple(startPosition: Coord.zero, floorIndex: 0)
         var player = world.player.inventoryComponent?.addItem(sword) ?? world.player
         player = player.inventoryComponent?.addItem(apple) ?? player
         player = player.equipmentComponent?.equipItem(helmet, in: .head) ?? player

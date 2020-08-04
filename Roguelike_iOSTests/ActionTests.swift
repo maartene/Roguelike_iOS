@@ -22,10 +22,10 @@ class ActionTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         world = World(width: mapWidth, height: mapHeight)
         
-        world.map = Map()
+        world.floors.append(Floor(baseEnemyLevel: 0, enemyTypes: [], map: Map()))
         for y in 0 ..< world.width {
             for x in 0 ..< world.height {
-                world.map[Coord(x, y)] = .ground
+                world.updateMapCell(at: Coord(x,y), on: 0, with: .ground)
             }
         }
         
@@ -37,7 +37,7 @@ class ActionTests: XCTestCase {
     func testExecuteMoveAction() throws {
         XCTAssertEqual(world.player.position, playerStartPosition)
         
-        let moveAction = MoveAction(owner: world.player, targetLocation: world.player.position + Coord.left, map: world.map, ignoreVisibility: true)
+        let moveAction = MoveAction(owner: world.player, targetLocation: world.player.position + Coord.left, map: world.currentFloor.map, ignoreVisibility: true)
         world.executeAction(moveAction)
         
         XCTAssertNotEqual(world.player.position, playerStartPosition)
@@ -49,10 +49,10 @@ class ActionTests: XCTestCase {
             XCTAssert(false, "Player should have an attack component set.")
             return
         }
-        let skeleton = RLEntity.skeleton(startPosition: playerStartPosition + Coord(ac.range / 2,0))
+        let skeleton = RLEntity.skeleton(startPosition: playerStartPosition + Coord(ac.range / 2,0), floorIndex: 0)
         
         world.addEntity(entity: skeleton)
-        XCTAssertTrue(world.map[skeleton.position].name != "void", "Skeleton should not be in the void.")
+        XCTAssertTrue(world.currentFloor.map[skeleton.position].name != "void", "Skeleton should not be in the void.")
         
         let attackAction = AttackAction(owner: world.player, damage: ac.damage, range: 5, target: skeleton)
         
@@ -63,7 +63,7 @@ class ActionTests: XCTestCase {
     }
     
     func testPickupItem() throws {
-        let apple = RLEntity.apple(startPosition: playerStartPosition)
+        let apple = RLEntity.apple(startPosition: playerStartPosition, floorIndex: 0)
         world.addEntity(entity: apple)
         
         let pickupAction = PickupAction(owner: world.player, item: apple)
@@ -94,7 +94,7 @@ class ActionTests: XCTestCase {
     
     
     func testConsumeItemFromInventory() throws {
-        let apple = RLEntity.apple(startPosition: playerStartPosition)
+        let apple = RLEntity.apple(startPosition: playerStartPosition, floorIndex: 0)
         world.addEntity(entity: apple)
         
         let pickupAction = PickupAction(owner: world.player, item: apple)
@@ -123,7 +123,7 @@ class ActionTests: XCTestCase {
     }
     
     func testEquipFromInventory() throws {
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         let playerWithSword = world.player.inventoryComponent!.addItem(sword)
         
@@ -142,13 +142,13 @@ class ActionTests: XCTestCase {
     }
     
     func testEquipFromInventoryInOccupiedSlot() throws {
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         let playerWithEquippedSword = world.player.equipmentComponent!.equipItem(sword, in: .leftArm)
         world.replaceEntity(entity: playerWithEquippedSword)
         XCTAssertFalse(world.player.equipmentComponent!.slotIsEmpty(.leftArm))
         
-        let sword2 = RLEntity.sword(startPosition: Coord.zero)
+        let sword2 = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         let playerWithSword = world.player.inventoryComponent!.addItem(sword2)
         
         world.replaceEntity(entity: playerWithSword)
@@ -163,7 +163,7 @@ class ActionTests: XCTestCase {
     }
     
     func testUnequipToInventory() throws {
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         let playerWithEquippedSword = world.player.equipmentComponent!.equipItem(sword, in: .leftArm)
         world.replaceEntity(entity: playerWithEquippedSword)

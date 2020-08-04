@@ -13,29 +13,48 @@ struct Floor: Codable {
     //let floorNumber: Int
     let baseEnemyLevel: Int
     let enemyTypes: [RLEntity]
-    let map: Map
+    var map: Map
+    
+    mutating func updateMapCell(at coord: Coord, with cell: MapCell) {
+        map[coord] = cell
+    }
 }
 
 struct World: Codable {
     
-    let floors = [Floor]()
+    var floors = [Floor]()
     
-    var map = Map()
+    //var map = Map()
     var entities = [UUID: RLEntity]()
     var allVisibleTiles = Set<Coord>()
     
     var player: RLEntity {
         return entities.values.first(where: {$0.name == "Player"} )!
     }
-        
+    
+    var currentFloorIndex: Int {
+        player.floorIndex
+    }
+    
+    var currentFloor: Floor {
+        assert((0 ..< floors.count).contains(currentFloorIndex))
+        return floors[currentFloorIndex]
+    }
+       
+    var entitiesOnCurrentFloor: [RLEntity] {
+        entities.values.filter { $0.floorIndex == currentFloorIndex }
+    }
+    
     let width: Int
     let height: Int
         
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
+
+        floors.append(Floor(baseEnemyLevel: 0, enemyTypes: [], map: Map()))
         
-        let player = RLEntity.player(startPosition: Coord(31,10))
+        let player = RLEntity.player(startPosition: Coord(31,10), floorIndex: 0)
         addEntity(entity: player)
 
         //let apple = RLEntity.apple(startPosition: Coord(31,12))
@@ -53,7 +72,8 @@ struct World: Codable {
     }
     
     mutating func update() {
-        for entity in entities.values {
+        let entitiesOnFloor = entities.values.filter({ $0.floorIndex == currentFloorIndex })
+        for entity in entitiesOnFloor {
             var updatedEntity = entities[entity.id] ?? entity
             
             updatedEntity = updatedEntity.visibilityComponent?.update(in: self) ?? updatedEntity
@@ -69,31 +89,44 @@ struct World: Codable {
         calculateLighting()
     }
     
-    
+    mutating func updateMapCell(at coord: Coord, on floor: Int, with cell: MapCell) {
+        assert((0 ..< floors.count).contains(floor))
+        
+        var changedFloor = floors[floor]
+        changedFloor.updateMapCell(at: coord, with: cell)
+        floors[floor] = changedFloor
+    }
     
     // calculate light intensity for:
     // 1. affected tiles around player
     // 2. tiles around lights that are visible from player position (LoS check)
     mutating func calculateLighting(){
+        let currentFloorIndex = self.currentFloorIndex
+        var map = currentFloor.map
         for cellCoord in map.coordinates {
             if map[cellCoord].visited && allVisibleTiles.contains(cellCoord) == false {
                 let visitedBrightness = map[cellCoord].visitedBrightness
-                map[cellCoord].setLight(visitedBrightness)
+                let litCell = map[cellCoord].setLight(visitedBrightness)
+                updateMapCell(at: cellCoord, on: currentFloorIndex, with: litCell)
             } else {
-                map[cellCoord].setLight(0)
+                updateMapCell(at: cellCoord, on: currentFloorIndex, with: map[cellCoord].setLight(0))
             }
         }
         
         
         allVisibleTiles.removeAll()
         
-        for vc in entities.values.compactMap({ $0.visibilityComponent }) {
+        for vc in entitiesOnCurrentFloor.compactMap({ $0.visibilityComponent }) {
+            map = currentFloor.map
             if VisibilityComponent.lineOfSight(from: player.position, to: vc.owner.position, in: self) && vc.addsLight {
             
                 let visibilityRangeSquared = Double(vc.visionRange * vc.visionRange)
                     //vc.refreshVisibility(world: self)
                 for coord in vc.visibleTiles {
-                    map[coord].visit()
+                    let visitedCell = map[coord].visit()
+                    
+                    updateMapCell(at: coord, on: currentFloorIndex, with: visitedCell)
+                    //map[coord].visit()
                     allVisibleTiles.insert(coord)
                     let distance: Double = Coord.sqr_distance(vc.owner.position, coord)
                     if distance <= visibilityRangeSquared {
@@ -101,7 +134,7 @@ struct World: Codable {
                         let currentLight = map[coord].light
                         let lightValue = max(min(currentLight + attenuation * attenuation, 1), map[coord].visitedBrightness)
                         //print(lightValue)
-                        map[coord].setLight(lightValue)
+                        updateMapCell(at: coord, on: currentFloorIndex, with: visitedCell.setLight(lightValue))
                     }
                 }
             }
@@ -128,13 +161,13 @@ struct World: Codable {
     }
     
     mutating func pruneEntities() -> [RLEntity] {
-        let entitiesToRemove = entities.values.filter {
+        let entitiesToRemove = entitiesOnCurrentFloor.filter {
             $0.healthComponent?.isDead ?? false ||
             $0.variables["SHOULD_REMOVE"] as? Bool ?? false == true
         }
         for entityID in entitiesToRemove.map({$0.id}) {
             if entityID == player.id {
-                addEntity(entity: RLEntity.playerRemains(startPosition: player.position))
+                addEntity(entity: RLEntity.playerRemains(startPosition: player.position, floorIndex: player.floorIndex))
             }
             entities.removeValue(forKey: entityID)
         }
@@ -151,10 +184,10 @@ struct World: Codable {
         switch mapCell.name {
         case "Double_Wall":
             var suffix = "_"
-            suffix += map[coord + Coord(0,1)].name == "Double_Wall" ? "N" : "_"
-            suffix += map[coord + Coord(1,0)].name == "Double_Wall" ? "E" : "_"
-            suffix += map[coord + Coord(0,-1)].name == "Double_Wall" ? "S" : "_"
-            suffix += map[coord + Coord(-1,0)].name == "Double_Wall" ? "W" : "_"
+            suffix += currentFloor.map[coord + Coord(0,1)].name == "Double_Wall" ? "N" : "_"
+            suffix += currentFloor.map[coord + Coord(1,0)].name == "Double_Wall" ? "E" : "_"
+            suffix += currentFloor.map[coord + Coord(0,-1)].name == "Double_Wall" ? "S" : "_"
+            suffix += currentFloor.map[coord + Coord(-1,0)].name == "Double_Wall" ? "W" : "_"
             
             return mapCell.name + suffix
         default:
@@ -197,12 +230,16 @@ struct MapCell: Codable {
         MapCell(name: "void", hue: 0, saturation: 0, blocksLight: false, enterable: false)
     }
     
-    mutating func visit() {
-        visited = true
+    func visit() -> MapCell{
+        var visitedCell = self
+        visitedCell.visited = true
+        return visitedCell
     }
     
-    mutating func setLight(_ intensity: Double) {
-        light = intensity
+    func setLight(_ intensity: Double) -> MapCell {
+        var changedCell = self
+        changedCell.light = intensity
+        return changedCell
     }
     
     var lightedBrightness: CGFloat {
@@ -229,5 +266,9 @@ struct Map: Codable {
     
     var coordinates: [Coord] {
         Array(mapCells.keys)
+    }
+    
+    var enterableTiles: [Coord] {
+        Array(mapCells.filter({cell in cell.value.enterable}).keys)
     }
 }

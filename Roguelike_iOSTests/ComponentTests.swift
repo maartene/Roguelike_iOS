@@ -20,10 +20,10 @@ class ComponentTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         world = World(width: mapWidth, height: mapHeight)
         
-        world.map = Map()
+        world.floors.append(Floor(baseEnemyLevel: 0, enemyTypes: [], map: Map()))
         for y in 0 ..< world.width {
             for x in 0 ..< world.height {
-                world.map[Coord(x, y)] = .ground
+                world.updateMapCell(at: Coord(x,y), on: 0, with: .ground)
             }
         }
         
@@ -85,10 +85,10 @@ class ComponentTests: XCTestCase {
     }
     
     func testConsumeItem() throws {
-        let apple = RLEntity.apple(startPosition: Coord.zero)
+        let apple = RLEntity.apple(startPosition: Coord.zero, floorIndex: 0)
         XCTAssertNotNil(apple.consumableEffect)
         
-        var player = RLEntity.player(startPosition: Coord.zero)
+        var player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
         player.variables["HC_currentHealth"] = (player.variables["HC_maxHealth"] as? Int ?? 2) - 1
         XCTAssertNotNil(player.healthComponent)
         
@@ -99,14 +99,14 @@ class ComponentTests: XCTestCase {
     }
     
     func testAddItemToInventory() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.inventoryComponent != nil else {
             XCTFail("Player should have an inventory component.")
             return
         }
         
-        let apple = RLEntity.apple(startPosition: Coord.zero)
+        let apple = RLEntity.apple(startPosition: Coord.zero, floorIndex: 0)
         
         let updatedPlayer = player.inventoryComponent!.addItem(apple)
         
@@ -117,14 +117,14 @@ class ComponentTests: XCTestCase {
     }
     
     func testRemoveItemFromInventory() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.inventoryComponent != nil else {
             XCTFail("Player should have an inventory component.")
             return
         }
         
-        let apple = RLEntity.apple(startPosition: Coord.zero)
+        let apple = RLEntity.apple(startPosition: Coord.zero, floorIndex: 0)
         
         let updatedPlayer = player.inventoryComponent!.addItem(apple)
         
@@ -141,14 +141,14 @@ class ComponentTests: XCTestCase {
     }
     
     func testInventoryFull() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.inventoryComponent != nil else {
             XCTFail("Player should have an inventory component.")
             return
         }
         
-        let apple = RLEntity.apple(startPosition: Coord.zero)
+        let apple = RLEntity.apple(startPosition: Coord.zero, floorIndex: 0)
         
         var updatedPlayer = player
         for _ in 0 ..< player.inventoryComponent!.size {
@@ -163,8 +163,8 @@ class ComponentTests: XCTestCase {
     }
     
     func testEquipSwordIncreasesDamage() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         guard let eec = sword.equipableEffect else {
             XCTFail("Sword needs an eec attached.")
@@ -195,8 +195,8 @@ class ComponentTests: XCTestCase {
     }*/
     
     func testEquipSwordTest() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.equipmentComponent != nil else {
             XCTFail("Player requires an EquipmentComponent.")
@@ -209,8 +209,8 @@ class ComponentTests: XCTestCase {
     }
     
     func testEquipSwordIncreasesDamageTest() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.equipmentComponent != nil else {
             XCTFail("Player requires an EquipmentComponent.")
@@ -229,8 +229,8 @@ class ComponentTests: XCTestCase {
     }
     
     func testUnequipSwordTest() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.equipmentComponent != nil else {
             XCTFail("Player requires an EquipmentComponent.")
@@ -250,8 +250,8 @@ class ComponentTests: XCTestCase {
     }
     
     func testUnEquipSwordDecreasesDamageTest() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.equipmentComponent != nil else {
             XCTFail("Player requires an EquipmentComponent.")
@@ -282,8 +282,8 @@ class ComponentTests: XCTestCase {
     }
     
     func testCannotEquipOccupiedSlot() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         guard player.equipmentComponent != nil else {
             XCTFail("Player requires an EquipmentComponent.")
@@ -294,15 +294,15 @@ class ComponentTests: XCTestCase {
         let equippingPlayer = player.equipmentComponent!.equipItem(sword, in: .leftArm)
         XCTAssertFalse(equippingPlayer.equipmentComponent!.slotIsEmpty(.leftArm))
         
-        let sword2 = RLEntity.sword(startPosition: Coord.zero)
+        let sword2 = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         let equippingPlayer2 = equippingPlayer.equipmentComponent?.equipItem(sword2, in: .leftArm) ?? equippingPlayer
         
         XCTAssertEqual(equippingPlayer2.equipmentComponent!.equippedSlots[.leftArm, default: sword2]?.id, sword.id)
     }
     
     func testCannotEquipWrongSlotType() throws {
-        let player = RLEntity.player(startPosition: Coord.zero)
-        let sword = RLEntity.sword(startPosition: Coord.zero)
+        let player = RLEntity.player(startPosition: Coord.zero, floorIndex: 0)
+        let sword = RLEntity.sword(startPosition: Coord.zero, floorIndex: 0)
         
         //print(player.equipmentComponent!.equippedSlots)
         

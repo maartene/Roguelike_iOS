@@ -38,7 +38,7 @@ class GameScene: SKScene, ObservableObject {
     
     override init() {
         print("regular init")
-        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize, floorCount: 20)
         boxedWorld = WorldBox(world: world)
         highlight = SKSpriteNode(imageNamed: "highlight")
         
@@ -50,7 +50,7 @@ class GameScene: SKScene, ObservableObject {
     }
         
     override init(size: CGSize) {
-        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize, floorCount: 20)
         boxedWorld = WorldBox(world: world)
         highlight = SKSpriteNode(imageNamed: "highlight")
         

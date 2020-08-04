@@ -53,8 +53,10 @@ struct VisibilityComponent {
     static func lineOfSight(from coord1: Coord, to coord2: Coord, in world: World) -> Bool {
         let lineCoords = Coord.plotLine(from: coord1, to: coord2)
         
+        let floor = world.currentFloor
+        
         let containsBlocker = lineCoords.contains { coord in
-            world.map[coord].blocksLight
+            floor.map[coord].blocksLight
         }
         
         return containsBlocker == false
@@ -90,6 +92,8 @@ struct VisibilityComponent {
         
         let sqr_visibilityRange = Double(visionRange * visionRange)
         
+        let floor = world.currentFloor
+        
         for row in 0 ..< visionRange {
             // Stop once we go out of bounds.
             //let pos = hero + transformOctant(row: row, col: 0, octant: octant);
@@ -110,7 +114,7 @@ struct VisibilityComponent {
                         }
                         
                         // Add any opaque tiles to the shadow map.
-                        if visible && world.map[pos].blocksLight == true {
+                        if visible && floor.map[pos].blocksLight == true {
                             line.add(projection);
                             fullShadow = line.isFullShadow
                         }

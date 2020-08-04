@@ -23,6 +23,8 @@ final class MapController {
     let scene: GameScene
     let cellSize: Int
     
+    var floorToShow = 0
+    
     private var cancellables = Set<AnyCancellable>()
     
     init(scene: GameScene) {
@@ -39,7 +41,19 @@ final class MapController {
         boxedWorld.$world.sink(receiveCompletion: { completion in
             print("Received completion value: \(completion).")
         }, receiveValue: { [weak self] world in
+            print("update world received")
             self?.update(world: world)
+            }).store(in: &cancellables)
+        
+        EventSystem.main.$lastEvent.sink(receiveValue: { [weak self] event in
+            switch event {
+            case .changedFloors(let newFloor):
+                print("Changing floors")
+                self?.floorToShow = newFloor
+                self?.reset()
+            default:
+                break
+            }
             }).store(in: &cancellables)
     }
     
@@ -65,11 +79,13 @@ final class MapController {
         let halfMapViewWidth = mapViewWidth / 2
         let halfMapViewHeight = mapViewHeight / 2
         
+        let floor = world.floors[floorToShow]
+        
         for viewY in 0 ..< mapViewHeight {
             for viewX in 0 ..< mapViewWidth {
                 let mapCoord = Coord(viewX, viewY) + playerPos - Coord(halfMapViewWidth, halfMapViewHeight)
                 
-                let mapCell = world.map[mapCoord]
+                let mapCell = floor.map[mapCoord]
                 
                 if let node = mapNodeMap[mapCoord] {
                     node.isHidden = false
@@ -103,7 +119,9 @@ final class MapController {
         let halfMapViewWidth = mapViewWidth / 2
         let halfMapViewHeight = mapViewHeight / 2
         
-        for entity in world.entities.values {
+        let floor = world.floors[floorToShow]
+        
+        for entity in world.entitiesOnCurrentFloor {
             let viewPos = entity.position - playerPos + Coord(halfMapViewWidth, halfMapViewHeight)
             
             if entityNodeMap[entity.id] == nil {
@@ -114,7 +132,7 @@ final class MapController {
                 if world.allVisibleTiles.contains(entity.position) {
                     sprite.isHidden = false
                     sprite.position = CGPoint(x: viewPos.x * cellSize + cellSize / 2, y: viewPos.y * cellSize + cellSize / 2)
-                    sprite.color = SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: CGFloat(max(world.map[entity.position].light, 0.5)), alpha: 1)
+                    sprite.color = SKColor(hue: entity.color.hue, saturation: entity.color.saturation, brightness: CGFloat(max(floor.map[entity.position].light, 0.5)), alpha: 1)
                 //} else if world.map[entity.position].visited {
                     //sprite.position = CGPoint(x: viewPos.x * cellSize + 8, y: viewPos.y * cellSize + 8)
                     //sprite.color = SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 0, alpha: 1)

@@ -26,7 +26,7 @@ class LootManagerTests: XCTestCase {
         let lootManager = LootManager(boxedWorld: boxedWorld, seed: seed)
         
         for _ in 0 ..< 50 {
-            let loot = lootManager.gimmeSomeLoot(at: Coord.zero)
+            let loot = lootManager.gimmeSomeLoot(at: Coord.zero, on: 0)
             if let eec = loot.equipableEffect {
                 print("\(loot.name) \(eec.statChange)")
             }

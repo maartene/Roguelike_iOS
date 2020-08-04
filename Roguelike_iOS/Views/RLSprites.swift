@@ -27,6 +27,8 @@ struct RLSprites {
                           "Double_Wall_NE_W": Coord(41, 27),
                           "Double_Wall_NES_": Coord(17, 27),
                           "Double_Wall_NESW": Coord(16, 27),
+                          "Stairs_Up": Coord(2, 25),
+                          "Stairs_Down": Coord(3, 25),
                           "Player": Coord(25, 30),
                           "Lamp": Coord(3, 16),
                           "FullSquare": Coord(32, 26),

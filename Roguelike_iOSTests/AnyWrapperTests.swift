@@ -20,14 +20,14 @@ class AnyWrapperTests: XCTestCase {
     }
 
     func testWrapRLEntity() throws {
-        let entity = RLEntity(name: "test entity", hue: 1, saturation: 0.5, startPosition: Coord(15,12))
+        let entity = RLEntity(name: "test entity", floorIndex: 0, startPosition: Coord(15,12))
         let wrappedEntity = try AnyWrapper.wrapperFor(entity)
         
         XCTAssertEqual(entity.id, (wrappedEntity.value as! RLEntity).id)
     }
     
     func testWrapRLEntityArray() throws {
-        let entityArray = [RLEntity.apple(startPosition: Coord.zero), RLEntity.lamp(startPosition: Coord.zero)]
+        let entityArray = [RLEntity.apple(startPosition: Coord.zero, floorIndex: 0), RLEntity.lamp(startPosition: Coord.zero, floorIndex: 0)]
         let wrappedArray = try AnyWrapper.wrapperFor(entityArray)
         XCTAssertEqual((wrappedArray.value as! [RLEntity]).count, entityArray.count)
         

@@ -20,10 +20,11 @@ class WorldTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         world = World(width: mapWidth, height: mapHeight)
         
-        world.map = Map()
+        world.floors.append(Floor(baseEnemyLevel: 0, enemyTypes: [], map: Map()))
+        
         for y in 0 ..< world.width {
             for x in 0 ..< world.height {
-                world.map[Coord(x, y)] = .ground
+                world.updateMapCell(at: Coord(x,y), on: 0, with: .ground)
             }
         }
         
@@ -44,28 +45,34 @@ class WorldTests: XCTestCase {
     func testUpdateEntities() throws {
         // This is an example of a performance test case.
         for _ in 0 ... 1000 {
-            let entity = RLEntity.skeleton(startPosition: Coord.zero)
+            let entity = RLEntity.skeleton(startPosition: Coord.zero, floorIndex: (0...9).randomElement()!)
             world.addEntity(entity: entity)
         }
+        var pass = 1
         self.measure {
             // Put the code you want to measure the time of here.
+            print("Pass: \(pass) Entities on current floor: \(world.entitiesOnCurrentFloor.count) Total entities: \(world.entities.count)")
             world.update()
+            pass += 1
         }
     }
     
     func testUpdateEntitiesInclAI() throws {
         // This is an example of a performance test case.
         for _ in 0 ... 1000 {
-            let entity = RLEntity.skeleton(startPosition: Coord.zero)
+            let entity = RLEntity.skeleton(startPosition: Coord.zero, floorIndex: (0...19).randomElement()!)
             world.addEntity(entity: entity)
         }
         
         let boxedWorld = WorldBox(world: world)
         
+        var pass = 1
         self.measure {
             // Put the code you want to measure the time of here.
+            print("Pass: \(pass) Entities on current floor: \(world.entitiesOnCurrentFloor.count) Entities: \(world.entities.count)")
             let waitAction = WaitAction(owner: world.player)
             boxedWorld.executeAction(waitAction)
+            pass += 1
         }
     }
     

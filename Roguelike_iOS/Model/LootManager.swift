@@ -33,7 +33,7 @@ final class LootManager {
             
             switch event {
             case .entityDied(let entity):
-                let loot = strongSelf.gimmeSomeLoot(at: entity.position)
+                let loot = strongSelf.gimmeSomeLoot(at: entity.position, on: entity.floorIndex)
                 let createEntityAction = CreateEntityAction(owner: entity, entity: loot)
                 strongSelf.boxedWorld.executeAction(createEntityAction)
             default:
@@ -43,20 +43,20 @@ final class LootManager {
             }).store(in: &cancellables)
     }
     
-    func gimmeSomeLoot(at position: Coord) -> RLEntity {
+    func gimmeSomeLoot(at position: Coord, on floor: Int) -> RLEntity {
         var loot: RLEntity
         
         // but what is it?
         let value = random.nextUniform()
         switch value {
         case 0 ..< 0.1:
-            loot = RLEntity.sword(startPosition: position)
+            loot = RLEntity.sword(startPosition: position, floorIndex: floor)
         case 0.1 ..< 0.2:
-            loot = RLEntity.helmet(startPosition: position)
-        case 0.2 ..< 0.4:
-            loot = RLEntity.apple(startPosition: position)
+            loot = RLEntity.helmet(startPosition: position, floorIndex: floor)
+        case 0.2 ..< 0.5:
+            loot = RLEntity.apple(startPosition: position, floorIndex: floor)
         default:
-            loot = RLEntity.gold(startPosition: position)
+            loot = RLEntity.gold(startPosition: position, floorIndex: floor)
         }
          
         
@@ -66,12 +66,12 @@ final class LootManager {
             let quality = random.nextUniform()
             print("Quality: \(quality)")
             switch quality {
-            case 0 ..< 0.05:
-                // legendary
-                loot = improveItem(loot, add: 2)
-            case 0.05 ..< 0.2:
-                // +1
-                loot = improveItem(loot, add: 1)
+            case 0 ..< 0.1:
+                // Rare
+                loot = improveItem(loot, rarity: .Rare)
+            case 0.1 ..< 0.4:
+                // Uncommon
+                loot = improveItem(loot, rarity: .Uncommon)
             default:
                 return loot
             }
@@ -80,12 +80,14 @@ final class LootManager {
         return loot
     }
     
-    func improveItem(_ item: RLEntity, add: Int) -> RLEntity {
-        var improvedItem = item
+    func improveItem(_ item: RLEntity, rarity: Rarity) -> RLEntity {
+        let namePrefix = rarity != .Common ? rarity.rawValue + " " : ""
+        var improvedItem = RLEntity(name: namePrefix + item.name, color: rarity.color, floorIndex: item.floorIndex, startPosition: item.position)
+        improvedItem.variables = item.variables
         
         if var changedStats = improvedItem.equipableEffect?.statChange {
             for stat in changedStats {
-                changedStats[stat.key] = stat.value + add
+                changedStats[stat.key] = stat.value + rarity.statChange
             }
             
             improvedItem.variables["EEC_statChange"] = changedStats

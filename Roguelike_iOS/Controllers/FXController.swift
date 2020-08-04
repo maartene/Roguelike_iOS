@@ -62,6 +62,8 @@ final class FXController {
             return
         }
         
+        let floor = world.currentFloor
+        
         if let newAction = actions.last {
             if let action = newAction as? AttackAction {
                 let projectile = SKNode()
@@ -103,17 +105,17 @@ final class FXController {
                 let touchedTiles = Coord.plotLine(from: action.owner.position, to: action.target.position)
                 
                 let fxedTiles = touchedTiles.map { coord -> FxTile in
-                    FxTile(coord: coord, tile: world.map[coord], highlightBrightnessToAdd: 1)
+                    FxTile(coord: coord, tile: floor.map[coord], highlightBrightnessToAdd: 1)
                 }
                 
                 let neighbourTiles = touchedTiles.flatMap { coord in coord.neighbourCoordinates }
                 let fxedNeighbours = neighbourTiles.map { coord -> FxTile in
-                    FxTile(coord: coord, tile: world.map[coord], highlightBrightnessToAdd: 0.5)
+                    FxTile(coord: coord, tile: floor.map[coord], highlightBrightnessToAdd: 0.5)
                 }
                 
                 let diagonalNeighbours = touchedTiles.flatMap { coord in coord.diagonalNeighbourCoordinates}
                 let fxedDiagonalNeighbours = diagonalNeighbours.map { coord -> FxTile in
-                    FxTile(coord: coord, tile: world.map[coord], highlightBrightnessToAdd: 0.25)
+                    FxTile(coord: coord, tile: floor.map[coord], highlightBrightnessToAdd: 0.25)
                 }
                 
                 let affectedTiles: Set<FxTile> = Set(fxedTiles).union(fxedNeighbours).union(fxedDiagonalNeighbours)
@@ -158,7 +160,7 @@ final class FXController {
     func createEffect(for event: RLEvent) {
         switch event {
         case .entityDied(let entity):
-            explosion(at: entity.position, range: 1, color: SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1))
+            explosion(at: entity.position, range: 1, color: SKColor(hue: entity.color.hue, saturation: entity.color.saturation, brightness: 1, alpha: 1))
         case .levelup(let entity):
             scaleSpriteEffect(for: entity)
         default:
@@ -171,7 +173,7 @@ final class FXController {
             if let tex = sprite.texture {
                 tex.filteringMode = .nearest
                 let fxSprite = SKSpriteNode(texture: tex)
-                fxSprite.color = SKColor(hue: CGFloat(entity.hue), saturation: CGFloat(entity.saturation), brightness: 1, alpha: 1)
+                fxSprite.color = SKColor(hue: entity.color.hue, saturation: entity.color.saturation, brightness: 1, alpha: 1)
                 fxSprite.blendMode = .screen
                 fxSprite.colorBlendFactor = 1
                 fxSprite.zPosition = FX_Z_POSITION
@@ -187,10 +189,15 @@ final class FXController {
     }
     
     func explosion(at coord: Coord, range: Int, color: SKColor = SKColor.white) {
+        guard let floor = boxedWorld?.world.currentFloor else {
+            return
+        }
+        
         for y in coord.y - range ... coord.y + range {
             for x in coord.x - range ... coord.x + range {
                 if Coord(x, y).manhattanDistance(to: coord) <= range {
-                    if let sprite = mapController?.mapNodeMap[Coord(x,y)], let tile = boxedWorld?.world.map[coord] {
+                    if let sprite = mapController?.mapNodeMap[Coord(x,y)] {
+                        let tile = floor.map[coord]
                         let fxTile = FxTile(coord: coord, tile: tile, highlightBrightnessToAdd: 4)
                         
                         let hl = SKAction.colorize(with: fxTile.highlightColor, colorBlendFactor: 1, duration: 0.25)

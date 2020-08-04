@@ -21,7 +21,7 @@ final class WorldBox: ObservableObject {
     @Published var world: World
     @Published var state: WorldBoxState = .idle
     @Published var lastExecutedAction: Action?
-    @Published var removedEntities = [RLEntity]()
+//    @Published var removedEntities = [RLEntity]()
     
     var actionQueue = [Action]()
     
@@ -47,11 +47,11 @@ final class WorldBox: ObservableObject {
         }
     }
     
-    func updateAI(entityID: UUID) {
-        guard state == .idle else {
-            print("Can only update in state 'idle'.")
-            return
-        }
+    func updateAI(entityID: UUID, in world: World) {
+        //guard state == .idle else {
+        //    print("Can only update in state 'idle'.")
+        //    return
+        //}
         
         guard let entity = world.entities[entityID] else {
             return
@@ -72,7 +72,7 @@ final class WorldBox: ObservableObject {
                 let movementLine = Coord.plotLine(from: entity.position, to: world.player.position)
                 
                 if movementLine.count > 1 {
-                    let moveAction = MoveAction(owner: entity, targetLocation: movementLine[1], map: world.map)
+                    let moveAction = MoveAction(owner: entity, targetLocation: movementLine[1], map: world.currentFloor.map)
                     actionQueue.insert(moveAction, at: 0)
                 }
             }
@@ -89,6 +89,11 @@ final class WorldBox: ObservableObject {
     }
     
     func executeNextQueuedAction() {
+        guard state == .idle else {
+            print("executeNextQueuedAction: Can only execute in state 'idle'.")
+            return
+        }
+        
         if actionQueue.count > 0 {
             executeAction(actionQueue.removeFirst())
         }
@@ -96,29 +101,42 @@ final class WorldBox: ObservableObject {
     
     func executeAction(_ action: Action) {
         guard state == .idle else {
-            print("Can only execute in state 'idle'.")
+            print("executeAction: Can only execute in state 'idle'.")
             return
         }
         
-        removedEntities = []
+        var updatedWorld = world
+        state = .updating
         
-        lastExecutedAction = action
-        
-        let updatedEntities = action.execute(in: world)
-        world.replaceEntities(entities: updatedEntities)
-    
-        if (action.owner.id == world.player.id) {
-            for entityID in world.entities.keys.filter({ $0 != world.player.id }) {
-                updateAI(entityID: entityID)
-            }
+        DispatchQueue.global().async {
+//            self.removedEntities = []
+                    
+                
+                
+                let updatedEntities = action.execute(in: updatedWorld)
+                updatedWorld.replaceEntities(entities: updatedEntities)
+            
+                if (action.owner.id == updatedWorld.player.id) {
+                    for entity in updatedWorld.entitiesOnCurrentFloor.filter({ $0.id != updatedWorld.player.id }) {
+                        self.updateAI(entityID: entity.id, in: updatedWorld)
+                    }
+                }
+                
+                /*removedEntities = world.pruneEntities()
+                if world.player.healthComponent?.isDead ?? false {
+                    state = .gameover
+                }*/
+                
+                updatedWorld.update()
+                
+                DispatchQueue.main.async {
+                    self.lastExecutedAction = action
+                    self.world = updatedWorld
+                    self.state = .idle
+                }
         }
         
-        /*removedEntities = world.pruneEntities()
-        if world.player.healthComponent?.isDead ?? false {
-            state = .gameover
-        }*/
-        
-        world.update()
+        world = updatedWorld
     }
     
     func save() {

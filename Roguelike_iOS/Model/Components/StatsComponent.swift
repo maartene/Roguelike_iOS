@@ -60,7 +60,7 @@ struct StatsComponent {
         var updatedEntity = entity
         
         // attack
-        let damage = (entity.variables["SC_strength"] as? Int ?? 0) + (entity.variables["SC_intelligence"] as? Int ?? 0) * 2 + 1
+        let damage = (entity.variables["SC_strength"] as? Int ?? 0) + (entity.variables["SC_intelligence"] as? Int ?? 0) * 2
         
         // defense
         let defense = max(0, (entity.variables["SC_strength"] as? Int ?? 0) * 2 + (entity.variables["SC_intelligence"] as? Int ?? 0) - 1)
