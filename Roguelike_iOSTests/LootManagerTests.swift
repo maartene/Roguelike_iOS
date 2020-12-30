@@ -22,8 +22,7 @@ class LootManagerTests: XCTestCase {
     }
 
     func testGenerateLoot() throws {
-        let boxedWorld = WorldBox(world: World(width: 10, height: 10))
-        let lootManager = LootManager(boxedWorld: boxedWorld, seed: seed)
+        let lootManager = LootManager(seed: seed)
         
         for _ in 0 ..< 50 {
             let loot = lootManager.gimmeSomeLoot(at: Coord.zero, on: 0)
@@ -33,6 +32,24 @@ class LootManagerTests: XCTestCase {
         }
     }
 
-    
+    func testLootRarity() throws {
+        let lootManager = LootManager(seed: seed)
+        
+        for _ in 0 ..< 10 {
+            let loot = lootManager.gimmeSomeLoot(at: Coord.zero, on: 0, minimumRarity: .Uncommon)
+            if let eec = loot.equipableEffect {
+                print("\(loot.name) \(loot.rarity ?? Rarity.Common) \(eec.statChange)")
+                XCTAssertEqual(loot.rarity, Rarity.Uncommon)
+            }
+        }
+        
+        for _ in 0 ..< 10 {
+            let loot = lootManager.gimmeSomeLoot(at: Coord.zero, on: 0, minimumRarity: .Rare)
+            if let eec = loot.equipableEffect {
+                print("\(loot.name) \(loot.rarity ?? Rarity.Common) \(eec.statChange)")
+                XCTAssertEqual(loot.rarity, Rarity.Rare)
+            }
+        }
+    }
 
 }

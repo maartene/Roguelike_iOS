@@ -76,7 +76,13 @@ struct AttackAction: Action {
         
         // try and add xp to target
         if damagedTarget.healthComponent?.isDead ?? false {
-            actor = actor.statsComponent?.addXP(damagedTarget.healthComponent!.xpOnDeath) ?? actor
+            var xpToAdd = damagedTarget.healthComponent!.xpOnDeath
+            if let rarity = damagedTarget.rarity {
+                xpToAdd += xpToAdd * rarity.statChange / 2
+            }
+            xpToAdd += damagedTarget.healthComponent!.xpOnDeath * (damagedTarget.variables["SC_currentLevel"] as? Int ?? 0)
+            
+            actor = actor.statsComponent?.addXP(xpToAdd) ?? actor
         }
         
         return [damagedTarget, actor]

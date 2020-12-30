@@ -62,6 +62,8 @@ final class WorldBox: ObservableObject {
         //    return
         //}
         
+//        return
+        
         guard let entity = world.entities[entityID] else {
             return
         }
@@ -140,14 +142,14 @@ final class WorldBox: ObservableObject {
                 
             self.updatedWorld!.update()
                 
-                DispatchQueue.main.async {
-                    self.lastExecutedAction = action
-                    self.world = self.updatedWorld!
-                    self.state = .idle
-                }
+            DispatchQueue.main.async {
+                self.lastExecutedAction = action
+                self.world = self.updatedWorld!
+                self.state = .idle
+            }
         }
         
-        world = updatedWorld!
+        //world = updatedWorld!
     }
     
     func save() {
@@ -163,7 +165,7 @@ final class WorldBox: ObservableObject {
                 encoder.outputFormatting = .prettyPrinted
                 
                 // pretend to be doing *actual* work
-                sleep(1)
+                //sleep(1)
                 
                 let data = try encoder.encode(self.world)
                 /*let localPlayer = GKLocalPlayer.local
@@ -178,12 +180,14 @@ final class WorldBox: ObservableObject {
                 let url = homeDir.appendingPathComponent("rogueLikeSave.json")
                 try data.write(to: url)
                 DispatchQueue.main.async {
-                    print("Save done.")
+                    print("Save done - \(url).")
                     self.state = .idle
                 }
             } catch {
-                print("Error: \(error)")
-                self.state = .idle
+                DispatchQueue.main.async {
+                    print("Error: \(error)")
+                    self.state = .idle
+                }
             }
         }
         
@@ -191,7 +195,7 @@ final class WorldBox: ObservableObject {
     
     func load(onLoadFinished: (() -> ())? = nil) {
         guard state == .idle else {
-            print("Can only save in state 'idle'.")
+            print("Can only load in state 'idle'.")
             return
         }
         state = .loading
@@ -201,7 +205,7 @@ final class WorldBox: ObservableObject {
                 let decoder = JSONDecoder()
                 
                 // pretend to be doing *actual* work
-                sleep(1)
+                //sleep(1)
                 
                 let homeDir = FileManager.default.temporaryDirectory
                 let url = homeDir.appendingPathComponent("rogueLikeSave.json")
@@ -217,7 +221,7 @@ final class WorldBox: ObservableObject {
                 }
             } catch {
                 DispatchQueue.main.async {
-                    print("Loading done")
+                    print("Loading failed \(error)")
                     onLoadFinished?()
                     self.state = .idle
                 }

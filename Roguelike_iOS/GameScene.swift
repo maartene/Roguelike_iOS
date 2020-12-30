@@ -31,7 +31,7 @@ class GameScene: SKScene, ObservableObject {
     
     let highlight: SKSpriteNode
         
-    let nextActionDelay: TimeInterval = 0.05
+    let nextActionDelay: TimeInterval = 0.1
     var actionTimer: TimeInterval = 0
     
     var musicNode: SKAudioNode?
@@ -170,7 +170,10 @@ class GameScene: SKScene, ObservableObject {
             guard let strongSelf = self else {
                 return
             }
-            /*strongSelf.spriteUIHandler.addMovementArrows(to: strongSelf.boxedWorld.world.player)*/
+            
+            // FIXME: quick hack to correctly refresh the screen after loading.
+            self?.mapController.update(world: strongSelf.boxedWorld.world)
+            strongSelf.boxedWorld.queueAction(WaitAction(owner: strongSelf.boxedWorld.world.player))
         }
     }
     

@@ -57,6 +57,7 @@
 		DEB34CC924CCCA1D001C3721 /* AnyWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */; };
 		DEB7ECBB24C96C1100052669 /* SpendStatPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */; };
 		DEBA631E24D9E1BE006275C3 /* MobCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA631D24D9E1BE006275C3 /* MobCreator.swift */; };
+		DEBA632024DAB9A8006275C3 /* MobCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA631F24DAB9A8006275C3 /* MobCreatorTests.swift */; };
 		DEBABCD024CD817E0039DC7A /* PickupItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */; };
 		DEBABCD224CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */; };
 		DEBABCD524CE20810039DC7A /* EventSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBABCD424CE20810039DC7A /* EventSystem.swift */; };
@@ -134,6 +135,7 @@
 		DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapperTests.swift; sourceTree = "<group>"; };
 		DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointsView.swift; sourceTree = "<group>"; };
 		DEBA631D24D9E1BE006275C3 /* MobCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobCreator.swift; sourceTree = "<group>"; };
+		DEBA631F24DAB9A8006275C3 /* MobCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobCreatorTests.swift; sourceTree = "<group>"; };
 		DEBABCCF24CD817E0039DC7A /* PickupItemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupItemAction.swift; sourceTree = "<group>"; };
 		DEBABCD124CDCDBA0039DC7A /* ConsumeFromInventoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumeFromInventoryAction.swift; sourceTree = "<group>"; };
 		DEBABCD424CE20810039DC7A /* EventSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSystem.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				DE6E987B24C781E7006EBFFB /* ComponentTests.swift */,
 				DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */,
 				DE0217DB24D3506000FAAB57 /* LootManagerTests.swift */,
+				DEBA631F24DAB9A8006275C3 /* MobCreatorTests.swift */,
 			);
 			path = Roguelike_iOSTests;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */,
 				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
 				DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */,
+				DEBA632024DAB9A8006275C3 /* MobCreatorTests.swift in Sources */,
 				DE6E987824C4D878006EBFFB /* ActionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

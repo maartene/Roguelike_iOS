@@ -38,6 +38,7 @@ enum AnyWrapper: Codable {
         case type, value
     }
     
+    case wrappedNull
     case string(value: String)
     case bool(value: Bool)
     case int(value: Int)
@@ -46,11 +47,16 @@ enum AnyWrapper: Codable {
     case array(value: [AnyWrapper])
     case coord(value: Coord)
     case stringlyTypedDict(value: [String: AnyWrapper])
+    case equipmentSlotEntityDict(value: [EquipmentSlot: AnyWrapper])
     case coordSet(value: Set<Coord>)
     case entity(value: RLEntity)
+    case equipmentSlot(value: EquipmentSlot)
+    //case optionalEntity(value: RLEntity?)
     
     static func wrapperFor(_ value: Any) throws -> AnyWrapper {
-        if let v = value as? String {
+        if value == nil {
+            return .wrappedNull
+        } else if let v = value as? String {
             return .string(value: v)
         } else if let v = value as? Bool {
             return .bool(value: v)
@@ -68,10 +74,21 @@ enum AnyWrapper: Codable {
         } else if let v = value as? [String: Any] {
             let wrappedDict = try v.mapValues { itemValue in try AnyWrapper.wrapperFor(itemValue) }
             return .stringlyTypedDict(value: wrappedDict)
+        } else if let v = value as? [EquipmentSlot: RLEntity?] {
+            let wrappedDict = try v.mapValues { itemValue -> AnyWrapper in
+                if let notNilItemValue = itemValue {
+                    return try AnyWrapper.wrapperFor(notNilItemValue)
+                } else {
+                    return AnyWrapper.wrappedNull
+                }
+            }
+            return .equipmentSlotEntityDict(value: wrappedDict)
         } else if let v = value as? Set<Coord> {
             return .coordSet(value: v)
         } else if let v = value as? RLEntity {
             return .entity(value: v)
+        } else if let v = value as? EquipmentSlot {
+            return .equipmentSlot(value: v)
         } else {
             throw AnyWrapperErrors.cannotConvertError
         }
@@ -79,6 +96,8 @@ enum AnyWrapper: Codable {
     
     var value: Any {
         switch self {
+        case .wrappedNull:
+            return self
         case .string(let value):
             return value
         case .bool(let value):
@@ -98,14 +117,28 @@ enum AnyWrapper: Codable {
         case .stringlyTypedDict(let dict):
             let unwrappedDict = dict.mapValues { itemValue in itemValue.value}
             return unwrappedDict
+        case .equipmentSlotEntityDict(let dict):
+            let unwrappedDict = dict.mapValues { itemValue -> RLEntity? in
+                switch itemValue {
+                case .wrappedNull:
+                    return nil
+                default:
+                    return itemValue.value as? RLEntity
+                }
+            }
+            return unwrappedDict
         case .coordSet(let set):
             return set
+        case .equipmentSlot(let value):
+            return value
         }
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
+        case .wrappedNull:
+            try container.encode("wrappedNull", forKey: .type)
         case .string(let value):
             try container.encode("string", forKey: .type)
             try container.encode(value, forKey: .value)
@@ -136,6 +169,12 @@ enum AnyWrapper: Codable {
         case .coordSet(let set):
             try container.encode("coordSet", forKey: .type)
             try container.encode(set, forKey: .value)
+        case .equipmentSlotEntityDict(let dict):
+            try container.encode("equipmentSlotEntityDict", forKey: .type)
+            try container.encode(dict, forKey: .value)
+        case .equipmentSlot(let value):
+            try container.encode("equipmentSlot", forKey: .type)
+            try container.encode(value, forKey: .value)
         }
     }
     
@@ -144,6 +183,8 @@ enum AnyWrapper: Codable {
         let type = try values.decode(String.self, forKey: .type)
         
         switch type {
+        case "wrappedNull":
+            self = .wrappedNull
         case "string":
             let v = try values.decode(String.self, forKey: .value)
             self = .string(value: v)
@@ -174,6 +215,12 @@ enum AnyWrapper: Codable {
         case "coordSet":
             let v = try values.decode(Set<Coord>.self, forKey: .value)
             self = .coordSet(value: v)
+        case "equipmentSlotEntityDict":
+            let decodedDict = try values.decode([EquipmentSlot: AnyWrapper].self, forKey: .value)
+            self = .equipmentSlotEntityDict(value: decodedDict)
+        case "equipmentSlot":
+            let v = try values.decode(EquipmentSlot.self, forKey: .value)
+            self = .equipmentSlot(value: v)
         default:
             throw AnyWrapperErrors.cannotConvertError
         }

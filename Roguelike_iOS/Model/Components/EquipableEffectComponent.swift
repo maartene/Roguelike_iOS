@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum EquipmentSlot: CustomStringConvertible {
+enum EquipmentSlot: String, CustomStringConvertible, Codable {
     case head
     case body
     case leftArm

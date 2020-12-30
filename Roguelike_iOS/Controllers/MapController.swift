@@ -41,7 +41,7 @@ final class MapController {
         boxedWorld.$world.sink(receiveCompletion: { completion in
             print("Received completion value: \(completion).")
         }, receiveValue: { [weak self] world in
-            //print("update world received")
+            print("update world received")
             self?.update(world: world)
             }).store(in: &cancellables)
         
@@ -49,6 +49,7 @@ final class MapController {
             switch event {
             case .changedFloors(let newFloor):
                 print("Changing floors")
+                
                 self?.floorToShow = newFloor
                 self?.reset()
             default:
@@ -64,10 +65,19 @@ final class MapController {
     }
     
     func reset() {
-        mapNodeMap.removeAll()
-        entityNodeMap.removeAll()
-        mapNode.removeAllChildren()
-        entityNode.removeAllChildren()
+        if Thread.current == Thread.main {
+            self.mapNodeMap.removeAll()
+            self.entityNodeMap.removeAll()
+            self.mapNode.removeAllChildren()
+            self.entityNode.removeAllChildren()
+        } else {
+            DispatchQueue.main.sync {
+                self.mapNodeMap.removeAll()
+                self.entityNodeMap.removeAll()
+                self.mapNode.removeAllChildren()
+                self.entityNode.removeAllChildren()
+            }
+        }
     }
     
     func showMap(world: World) {
@@ -153,8 +163,9 @@ final class MapController {
     }
     
     func deleteSprites(world: World) {
+        let entitiesOnCurrentFloor = world.entitiesOnCurrentFloor
         let spritesToDelete = entityNodeMap.filter { entry in
-            world.entitiesOnCurrentFloor.contains(where: {$0.id == entry.key}) == false
+            entitiesOnCurrentFloor.contains(where: {$0.id == entry.key}) == false
         }
         
         for entry in spritesToDelete {

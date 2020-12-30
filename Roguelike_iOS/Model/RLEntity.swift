@@ -19,6 +19,7 @@ struct RLEntity: Codable {
         case name
         case variables
         case color
+        case rarity
     }
     
     let id: UUID
@@ -26,15 +27,16 @@ struct RLEntity: Codable {
     var floorIndex: Int
     let name: String
     let color: ColorInfo
-    
+    let rarity: Rarity?
     var variables = [String: Any]()
     
-    init(name: String, color: SKColor = SKColor.white, floorIndex: Int, startPosition: Coord = Coord.zero) {
+    init(name: String, color: SKColor = SKColor.white, rarity: Rarity? = nil, floorIndex: Int, startPosition: Coord = Coord.zero) {
         self.id = UUID()
         self.name = name
         self.color = ColorInfo(color)
         self.position = startPosition
         self.floorIndex = floorIndex
+        self.rarity = rarity
     }
     
     func encode(to encoder: Encoder) throws {
@@ -44,6 +46,7 @@ struct RLEntity: Codable {
         try container.encode(floorIndex, forKey: .floorIndex)
         try container.encode(name, forKey: .name)
         try container.encode(color, forKey: .color)
+        try container.encode(rarity, forKey: .rarity)
         
         let wrappedVariables = try AnyWrapper.wrapperFor(variables)
         try container.encode(wrappedVariables, forKey: .variables)
@@ -56,6 +59,7 @@ struct RLEntity: Codable {
         floorIndex = try values.decode(Int.self, forKey: .floorIndex)
         name = try values.decode(String.self, forKey: .name)
         color = try values.decode(ColorInfo.self, forKey: .color)
+        rarity = try values.decode(Rarity?.self, forKey: .rarity)
         
         // load preliminary values
         let wrappedVariables = try values.decode(AnyWrapper.self, forKey: .variables)
@@ -71,7 +75,7 @@ struct RLEntity: Codable {
         player = VisibilityComponent.add(to: player, addsLight: true, visionRange: 10)
         player = ActionComponent.add(to: player)
         player = HealthComponent.add(to: player, maxHealth: 10, currentHealth: 10, defense: 1, xpOnDeath: 0)
-        player = AttackComponent.add(to: player, range: 5, damage: 3)
+        player = AttackComponent.add(to: player, range: 5, damage: 5)
         player = StatsComponent.add(to: player)
         player = InventoryComponent.add(to: player, size: 10, pickupRange: 2)
         player = EquipmentComponent.add(to: player)

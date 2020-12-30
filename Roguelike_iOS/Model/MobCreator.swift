@@ -15,17 +15,35 @@ struct MobCreator {
             fatalError("Floor does not have any enemy types.")
         }
         
-        var newMob: RLEntity
+        let prototype: RLEntity
         switch newMobType {
         case "Skeleton":
-            newMob = RLEntity.skeleton(startPosition: location, floorIndex: floorIndex)
+            prototype = RLEntity.skeleton(startPosition: location, floorIndex: floorIndex)
         default:
-            newMob = RLEntity(name: "ERROR", floorIndex: floorIndex)
+            prototype = RLEntity(name: "ERROR", floorIndex: floorIndex)
         }
+        
+        let value = Float.random(in: 0...1.0)
+        let rarity: Rarity
+        switch value {
+        case 0 ..< 0.1:
+            rarity = .Rare
+        case 0.1 ..< 0.4:
+            rarity = .Uncommon
+        default:
+            rarity = .Common
+        }
+        
+        var newMob = RLEntity(name: prototype.name, color: rarity.color, floorIndex: prototype.floorIndex, startPosition: prototype.position)
+        newMob.variables = prototype.variables
         
         newMob = StatsComponent.add(to: newMob)
         
         newMob.variables["SC_currentLevel"] = floor.baseEnemyLevel
+        
+        newMob.variables["SC_strength"] = rarity.statChange
+        newMob.variables["SC_intelligence"] = rarity.statChange
+        newMob.variables["SC_dexterity"] = rarity.statChange
         
         var unspentPoints = floor.baseEnemyLevel * 2
         while unspentPoints > 0 {
