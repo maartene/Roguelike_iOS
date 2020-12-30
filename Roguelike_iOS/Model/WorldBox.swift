@@ -135,17 +135,18 @@ final class WorldBox: ObservableObject {
                     }
                 }
                 
-                /*removedEntities = world.pruneEntities()
-                if world.player.healthComponent?.isDead ?? false {
-                    state = .gameover
-                }*/
+                //removedEntities = world.pruneEntities()
                 
             self.updatedWorld!.update()
                 
             DispatchQueue.main.async {
                 self.lastExecutedAction = action
                 self.world = self.updatedWorld!
-                self.state = .idle
+                if self.world.player.healthComponent?.isDead ?? false {
+                    self.state = .gameover
+                } else {
+                    self.state = .idle
+                }
             }
         }
         

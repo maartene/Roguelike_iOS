@@ -43,7 +43,7 @@ struct PlayerStatisticsView: View {
     }
     
     var closeOffset: CGFloat {
-        CGFloat((2 + playerInfoText.count) * -26)
+        CGFloat(-12 + (2 + playerInfoText.count) * -32)
     }
     
     var body: some View {

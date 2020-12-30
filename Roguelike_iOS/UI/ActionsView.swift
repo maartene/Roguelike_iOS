@@ -14,7 +14,7 @@ struct ActionsView: View {
     
     let offset: CGPoint
     let title: String
-    let fontSize: CGFloat = 24
+    let fontSize: CGFloat = 32
     let actions: [Action]
     let sceneSize: CGSize
         

@@ -54,7 +54,7 @@ struct InventoryView: View {
     @State var showItemDetails: RLEntity?
     @ObservedObject var boxedWorld: WorldBox
     let title = "Inventory"
-    let fontSize: CGFloat = 24
+    let fontSize: CGFloat = 32
     
     var items: [RLEntity] {
         boxedWorld.world.player.inventoryComponent?.items ?? []
@@ -183,19 +183,19 @@ struct InventoryViewContainer: View {
     let windowWidth = 35
     
     var closeOffset: CGFloat {
-        CGFloat((2 + windowWidth) * 16)
+        CGFloat((2 + windowWidth) * 20)
     }
     
     var body: some View {
         HStack {
             Image(self.isShown ? "rightArrow_32" : "leftArrow_32")
                 //.overlay(Circle().size(CGSize(width: 32, height: 32)).foregroundColor(Color.clear))
-                .offset(x: -16, y: 0)
+                .offset(x: -8, y: 0)
                 .onTapGesture(perform: { self.isShown.toggle()
     //                print("")
                 })
             InventoryView(boxedWorld: boxedWorld, windowWidth: windowWidth)
-        }.offset(x: self.isShown ? 0 : closeOffset - 8, y: 0)
+        }.offset(x: self.isShown ? 0 : closeOffset + 8, y: 0)
             .animation(.easeOut(duration: 0.25))
     }
 }

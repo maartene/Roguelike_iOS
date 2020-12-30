@@ -14,7 +14,7 @@ struct ConsoleWindowView: View {
     var title = "Window"
     var windowWidth = 0
     
-    let fontSize: CGFloat = 24
+    let fontSize: CGFloat = 32
     let lines: [String]
     
     var longestLineCount: Int {

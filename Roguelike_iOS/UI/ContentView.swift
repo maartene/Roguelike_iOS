@@ -32,12 +32,19 @@ struct HUD: View {
             VStack {
                 PlayerStatisticsView(boxedWorld: self.scene.boxedWorld)
                 Spacer()
-                HStack {
-                    SpendStatPointsViewContainer(boxedWorld: self.scene.boxedWorld)
-                    Spacer()
-                    InventoryViewContainer(boxedWorld: self.scene.boxedWorld)
-                }
+            }
+            
+            HStack {
+                SpendStatPointsViewContainer(boxedWorld: self.scene.boxedWorld)
                 Spacer()
+            }
+            HStack {
+                Spacer()
+                InventoryViewContainer(boxedWorld: self.scene.boxedWorld)
+            }
+            VStack {
+                Spacer()
+                
                 HStack {
                     Text("Floor: \(self.scene.boxedWorld.world.currentFloorIndex) Entities: \(self.scene.boxedWorld.world.entitiesOnCurrentFloor.count) /  \(self.scene.boxedWorld.world.entities.count)     ").font(.custom("Menlo-Regular", size: 24)).foregroundColor(Color.white)
                     Button(action: { self.scene.boxedWorld.save()}, label: { Text("[ Save ]")}).disabled(boxedWorld.state != .idle)
