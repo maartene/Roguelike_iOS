@@ -132,6 +132,11 @@ struct RLEntity: Codable {
         gold = GoldComponent.add(to: gold, amount: 10)
         return gold
     }
+    
+    static func chest(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var chest = RLEntity(name: "Chest", color: SKColor.rarityUncommon, rarity: Rarity.Uncommon, floorIndex: floorIndex, startPosition: startPosition)
+        return chest
+    }
 }
 
 struct ColorInfo: Codable {

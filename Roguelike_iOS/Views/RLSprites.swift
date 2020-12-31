@@ -44,6 +44,10 @@ struct RLSprites {
                           "DownArrow_Short_OL": Coord(25, 10),
                           "LeftArrow_Short_OL": Coord(26, 10),
                           
+                          // Chests
+                          "Chest": Coord(8,25),
+                          "Empty Chest": Coord(9,25),
+                          
                           // Pickups
                           "Apple": Coord(15, 2),
                           "Gold": Coord(15,20),

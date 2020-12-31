@@ -139,22 +139,22 @@ struct WorldBuilder {
                     let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
                     if world.floors[mapLevel].map[Coord(posX, posY)].enterable {
                         let value = random.nextUniform()
-                        //if value < 0.5 {
+                        if value < 0.5 {
                             let lamp = RLEntity.lamp(startPosition: Coord(posX,posY), floorIndex: mapLevel)
                             if world.floors[mapLevel].map[lamp.position].enterable {
                                 world.addEntity(entity: lamp)
                             }
-                        //} else if value < 0.75 {
-                           /* let apple = RLEntity.apple(startPosition: Coord(posX, posY))
-                            if world.map[apple.position].enterable {
+                        } else if value < 0.75 {
+                            let apple = RLEntity.apple(startPosition: Coord(posX, posY), floorIndex: mapLevel)
+                            if world.floors[mapLevel].map[apple.position].enterable {
                                 world.addEntity(entity: apple)
                             }
                         } else {
-                            let sword = RLEntity.sword(startPosition: Coord(posX, posY))
-                            if world.map[sword.position].enterable {
-                                world.addEntity(entity: sword)
+                            let chest = RLEntity.chest(startPosition: Coord(posX, posY), floorIndex: mapLevel)
+                            if world.floors[mapLevel].map[chest.position].enterable {
+                                world.addEntity(entity: chest)
                             }
-                        }*/
+                        }
                     }
                 }
             }
