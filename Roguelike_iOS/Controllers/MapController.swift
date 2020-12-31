@@ -176,7 +176,7 @@ final class MapController {
     
     func createSpriteForEntity(_ entity: RLEntity) {
         let node: SKSpriteNode
-        if let tex = RLSprites.getSpriteTextureFor(tileName: entity.name) {
+        if let tex = RLSprites.getSpriteTextureFor(tileName: entity.sprite) {
             tex.filteringMode = .nearest
             node = SKSpriteNode(texture: tex)
         } else {

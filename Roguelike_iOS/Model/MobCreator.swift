@@ -34,7 +34,8 @@ struct MobCreator {
             rarity = .Common
         }
         
-        var newMob = RLEntity(name: prototype.name, color: rarity.color, floorIndex: prototype.floorIndex, startPosition: prototype.position)
+        let prefix = rarity != .Common ? "\(rarity) " : ""
+        var newMob = RLEntity(name: prefix + prototype.name, color: rarity.color, floorIndex: prototype.floorIndex, spriteName: prototype.sprite, startPosition: prototype.position)
         newMob.variables = prototype.variables
         
         newMob = StatsComponent.add(to: newMob)

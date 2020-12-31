@@ -20,6 +20,7 @@ struct RLEntity: Codable {
         case variables
         case color
         case rarity
+        case sprite
     }
     
     let id: UUID
@@ -29,14 +30,16 @@ struct RLEntity: Codable {
     let color: ColorInfo
     let rarity: Rarity?
     var variables = [String: Any]()
+    let sprite: String
     
-    init(name: String, color: SKColor = SKColor.white, rarity: Rarity? = nil, floorIndex: Int, startPosition: Coord = Coord.zero) {
+    init(name: String, color: SKColor = SKColor.white, rarity: Rarity? = nil, floorIndex: Int, spriteName: String? = nil, startPosition: Coord = Coord.zero) {
         self.id = UUID()
         self.name = name
         self.color = ColorInfo(color)
         self.position = startPosition
         self.floorIndex = floorIndex
         self.rarity = rarity
+        self.sprite = spriteName ?? name
     }
     
     func encode(to encoder: Encoder) throws {
@@ -50,6 +53,7 @@ struct RLEntity: Codable {
         
         let wrappedVariables = try AnyWrapper.wrapperFor(variables)
         try container.encode(wrappedVariables, forKey: .variables)
+        try container.encode(sprite, forKey: .sprite)
     }
     
     init(from decoder: Decoder) throws {
@@ -64,6 +68,7 @@ struct RLEntity: Codable {
         // load preliminary values
         let wrappedVariables = try values.decode(AnyWrapper.self, forKey: .variables)
         variables = wrappedVariables.value as! [String: Any]
+        sprite = try values.decode(String.self, forKey: .sprite)
     }
     
     func update(in world: World) {
@@ -135,6 +140,11 @@ struct RLEntity: Codable {
     
     static func chest(startPosition: Coord, floorIndex: Int) -> RLEntity {
         var chest = RLEntity(name: "Chest", color: SKColor.rarityUncommon, rarity: Rarity.Uncommon, floorIndex: floorIndex, startPosition: startPosition)
+        
+        let openChest = RLEntity(name: "Empty Chest", color: SKColor.rarityCommon, rarity: Rarity.Common, floorIndex: floorIndex, startPosition: startPosition)
+        let lootManager = LootManager(seed: [1])
+        let loot = lootManager.gimmeSomeLoot(at: startPosition, on: floorIndex, minimumRarity: .Uncommon)
+        chest = ItemContainerComponent.add(to: chest, replaceComponent: openChest, loot: [loot])
         return chest
     }
 }

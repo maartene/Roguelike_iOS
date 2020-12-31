@@ -89,7 +89,7 @@ final class LootManager {
     
     func improveItem(_ item: RLEntity, rarity: Rarity) -> RLEntity {
         let namePrefix = rarity != .Common ? rarity.rawValue + " " : ""
-        var improvedItem = RLEntity(name: namePrefix + item.name, color: rarity.color, rarity: rarity, floorIndex: item.floorIndex, startPosition: item.position)
+        var improvedItem = RLEntity(name: namePrefix + item.name, color: rarity.color, rarity: rarity, floorIndex: item.floorIndex, spriteName: item.name, startPosition: item.position)
         improvedItem.variables = item.variables
         
         if var changedStats = improvedItem.equipableEffect?.statChange {
