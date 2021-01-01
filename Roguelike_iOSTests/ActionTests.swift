@@ -177,7 +177,7 @@ class ActionTests: XCTestCase {
     }
     
     func testOpenChestAction() throws {
-        let chest = RLEntity.chest(startPosition: Coord.zero, floorIndex: 0)
+        let chest = RLEntity.chest(startPosition: world.player.position, floorIndex: 0)
         world.addEntity(entity: chest)
         let openCommand = OpenContainerAction(owner: world.player, itemContainer: chest)
         XCTAssertTrue(openCommand.canExecute(in: world))
