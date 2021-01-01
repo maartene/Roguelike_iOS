@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-enum Rarity: String, Codable {
+enum Rarity: Int, Codable {
     case Common
     case Uncommon
     case Rare
@@ -43,6 +43,14 @@ enum Rarity: String, Codable {
             return 0
         default:
             return 0
+        }
+    }
+    
+    func clamped(maxRarity: Rarity) -> Rarity {
+        if self.rawValue > maxRarity.rawValue {
+            return maxRarity
+        } else {
+            return self
         }
     }
 }

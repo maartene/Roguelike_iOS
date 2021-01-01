@@ -54,6 +54,8 @@ struct RLSprites {
                           // Equipment
                           "Sword": Coord(0,1),
                           "Helmet": Coord(1,9),
+                          "Shield": Coord(7, 7),
+                          "Boots": Coord(7, 8),
                           // Monsters
                           "Skeleton": Coord(27, 26),
                           "Evil Knight": Coord(31,31),

@@ -137,6 +137,14 @@ class GameScene: SKScene, ObservableObject {
             } else if let entityID = node.userData?["entityID"] {
                 print("Selected entity with id: \(entityID)")
                 selectNode(node)
+                
+                // all nodes on this position
+                /*if let entity = boxedWorld.world.entities.first(where: { $0.key == entityID as? UUID ?? UUID() }) {
+                    let allNodes = boxedWorld.world.entitiesOnCurrentFloor.filter { $0.position == entity.value.position
+                    }
+                    print(allNodes)
+                }*/
+                
             } else if let action = node.userData?["onClick"] as? (() -> ()) {
                 action()
                 //mapController.update(world: world)

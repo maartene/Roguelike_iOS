@@ -15,6 +15,14 @@ struct Floor: Codable {
     let baseEnemyLevel: Int
     let enemyTypes: [String]
     var map: Map
+    let maxEnemyRarity: Rarity
+    
+    init(baseEnemyLevel: Int, enemyTypes: [String], map: Map, maxEnemyRarity: Rarity = .Legendary) {
+        self.baseEnemyLevel = baseEnemyLevel
+        self.enemyTypes = enemyTypes
+        self.map = map
+        self.maxEnemyRarity = maxEnemyRarity
+    }
     
     mutating func updateMapCell(at coord: Coord, with cell: MapCell) {
         map[coord] = cell

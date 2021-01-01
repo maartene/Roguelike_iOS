@@ -132,6 +132,18 @@ struct RLEntity: Codable {
         return helmet
     }
     
+    static func shield(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var shield = RLEntity(name: "Shield", color: SKColor.rarityCommon, floorIndex: floorIndex, startPosition: startPosition)
+        shield = EquipableEffectComponent.add(to: shield, statChange: ["HC_defense": 1], occupiesSlot: .rightArm)
+        return shield
+    }
+    
+    static func boots(startPosition: Coord, floorIndex: Int) -> RLEntity {
+        var boots = RLEntity(name: "Boots", color: SKColor.rarityCommon, floorIndex: floorIndex, startPosition: startPosition)
+        boots = EquipableEffectComponent.add(to: boots, statChange: ["HC_defense" : 1], occupiesSlot: .legs)
+        return boots
+    }
+    
     static func gold(startPosition: Coord, floorIndex: Int) -> RLEntity {
         var gold = RLEntity(name: "Gold", color: SKColor.yellow, floorIndex: floorIndex, startPosition: startPosition)
         gold = GoldComponent.add(to: gold, amount: 10)
