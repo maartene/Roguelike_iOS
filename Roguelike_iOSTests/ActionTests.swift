@@ -175,4 +175,37 @@ class ActionTests: XCTestCase {
         XCTAssertTrue(world.player.inventoryComponent!.items.contains(where: {$0.id == sword.id }))
         
     }
+    
+    func testOpenChestAction() throws {
+        let chest = RLEntity.chest(startPosition: world.player.position, floorIndex: 0)
+        world.addEntity(entity: chest)
+        let openCommand = OpenContainerAction(owner: world.player, itemContainer: chest)
+        XCTAssertTrue(openCommand.canExecute(in: world))
+        
+        let originalItemCount = world.player.inventoryComponent?.items.count ?? 0
+        
+        let result = openCommand.execute(in: world)
+        
+        guard let changedPlayer = result.first(where: { $0.id == world.player.id }) else {
+            XCTFail("Changed player not found in result.")
+            return
+        }
+        XCTAssertGreaterThan(changedPlayer.inventoryComponent?.items.count ?? 0, originalItemCount)
+        
+        world.replaceEntities(entities: result)
+        
+        world.update()
+        
+        // Chest should be gone
+        XCTAssertFalse(world.entities.contains(where: { $0.key == chest.id }))
+        
+        // We should now have an empty chest in the world.
+        if let replacementID = chest.itemContainerComponent?.replaceComponent.id {
+            XCTAssertTrue(result.contains(where: {$0.id == replacementID}))
+            XCTAssertTrue(world.entities.contains(where: {$0.key == replacementID}))
+        } else {
+            print("No replacement item found. This might not be expected.")
+            XCTFail("No replacement item found. This might not be expected.")
+        }
+    }
 }

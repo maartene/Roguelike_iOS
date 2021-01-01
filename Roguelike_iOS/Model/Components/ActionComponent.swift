@@ -41,6 +41,9 @@ struct ActionComponent {
             if owner.inventoryComponent != nil, entity.goldComponent != nil {
                 actions.append(PickupGoldAction(owner: owner, goldEntity: entity))
             }
+            if owner.inventoryComponent != nil, entity.itemContainerComponent != nil {
+                actions.append(OpenContainerAction(owner: owner, itemContainer: entity))
+            }
         }
         actions.append(WaitAction(owner: owner))
         return actions

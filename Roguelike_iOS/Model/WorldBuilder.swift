@@ -37,7 +37,21 @@ struct WorldBuilder {
         builder.world.floors.removeAll()
         
         for floor in 0 ..< floorCount {
-            builder.world.floors.append(Floor(baseEnemyLevel: floor, enemyTypes: ["Skeleton"], map: Map()))
+            let maxRarity: Rarity
+            switch floor {
+            case 0:
+                maxRarity = .Common
+            case 1:
+                maxRarity = .Uncommon
+            case 2:
+                maxRarity = .Rare
+            case 3:
+                maxRarity = .Legendary
+            default:
+                maxRarity = .Unique
+            }
+            
+            builder.world.floors.append(Floor(baseEnemyLevel: floor, enemyTypes: ["Skeleton"], map: Map(), maxEnemyRarity: maxRarity))
             builder.createRandomRooms(amount: 10, mapLevel: floor)
         }
         
@@ -204,12 +218,28 @@ struct WorldBuilder {
     }
     
     mutating func createStairs(from floor1: Int, to floor2: Int, oneWay: Bool = false) {
-    
+        // the sequence in which these returns is NOT deterministic
         let enterableCoordsFloor1 = world.floors[floor1].map.enterableTiles
         let enterableCoordsFloor2 = world.floors[floor2].map.enterableTiles
         
-        let stairsCoordFloor1 = enterableCoordsFloor1[random.nextInt(upperBound: enterableCoordsFloor1.count)]
-        let stairsCoordFloor2 = enterableCoordsFloor2[random.nextInt(upperBound: enterableCoordsFloor2.count)]
+        // so we need some way of making them deterministic
+        // here we'll assign an "index" to every coordinate value
+        let sortedEnterableCoordsFloor1 = enterableCoordsFloor1.sorted(by: { coord1, coord2 in
+            let coord1Value = coord1.y * width + coord1.x
+            let coord2Value = coord2.y * width + coord2.x
+            return coord1Value > coord2Value
+        })
+        let sortedEnterableCoordsFloor2 = enterableCoordsFloor2.sorted(by: { coord1, coord2 in
+            let coord1Value = coord1.y * width + coord1.x
+            let coord2Value = coord2.y * width + coord2.x
+            return coord1Value > coord2Value
+        })
+        
+        let index1 = random.nextInt(upperBound: enterableCoordsFloor1.count)
+        let index2 = random.nextInt(upperBound: enterableCoordsFloor2.count)
+        
+        let stairsCoordFloor1 = sortedEnterableCoordsFloor1[index1]
+        let stairsCoordFloor2 = sortedEnterableCoordsFloor2[index2]
         
         
         let name1to2 = floor2 < floor1 ? "Stairs_Up" : "Stairs_Down"
@@ -217,7 +247,7 @@ struct WorldBuilder {
         var stairs1to2 = RLEntity(name: name1to2, color: SKColor.yellow, floorIndex: floor1, startPosition: stairsCoordFloor1)
         stairs1to2 = StairsComponent.add(to: stairs1to2, targetFloor: floor2, targetLocation: stairsCoordFloor2)
         world.addEntity(entity: stairs1to2)
-        print(stairs1to2)
+        //print(stairs1to2)
         
         if oneWay == false {
             let name2to1 = floor1 < floor2 ? "Stairs_Up" : "Stairs_Down"

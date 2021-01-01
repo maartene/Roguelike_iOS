@@ -98,7 +98,7 @@ struct InventoryView: View {
             Text("\u{2551} ")
             Text("\(padded(String(describing: slot), width: 7)): ")
                 ZStack(alignment: .leading) {
-                    Image(item?.name ?? "Clear")
+                    Image(item?.sprite ?? "Clear").colorMultiply(Color(hue: Double(item?.color.hue ?? 1), saturation: Double(item?.color.saturation ?? 1), brightness: 1))
                     Text("   \(padded(item?.name ?? "empty", width: item != nil ? windowWidth - 7 - 5 - 11 : windowWidth - 7 - 5))").foregroundColor(item != nil ? Color.white : Color.gray).onTapGesture {
                         self.showItemDetails = item
                     }
@@ -137,27 +137,35 @@ struct InventoryView: View {
             ForEach(items, id: \.id) { item in
                 HStack {
                     ZStack(alignment: .leading) {
-                        Image(item.name).offset(x: 16, y: 0).colorMultiply(Color(hue: Double(item.color.hue), saturation: Double(item.color.saturation), brightness: 1))
+                        Image(item.sprite).offset(x: 16, y: 0).colorMultiply(Color(hue: Double(item.color.hue), saturation: Double(item.color.saturation), brightness: 1))
                         HStack(spacing: 0) {
                             if item.consumableEffect != nil {
-                                Text("\u{2551} " + "  \(self.paddedLine(item.name, extraPadding: -13))").onTapGesture {
+                                Text("\u{2551} " + "  \(self.paddedLine(item.name, extraPadding: -14))").onTapGesture {
                                     self.showItemDetails = item
                                 }
-                                Button("[ Consume ]") {
+                                Button("[Cons]") {
                                     let consumeAction = ConsumeFromInventoryAction(owner: self.boxedWorld.world.player, item: item)
                                     self.boxedWorld.executeAction(consumeAction)
                                 }.background(Color.yellow)
+                                Button("[Drop]") {
+                                    let dropAction = DropItemAction(owner: self.boxedWorld.world.player, item: item)
+                                    self.boxedWorld.executeAction(dropAction)
+                                }.background(Color.red)
                                 Text(" \u{2551}")
                             }
                             if item.equipableEffect != nil {
-                                Text("\u{2551} " + "  \(self.paddedLine(item.name, extraPadding: -11))")
+                                Text("\u{2551} " + "  \(self.paddedLine(item.name, extraPadding: -15))")
                                 .onTapGesture {
                                     self.showItemDetails = item
                                 }
-                                Button("[ Equip ]") {
+                                Button("[Equip]") {
                                     let equipAction = EquipFromInventoryAction(owner: self.boxedWorld.world.player, item: item, slot: item.equipableEffect?.occupiesSlot ?? .leftArm)
                                     self.boxedWorld.executeAction(equipAction)
                                 }.background(Color.purple)
+                                Button("[Drop]") {
+                                    let dropAction = DropItemAction(owner: self.boxedWorld.world.player, item: item)
+                                    self.boxedWorld.executeAction(dropAction)
+                                }.background(Color.red)
                                 Text(" \u{2551}")
                             }
                         }
@@ -180,7 +188,7 @@ struct InventoryViewContainer: View {
     @ObservedObject var boxedWorld: WorldBox
     @State private var isShown = false
     
-    let windowWidth = 35
+    let windowWidth = 40
     
     var closeOffset: CGFloat {
         CGFloat((2 + windowWidth) * 20)

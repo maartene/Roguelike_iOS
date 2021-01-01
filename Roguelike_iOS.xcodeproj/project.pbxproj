@@ -51,6 +51,9 @@
 		DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987D24C78372006EBFFB /* WorldTests.swift */; };
 		DE6E988024C83C0A006EBFFB /* SpendStatPointAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */; };
 		DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70122624BDF88D002F7481 /* WaitAction.swift */; };
+		DEA17018259DE4A40055295F /* ItemContainerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17017259DE4A40055295F /* ItemContainerComponent.swift */; };
+		DEA1701E259DE73C0055295F /* OpenContainerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA1701D259DE73C0055295F /* OpenContainerAction.swift */; };
+		DEA17022259E111B0055295F /* DropItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17021259E111B0055295F /* DropItemAction.swift */; };
 		DEAB712924D7EC6B0091A40E /* StairsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAB712824D7EC6B0091A40E /* StairsComponent.swift */; };
 		DEB34CC324CC7189001C3721 /* InventoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC224CC7189001C3721 /* InventoryComponent.swift */; };
 		DEB34CC724CCA702001C3721 /* ConsumableEffectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */; };
@@ -129,6 +132,9 @@
 		DE6E987D24C78372006EBFFB /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
 		DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointAction.swift; sourceTree = "<group>"; };
 		DE70122624BDF88D002F7481 /* WaitAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitAction.swift; sourceTree = "<group>"; };
+		DEA17017259DE4A40055295F /* ItemContainerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContainerComponent.swift; sourceTree = "<group>"; };
+		DEA1701D259DE73C0055295F /* OpenContainerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenContainerAction.swift; sourceTree = "<group>"; };
+		DEA17021259E111B0055295F /* DropItemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropItemAction.swift; sourceTree = "<group>"; };
 		DEAB712824D7EC6B0091A40E /* StairsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StairsComponent.swift; sourceTree = "<group>"; };
 		DEB34CC224CC7189001C3721 /* InventoryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryComponent.swift; sourceTree = "<group>"; };
 		DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumableEffectComponent.swift; sourceTree = "<group>"; };
@@ -189,6 +195,8 @@
 				DE23AC9324D3609F00DBC0A1 /* CreateEntityAction.swift */,
 				DE23AC9524D5678300DBC0A1 /* PickupGoldAction.swift */,
 				DE3B6D5624D7627500CCE796 /* TakeStairsAction.swift */,
+				DEA1701D259DE73C0055295F /* OpenContainerAction.swift */,
+				DEA17021259E111B0055295F /* DropItemAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -298,6 +306,7 @@
 				DEBABCD824CEEA160039DC7A /* EquipmentComponent.swift */,
 				DE23AC9724D567ED00DBC0A1 /* GoldComponent.swift */,
 				DEAB712824D7EC6B0091A40E /* StairsComponent.swift */,
+				DEA17017259DE4A40055295F /* ItemContainerComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -466,11 +475,13 @@
 				DEBABCD724CED97C0039DC7A /* EquipableEffectComponent.swift in Sources */,
 				DE63C2AF24B84D96002058BA /* MapController.swift in Sources */,
 				DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */,
+				DEA1701E259DE73C0055295F /* OpenContainerAction.swift in Sources */,
 				DE6E987A24C5A582006EBFFB /* StatsComponent.swift in Sources */,
 				DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */,
 				DE3B6D5524D6A37C00CCE796 /* Rarity.swift in Sources */,
 				DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */,
 				DEAB712924D7EC6B0091A40E /* StairsComponent.swift in Sources */,
+				DEA17022259E111B0055295F /* DropItemAction.swift in Sources */,
 				DE63C2CC24B84DBC002058BA /* ContentView.swift in Sources */,
 				DEBABCD524CE20810039DC7A /* EventSystem.swift in Sources */,
 				DE0217D824D1388F00FAAB57 /* Utils.swift in Sources */,
@@ -484,6 +495,7 @@
 				DE63C2CB24B84DBC002058BA /* ConsoleWindowView.swift in Sources */,
 				DE23AC9424D3609F00DBC0A1 /* CreateEntityAction.swift in Sources */,
 				DE63C2C024B84DA7002058BA /* World.swift in Sources */,
+				DEA17018259DE4A40055295F /* ItemContainerComponent.swift in Sources */,
 				DE63C2CA24B84DBC002058BA /* SpriteKitView.swift in Sources */,
 				DE63C2C124B84DA7002058BA /* Coord.swift in Sources */,
 				DE63C2C924B84DBC002058BA /* Constants.swift in Sources */,
@@ -664,6 +676,7 @@
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Roguelike_iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -686,6 +699,7 @@
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Roguelike_iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -706,7 +720,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
 				INFOPLIST_FILE = Roguelike_iOSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,7 +742,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
 				INFOPLIST_FILE = Roguelike_iOSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

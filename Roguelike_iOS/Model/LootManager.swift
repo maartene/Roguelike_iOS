@@ -50,10 +50,15 @@ final class LootManager {
         // is it an equipment or item?
         if random.nextBool() || minimumRarity != .Common {
             // Equipment!
-            if random.nextBool() {
+            let value = random.nextUniform()
+            if value <= 0.25 {
                 loot = RLEntity.sword(startPosition: position, floorIndex: floor)
-            } else {
+            } else if value <= 0.5 {
                 loot = RLEntity.helmet(startPosition: position, floorIndex: floor)
+            } else if value <= 0.75 {
+                loot = RLEntity.shield(startPosition: position, floorIndex: floor)
+            } else {
+                loot = RLEntity.boots(startPosition: position, floorIndex: floor)
             }
         } else {
             // Item!
@@ -88,8 +93,8 @@ final class LootManager {
     }
     
     func improveItem(_ item: RLEntity, rarity: Rarity) -> RLEntity {
-        let namePrefix = rarity != .Common ? rarity.rawValue + " " : ""
-        var improvedItem = RLEntity(name: namePrefix + item.name, color: rarity.color, rarity: rarity, floorIndex: item.floorIndex, startPosition: item.position)
+        let namePrefix = rarity != .Common ? "\(rarity) " : ""
+        var improvedItem = RLEntity(name: namePrefix + item.name, color: rarity.color, rarity: rarity, floorIndex: item.floorIndex, spriteName: item.name, startPosition: item.position)
         improvedItem.variables = item.variables
         
         if var changedStats = improvedItem.equipableEffect?.statChange {

@@ -71,6 +71,7 @@ struct HUD: View {
                     Text("You died...").foregroundColor(Color.white).font(.custom("Menlo-Regular", size: 36))
                     
                     Button(action: {
+                        //self.scene.mapController.floorToShow = 0
                         self.scene.newGame()
                     }, label: { Text("[ New game ]") }).font(.custom("Menlo-Regular", size: 24)).background(Color.yellow).padding(.top)
                 }

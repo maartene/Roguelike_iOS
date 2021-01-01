@@ -137,6 +137,14 @@ class GameScene: SKScene, ObservableObject {
             } else if let entityID = node.userData?["entityID"] {
                 print("Selected entity with id: \(entityID)")
                 selectNode(node)
+                
+                // all nodes on this position
+                /*if let entity = boxedWorld.world.entities.first(where: { $0.key == entityID as? UUID ?? UUID() }) {
+                    let allNodes = boxedWorld.world.entitiesOnCurrentFloor.filter { $0.position == entity.value.position
+                    }
+                    print(allNodes)
+                }*/
+                
             } else if let action = node.userData?["onClick"] as? (() -> ()) {
                 action()
                 //mapController.update(world: world)
@@ -154,12 +162,13 @@ class GameScene: SKScene, ObservableObject {
         mapController.reset()
         selectedNode = nil
         
-        var world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
-        world.update()
-        
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize, floorCount: 10)
         boxedWorld.world = world
+        
+        mapController.floorToShow = boxedWorld.world.player.floorIndex
+        EventSystem.main.fireEvent(.changedFloors(boxedWorld.world.player.floorIndex))
         boxedWorld.state = .idle
-//        boxedWorld.executeAction(WaitAction(owner: boxedWorld.world.player))
+        boxedWorld.world.executeAction(WaitAction(owner: boxedWorld.world.player))
     }
     
     func load() {
@@ -172,8 +181,10 @@ class GameScene: SKScene, ObservableObject {
             }
             
             // FIXME: quick hack to correctly refresh the screen after loading.
-            self?.mapController.update(world: strongSelf.boxedWorld.world)
-            strongSelf.boxedWorld.queueAction(WaitAction(owner: strongSelf.boxedWorld.world.player))
+            self?.mapController.floorToShow = strongSelf.boxedWorld.world.player.floorIndex
+            EventSystem.main.fireEvent(.changedFloors(strongSelf.boxedWorld.world.player.floorIndex))
+            self?.boxedWorld.world.executeAction(WaitAction(owner: strongSelf.boxedWorld.world.player))
+            
         }
     }
     
