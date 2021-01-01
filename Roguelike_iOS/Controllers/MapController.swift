@@ -66,12 +66,14 @@ final class MapController {
     
     func reset() {
         if Thread.current == Thread.main {
+            print("MapController - Reset() called from main thread.")
             self.mapNodeMap.removeAll()
             self.entityNodeMap.removeAll()
             self.mapNode.removeAllChildren()
             self.entityNode.removeAllChildren()
         } else {
             DispatchQueue.main.sync {
+                print("MapController - Reset() called from async thread.")
                 self.mapNodeMap.removeAll()
                 self.entityNodeMap.removeAll()
                 self.mapNode.removeAllChildren()

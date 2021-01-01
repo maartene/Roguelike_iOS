@@ -162,12 +162,13 @@ class GameScene: SKScene, ObservableObject {
         mapController.reset()
         selectedNode = nil
         
-        var world = WorldBuilder.buildWorld(width: mapSize, height: mapSize)
-        world.update()
-        
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize, floorCount: 10)
         boxedWorld.world = world
+        
+        mapController.floorToShow = boxedWorld.world.player.floorIndex
+        EventSystem.main.fireEvent(.changedFloors(boxedWorld.world.player.floorIndex))
         boxedWorld.state = .idle
-//        boxedWorld.executeAction(WaitAction(owner: boxedWorld.world.player))
+        boxedWorld.world.executeAction(WaitAction(owner: boxedWorld.world.player))
     }
     
     func load() {
@@ -180,8 +181,10 @@ class GameScene: SKScene, ObservableObject {
             }
             
             // FIXME: quick hack to correctly refresh the screen after loading.
-            self?.mapController.update(world: strongSelf.boxedWorld.world)
-            strongSelf.boxedWorld.queueAction(WaitAction(owner: strongSelf.boxedWorld.world.player))
+            self?.mapController.floorToShow = strongSelf.boxedWorld.world.player.floorIndex
+            EventSystem.main.fireEvent(.changedFloors(strongSelf.boxedWorld.world.player.floorIndex))
+            self?.boxedWorld.world.executeAction(WaitAction(owner: strongSelf.boxedWorld.world.player))
+            
         }
     }
     
