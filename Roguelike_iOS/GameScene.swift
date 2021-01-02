@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 import GameKit
 import Combine
 
@@ -162,7 +161,7 @@ class GameScene: SKScene, ObservableObject {
         mapController.reset()
         selectedNode = nil
         
-        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize, floorCount: 10)
+        let world = WorldBuilder.buildWorld(width: mapSize, height: mapSize, floorCount: 20)
         boxedWorld.world = world
         
         mapController.floorToShow = boxedWorld.world.player.floorIndex

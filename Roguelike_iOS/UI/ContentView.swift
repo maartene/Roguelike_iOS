@@ -27,6 +27,18 @@ struct HUD: View {
         return []
     }
     
+    var info: String {
+        if let tile = scene.selectedNode?.userData?["position"] as? Coord {
+            return tile.description
+        } else if let entityID = scene.selectedNode?.userData?["entityID"] as? UUID {
+            if let entity = boxedWorld.world.entities[entityID] {
+                let level = entity.variables["SC_currentLevel"] as? Int ?? -1
+                return "\(entity.name) - \(level)"
+            }
+        }
+        return ""
+    }
+    
     var body: some View {
         ZStack {
             VStack {
@@ -58,7 +70,7 @@ struct HUD: View {
             }
             
             if scene.selectedNode != nil && action.count > 0 {
-                ActionsView(boxedWorld: boxedWorld, offset: scene.selectedNode!.position, title: "ACTIONS:", actions: action, sceneSize: scene.size)
+                ActionsView(boxedWorld: boxedWorld, offset: scene.selectedNode!.position, title: "ACTIONS:", actions: action, sceneSize: scene.size, info: info)
             }
             
             if boxedWorld.state == .loading || boxedWorld.state == .saving {

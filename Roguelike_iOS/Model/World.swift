@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GameplayKit
+import SpriteKit
 import Combine
 
 struct Floor: Codable {
@@ -35,6 +35,7 @@ struct World: Codable {
         case entities
         case width
         case height
+        case lootManager
     }
     
     var floors = [Floor]()
@@ -63,12 +64,14 @@ struct World: Codable {
     let width: Int
     let height: Int
     
-    let lootManager = LootManager()
+    let lootManager: LootManager
         
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
 
+        lootManager = LootManager()
+        
         floors.append(Floor(baseEnemyLevel: 0, enemyTypes: [], map: Map()))
         
         let player = RLEntity.player(startPosition: Coord(31,10), floorIndex: 0)

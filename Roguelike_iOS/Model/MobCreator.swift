@@ -7,14 +7,13 @@
 //
 
 import Foundation
-import GameplayKit
 
 struct MobCreator {
     
-    static let random = GKARC4RandomSource(seed: Data([12]))
+    var random = PRNG(seed: 345)
     
-    static func createMob(at location: Coord, on floor: Floor, floorIndex: Int) -> RLEntity {
-        let newMobType = floor.enemyTypes[random.nextInt(upperBound: floor.enemyTypes.count)]
+    mutating func createMob(at location: Coord, on floor: Floor, floorIndex: Int) -> RLEntity {
+        let newMobType = floor.enemyTypes.randomElement(using: &random)
         
         let prototype: RLEntity
         switch newMobType {
@@ -24,7 +23,7 @@ struct MobCreator {
             prototype = RLEntity(name: "ERROR", floorIndex: floorIndex)
         }
         
-        let value = random.nextUniform()
+        let value = Double.random(in: 0...1, using: &random)
         var rarity: Rarity
         switch value {
         case 0 ..< 0.1:
@@ -48,8 +47,9 @@ struct MobCreator {
         newMob.variables["SC_strength"] = rarity.statChange
         newMob.variables["SC_intelligence"] = rarity.statChange
         newMob.variables["SC_dexterity"] = rarity.statChange
+        newMob.variables["HC_xpOnDeath"] = floor.baseEnemyLevel + (prototype.healthComponent?.xpOnDeath ?? 0) * (1 + rarity.statChange)
         
-        var unspentPoints = Double(floor.baseEnemyLevel) * 1.5
+        var unspentPoints = Double(floor.baseEnemyLevel) * 2.5
         while unspentPoints > 0 {
             newMob.variables["SC_strength"] = 1 + (newMob.statsComponent?.strength ?? 0)
             newMob.variables["SC_intelligence"] = 1 + (newMob.statsComponent?.intelligence ?? 0)

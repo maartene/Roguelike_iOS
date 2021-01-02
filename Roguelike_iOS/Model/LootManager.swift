@@ -7,20 +7,34 @@
 //
 
 import Foundation
-import GameplayKit
+//import GameplayKit
 import Combine
 
-final class LootManager {
+final class LootManager: Codable {
     
-    private let random: GKRandomSource
+    private var random: PRNG
+    
+    enum CodingKeys: CodingKey {
+        case seed
+    }
     
     //private var cancellables = Set<AnyCancellable>()
     //var boxedWorld: WorldBox
     
-    init(seed: [UInt8] = [0,1,2,3]) {
-        let data = Data(seed)
-        random = GKARC4RandomSource(seed: data)
+    init(seed: UInt64 = 123) {
+        random = PRNG(seed: seed)
         //self.boxedWorld = boxedWorld
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let seed = try values.decode(UInt64.self, forKey: .seed)
+        random = PRNG(seed: seed)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(random.seed, forKey: .seed)
     }
     
     /*func registerToDieEvents() {
@@ -48,9 +62,9 @@ final class LootManager {
         
         // but what is it?
         // is it an equipment or item?
-        if random.nextBool() || minimumRarity != .Common {
+        if Bool.random(using: &random) || minimumRarity != .Common {
             // Equipment!
-            let value = random.nextUniform()
+            let value = Double.random(in: 0...1, using: &random)
             if value <= 0.25 {
                 loot = RLEntity.sword(startPosition: position, floorIndex: floor)
             } else if value <= 0.5 {
@@ -62,7 +76,7 @@ final class LootManager {
             }
         } else {
             // Item!
-            if random.nextBool() {
+            if Bool.random(using: &random) {
                 loot = RLEntity.apple(startPosition: position, floorIndex: floor)
             } else {
                 loot = RLEntity.gold(startPosition: position, floorIndex: floor)
@@ -74,7 +88,7 @@ final class LootManager {
             if minimumRarity != .Common {
                 loot = improveItem(loot, rarity: minimumRarity)
             } else {
-                let quality = random.nextUniform()
+                let quality = Double.random(in: 0...1, using: &random)
                 print("Quality: \(quality)")
                 switch quality {
                 case 0 ..< 0.1:
