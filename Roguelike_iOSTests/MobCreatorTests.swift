@@ -24,8 +24,9 @@ class MobCreatorTests: XCTestCase {
     func testCreateMobs() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        var mobCreator = MobCreator(random: PRNG(seed: 123))
         for _ in 0 ..< 20 {
-            let mob = MobCreator.createMob(at: Coord.zero, on: floor, floorIndex: 0)
+            let mob = mobCreator.createMob(at: Coord.zero, on: floor, floorIndex: 0)
             print(mob)
         }
         

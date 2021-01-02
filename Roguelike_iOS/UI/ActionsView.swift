@@ -80,6 +80,6 @@ struct ActionsView_Previews: PreviewProvider {
         let world = World(width: 10, height: 10)
         let boxedWorld = WorldBox(world: world)
         return ActionsView(boxedWorld: boxedWorld, offset: CGPoint.zero, title: "ACTIONS:", actions:
-            [WaitAction(owner: world.player)], sceneSize: CGSize.zero)
+                            [WaitAction(owner: world.player)], sceneSize: CGSize.zero)
     }
 }

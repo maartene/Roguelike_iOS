@@ -61,6 +61,14 @@ struct HUD: View {
                 ActionsView(boxedWorld: boxedWorld, offset: scene.selectedNode!.position, title: "ACTIONS:", actions: action, sceneSize: scene.size)
             }
             
+            VStack {
+                Spacer()
+                HStack {
+                    InfoView(scene: scene)
+                    Spacer()
+                }
+            }
+            
             if boxedWorld.state == .loading || boxedWorld.state == .saving {
                 Color.black.opacity(0.75)
                 Text("\(boxedWorld.state.rawValue) - please wait").foregroundColor(Color.white).font(.custom("Menlo-Regular", size: 36))

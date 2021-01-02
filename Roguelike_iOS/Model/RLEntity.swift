@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import GameplayKit
 import SpriteKit
 
 struct RLEntity: Codable {
@@ -71,9 +70,9 @@ struct RLEntity: Codable {
         sprite = try values.decode(String.self, forKey: .sprite)
     }
     
-    func update(in world: World) {
-        print("updating")
-    }
+    /*func update(in world: World) {
+        //print("updating")
+    }*/
     
     static func player(startPosition: Coord, floorIndex: Int) -> RLEntity {
         var player = RLEntity(name: "Player", color: SKColor.rarityPlayer, floorIndex: floorIndex, startPosition: startPosition)
@@ -154,7 +153,7 @@ struct RLEntity: Codable {
         var chest = RLEntity(name: "Chest", color: SKColor.rarityUncommon, rarity: Rarity.Uncommon, floorIndex: floorIndex, startPosition: startPosition)
         
         let openChest = RLEntity(name: "Empty Chest", color: SKColor.rarityCommon, rarity: Rarity.Common, floorIndex: floorIndex, startPosition: startPosition)
-        let lootManager = LootManager(seed: [1])
+        let lootManager = LootManager(seed: UInt64(abs(chest.position.hashValue)))
         let loot = lootManager.gimmeSomeLoot(at: startPosition, on: floorIndex, minimumRarity: .Uncommon)
         chest = ItemContainerComponent.add(to: chest, replaceComponent: openChest, loot: [loot])
         return chest

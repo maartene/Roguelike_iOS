@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GameplayKit
+import SpriteKit
 
 struct WorldBuilder {
     
@@ -18,16 +18,18 @@ struct WorldBuilder {
     let width: Int
     let height: Int
     
-    let random: GKARC4RandomSource
+    var random: PRNG
+    var mobCreator: MobCreator
     
-    private init(world: World) {
+    var playerStartPosition = Coord.zero
+    
+    private init(world: World, seed: UInt64 = 0) {
         self.world = world
         self.width = world.width
         self.height = world.height
         
-        var seed = Data()
-        seed.append(UInt8(0))
-        random = GKARC4RandomSource(seed: seed)
+        random = PRNG(seed: seed)
+        mobCreator = MobCreator()
     }
     
     static func buildWorld(width: Int, height: Int, floorCount: Int = 1) -> World {
@@ -60,17 +62,25 @@ struct WorldBuilder {
             builder.createStairs(from: floor, to: floor + 1, oneWay: false)
         }
         
+        var teleportedPlayer = builder.world.player
+        teleportedPlayer.position = builder.playerStartPosition
+        builder.world.replaceEntity(entity: teleportedPlayer)
+        
         return builder.world
     }
     
     mutating func createRandomRooms(amount: Int, minSize: Int = 10, maxSize: Int = 20, mapLevel: Int = 0) {
         var rooms = [Room]()
         
-        for _ in 0 ..< amount {
-            let startY = random.nextInt(upperBound: self.height - maxSize)
-            let startX = random.nextInt(upperBound: self.width - maxSize)
-            let width = max(random.nextInt(upperBound: maxSize), minSize)
-            let height = max(random.nextInt(upperBound: maxSize), minSize)
+        let room0 = Room(startX: width / 2, startY: height / 2, width: 15, height: 10)
+        playerStartPosition = Coord(1 + width / 2, 1 + height / 2)
+        rooms.append(room0)
+        
+        for _ in 1 ..< amount {
+            let startY = Int.random(in: 0 ..< self.height - maxSize, using: &random)
+            let startX = Int.random(in: 0 ..< self.width - maxSize, using: &random)
+            let width = max(Int.random(in: 0 ..< maxSize, using: &random), minSize)
+            let height = max(Int.random(in: 0 ..< maxSize, using: &random), minSize)
             
             rooms.append(Room(startX: startX, startY: startY, width: width, height: height))
         }
@@ -98,7 +108,7 @@ struct WorldBuilder {
             let toY = max(room.centerY, otherRoom.centerY)
             
             // flip a coin
-            if random.nextBool() {
+            if Bool.random(using: &random) {
                 // first horizontal, then vertical
                 createHorizontalTunnel(from: (fromX, room.centerY), to: toX, on: mapLevel)
                 createVerticalTunnel(from: (otherRoom.centerX, fromY), to: toY, on: mapLevel)
@@ -117,12 +127,12 @@ struct WorldBuilder {
         
         // add entities to rooms
         rooms.forEach {
-            let numberOfMonsters = random.nextInt(upperBound: 1)
+            let numberOfMonsters = Int.random(in: 0 ..< 1, using: &random)
                 for _ in 0...numberOfMonsters {
-                    let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)
-                    let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
+                    let posX = $0.startX + 1 + Int.random(in: 0 ..< $0.width - 2, using: &random)
+                    let posY = $0.startY + 1 + Int.random(in: 0 ..< $0.height - 2, using: &random)
                     
-                    let value = random.nextUniform()
+                    let value = Double.random(in: 0...1, using: &random)
                     var newMonster: RLEntity
                     /*if value < 0.5 {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Rat", world: self)
@@ -134,7 +144,7 @@ struct WorldBuilder {
                         newMonster = MonsterPrototypes.GetCloneOfPrototype("Troll", world: self)
                     }*/
                     
-                    newMonster = MobCreator.createMob(at: Coord(posX, posY), on: world.floors[mapLevel], floorIndex: mapLevel)
+                    newMonster = mobCreator.createMob(at: Coord(posX, posY), on: world.floors[mapLevel], floorIndex: mapLevel)
                     //newMonster = RLEntity.skeleton(startPosition: Coord(posX, posY), floorIndex: mapLevel)
                     
                     //newMonster.levelIndex = mapLevel
@@ -147,12 +157,12 @@ struct WorldBuilder {
                     }
                 }
             
-                let numberOfItems = random.nextInt(upperBound: 1)
+            let numberOfItems = Int.random(in: 0...1, using: &random)
                 for _ in 0...numberOfItems {
-                    let posX = $0.startX + 1 + random.nextInt(upperBound: $0.width - 2)
-                    let posY = $0.startY + 1 + random.nextInt(upperBound: $0.height - 2)
+                    let posX = $0.startX + 1 + Int.random(in: 0 ..< $0.width - 2, using: &random)
+                    let posY = $0.startY + 1 + Int.random(in: 0 ..< $0.height - 2, using: &random)
                     if world.floors[mapLevel].map[Coord(posX, posY)].enterable {
-                        let value = random.nextUniform()
+                        let value = Double.random(in: 0...1, using: &random)
                         if value < 0.5 {
                             let lamp = RLEntity.lamp(startPosition: Coord(posX,posY), floorIndex: mapLevel)
                             if world.floors[mapLevel].map[lamp.position].enterable {
@@ -209,7 +219,8 @@ struct WorldBuilder {
         for y in startY ..< startY + height {
             for x in startX ..< startX + width {
                 if x == startX || x == (startX + width - 1) || y == startY || y == (startY + height - 1) {
-                    world.updateMapCell(at: Coord(x,y), on: mapLevel, with: .wall)
+                    if world.floors[mapLevel].map[Coord(x,y)].enterable == false {  world.updateMapCell(at: Coord(x,y), on: mapLevel, with: .wall)
+                    }
                 } else {
                     world.updateMapCell(at: Coord(x,y), on: mapLevel, with: .ground)
                 }
@@ -235,8 +246,8 @@ struct WorldBuilder {
             return coord1Value > coord2Value
         })
         
-        let index1 = random.nextInt(upperBound: enterableCoordsFloor1.count)
-        let index2 = random.nextInt(upperBound: enterableCoordsFloor2.count)
+        let index1 = Int.random(in: 0..<enterableCoordsFloor1.count, using: &random)
+        let index2 = Int.random(in: 0..<enterableCoordsFloor2.count, using: &random)
         
         let stairsCoordFloor1 = sortedEnterableCoordsFloor1[index1]
         let stairsCoordFloor2 = sortedEnterableCoordsFloor2[index2]
