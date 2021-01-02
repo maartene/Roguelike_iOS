@@ -203,7 +203,7 @@ struct World: Codable {
         }
     }
     
-    func getSpriteNameFor(_ mapCell: MapCell, at coord: Coord) -> String {
+    /*func getSpriteNameFor(_ mapCell: MapCell, at coord: Coord) -> String {
         switch mapCell.name {
         case "Double_Wall":
             var suffix = "_"
@@ -216,7 +216,7 @@ struct World: Codable {
         default:
             return mapCell.name
         }
-    }
+    }*/
     
     mutating func processEvent(_ event: RLEvent) {
         switch event {
@@ -231,6 +231,7 @@ struct World: Codable {
 
 struct MapCell: Codable {
     let name: String
+    let sprite: String
     var hue: Double
     var saturation: Double
     var visitedBrightness: Double
@@ -240,7 +241,7 @@ struct MapCell: Codable {
     var enterable: Bool
     var visited = false
     
-    private init(name: String, hue: Double = 0, saturation: Double = 1, visitedBrightness: Double = 0.25, maxBrightness: Double = 1, blocksLight: Bool = false, enterable: Bool = true) {
+    private init(name: String, hue: Double = 0, saturation: Double = 1, visitedBrightness: Double = 0.25, maxBrightness: Double = 1, blocksLight: Bool = false, enterable: Bool = true, sprite: String? = nil) {
         self.name = name
         self.hue = hue
         self.saturation = saturation
@@ -248,15 +249,16 @@ struct MapCell: Codable {
         self.maxBrightness = maxBrightness
         self.blocksLight = blocksLight
         self.enterable = enterable
+        self.sprite = sprite ?? name
     }
     
     static var ground: MapCell {
-        MapCell(name: "DitherSquare_16th", hue: 0.16, saturation: 0, visitedBrightness: 0, maxBrightness: 0.333, blocksLight: false)
+        MapCell(name: "Floor", hue: 0.16, saturation: 0, visitedBrightness: 0, maxBrightness: 0.333, blocksLight: false, sprite: "DitherSquare_16th")
     }
     
     static var wall: MapCell {
         //MapCell(name: "Double_Wall", hue: 0.5, saturation: 1, visitedBrightness: 0.5, blocksLight: true, enterable: false)
-        MapCell(name: "Brick_Wall", hue: 0.5, saturation: 1, visitedBrightness: 0.5, blocksLight: true, enterable: false)
+        MapCell(name: "Wall", hue: 0.5, saturation: 1, visitedBrightness: 0.5, blocksLight: true, enterable: false, sprite: "Brick_Wall")
     }
     
     static var void: MapCell {

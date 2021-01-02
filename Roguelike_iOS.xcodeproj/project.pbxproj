@@ -55,9 +55,9 @@
 		DEA1701E259DE73C0055295F /* OpenContainerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA1701D259DE73C0055295F /* OpenContainerAction.swift */; };
 		DEA17022259E111B0055295F /* DropItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17021259E111B0055295F /* DropItemAction.swift */; };
 		DEA17076259F44CE0055295F /* RNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17073259F44CD0055295F /* RNG.swift */; };
-		DEA17077259F44CE0055295F /* RNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17073259F44CD0055295F /* RNG.swift */; };
 		DEA17088259F45600055295F /* squirrel.c in Sources */ = {isa = PBXBuildFile; fileRef = DEA17086259F45600055295F /* squirrel.c */; };
 		DEA17089259F45600055295F /* squirrel.c in Sources */ = {isa = PBXBuildFile; fileRef = DEA17086259F45600055295F /* squirrel.c */; };
+		DEA1708F25A0A7960055295F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA1708E25A0A7960055295F /* InfoView.swift */; };
 		DEAB712924D7EC6B0091A40E /* StairsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAB712824D7EC6B0091A40E /* StairsComponent.swift */; };
 		DEB34CC324CC7189001C3721 /* InventoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC224CC7189001C3721 /* InventoryComponent.swift */; };
 		DEB34CC724CCA702001C3721 /* ConsumableEffectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */; };
@@ -144,6 +144,7 @@
 		DEA17083259F455F0055295F /* Roguelike_iOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Roguelike_iOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		DEA17086259F45600055295F /* squirrel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = squirrel.c; path = ../../../../../../Desktop/test/test/squirrel.c; sourceTree = "<group>"; };
 		DEA17087259F45600055295F /* squirrel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = squirrel.h; path = ../../../../../../Desktop/test/test/squirrel.h; sourceTree = "<group>"; };
+		DEA1708E25A0A7960055295F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DEAB712824D7EC6B0091A40E /* StairsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StairsComponent.swift; sourceTree = "<group>"; };
 		DEB34CC224CC7189001C3721 /* InventoryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryComponent.swift; sourceTree = "<group>"; };
 		DEB34CC624CCA702001C3721 /* ConsumableEffectComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumableEffectComponent.swift; sourceTree = "<group>"; };
@@ -331,6 +332,7 @@
 				DEEFEF7124BC943000C59126 /* ActionsView.swift */,
 				DEB7ECBA24C96C1100052669 /* SpendStatPointsView.swift */,
 				DE62713524C983F60032F69C /* InventoryView.swift */,
+				DEA1708E25A0A7960055295F /* InfoView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -532,6 +534,7 @@
 				DEB34CC324CC7189001C3721 /* InventoryComponent.swift in Sources */,
 				DEBABCD024CD817E0039DC7A /* PickupItemAction.swift in Sources */,
 				DEB7ECBB24C96C1100052669 /* SpendStatPointsView.swift in Sources */,
+				DEA1708F25A0A7960055295F /* InfoView.swift in Sources */,
 				DEBABCDB24CEFA140039DC7A /* EquipmentActions.swift in Sources */,
 				DE3B6D5724D7627500CCE796 /* TakeStairsAction.swift in Sources */,
 				DE63C2BF24B84DA7002058BA /* WorldBuilder.swift in Sources */,
@@ -548,7 +551,6 @@
 			files = (
 				DEB34CC924CCCA1D001C3721 /* AnyWrapperTests.swift in Sources */,
 				DE0217DC24D3506000FAAB57 /* LootManagerTests.swift in Sources */,
-				DEA17077259F44CE0055295F /* RNG.swift in Sources */,
 				DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */,
 				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
 				DEA17089259F45600055295F /* squirrel.c in Sources */,

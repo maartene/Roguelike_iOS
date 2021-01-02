@@ -70,9 +70,9 @@ struct RLEntity: Codable {
         sprite = try values.decode(String.self, forKey: .sprite)
     }
     
-    func update(in world: World) {
-        print("updating")
-    }
+    /*func update(in world: World) {
+        //print("updating")
+    }*/
     
     static func player(startPosition: Coord, floorIndex: Int) -> RLEntity {
         var player = RLEntity(name: "Player", color: SKColor.rarityPlayer, floorIndex: floorIndex, startPosition: startPosition)

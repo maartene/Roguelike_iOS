@@ -110,7 +110,7 @@ final class MapController {
                     
                     
                 } else if mapCell.visited {
-                    if let tex = RLSprites.getSpriteTextureFor(tileName: world.getSpriteNameFor(mapCell, at: mapCoord)) {
+                    if let tex = RLSprites.getSpriteTextureFor(tileName: mapCell.sprite) {
                         tex.filteringMode = .nearest
                         let node = SKSpriteNode(texture: tex)
                         //print(tex.size())

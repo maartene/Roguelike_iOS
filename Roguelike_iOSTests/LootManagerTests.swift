@@ -10,8 +10,6 @@ import XCTest
 @testable import Roguelike_iOS
 
 class LootManagerTests: XCTestCase {
-
-    let seed: [UInt8] = [42]
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,7 +20,7 @@ class LootManagerTests: XCTestCase {
     }
 
     func testGenerateLoot() throws {
-        let lootManager = LootManager(seed: seed)
+        let lootManager = LootManager(seed: 987)
         
         for _ in 0 ..< 50 {
             let loot = lootManager.gimmeSomeLoot(at: Coord.zero, on: 0)
@@ -33,7 +31,7 @@ class LootManagerTests: XCTestCase {
     }
 
     func testLootRarity() throws {
-        let lootManager = LootManager(seed: seed)
+        let lootManager = LootManager(seed: 987)
         
         for _ in 0 ..< 10 {
             let loot = lootManager.gimmeSomeLoot(at: Coord.zero, on: 0, minimumRarity: .Uncommon)

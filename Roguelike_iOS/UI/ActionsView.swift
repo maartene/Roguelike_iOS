@@ -17,7 +17,6 @@ struct ActionsView: View {
     let fontSize: CGFloat = 32
     let actions: [Action]
     let sceneSize: CGSize
-    let info: String
         
     var topRow: String {
         var result = "\u{2554}"
@@ -71,7 +70,6 @@ struct ActionsView: View {
             }
                 
             Text(self.bottomRow).font(.custom("Menlo-Regular", size: fontSize)).foregroundColor(Color.white)
-            Text(info).font(.custom("Menlo-Regular", size: fontSize)).foregroundColor(Color.white)
         }.background(Color.black.opacity(0.75))
             .position(calculatedPosition)
     }
@@ -82,6 +80,6 @@ struct ActionsView_Previews: PreviewProvider {
         let world = World(width: 10, height: 10)
         let boxedWorld = WorldBox(world: world)
         return ActionsView(boxedWorld: boxedWorld, offset: CGPoint.zero, title: "ACTIONS:", actions:
-                            [WaitAction(owner: world.player)], sceneSize: CGSize.zero, info: "Something here")
+                            [WaitAction(owner: world.player)], sceneSize: CGSize.zero)
     }
 }
