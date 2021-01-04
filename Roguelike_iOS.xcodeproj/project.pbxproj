@@ -51,6 +51,7 @@
 		DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987D24C78372006EBFFB /* WorldTests.swift */; };
 		DE6E988024C83C0A006EBFFB /* SpendStatPointAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */; };
 		DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70122624BDF88D002F7481 /* WaitAction.swift */; };
+		DE9C1E0125A2F47300175215 /* PRNGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9C1E0025A2F47300175215 /* PRNGTests.swift */; };
 		DEA17018259DE4A40055295F /* ItemContainerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17017259DE4A40055295F /* ItemContainerComponent.swift */; };
 		DEA1701E259DE73C0055295F /* OpenContainerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA1701D259DE73C0055295F /* OpenContainerAction.swift */; };
 		DEA17022259E111B0055295F /* DropItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17021259E111B0055295F /* DropItemAction.swift */; };
@@ -136,6 +137,7 @@
 		DE6E987D24C78372006EBFFB /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
 		DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointAction.swift; sourceTree = "<group>"; };
 		DE70122624BDF88D002F7481 /* WaitAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitAction.swift; sourceTree = "<group>"; };
+		DE9C1E0025A2F47300175215 /* PRNGTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRNGTests.swift; sourceTree = "<group>"; };
 		DEA17017259DE4A40055295F /* ItemContainerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContainerComponent.swift; sourceTree = "<group>"; };
 		DEA1701D259DE73C0055295F /* OpenContainerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenContainerAction.swift; sourceTree = "<group>"; };
 		DEA17021259E111B0055295F /* DropItemAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropItemAction.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				DEB34CC824CCCA1D001C3721 /* AnyWrapperTests.swift */,
 				DE0217DB24D3506000FAAB57 /* LootManagerTests.swift */,
 				DEBA631F24DAB9A8006275C3 /* MobCreatorTests.swift */,
+				DE9C1E0025A2F47300175215 /* PRNGTests.swift */,
 			);
 			path = Roguelike_iOSTests;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */,
 				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
 				DEA17089259F45600055295F /* squirrel.c in Sources */,
+				DE9C1E0125A2F47300175215 /* PRNGTests.swift in Sources */,
 				DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */,
 				DEBA632024DAB9A8006275C3 /* MobCreatorTests.swift in Sources */,
 				DE6E987824C4D878006EBFFB /* ActionTests.swift in Sources */,
