@@ -51,13 +51,12 @@
 		DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987D24C78372006EBFFB /* WorldTests.swift */; };
 		DE6E988024C83C0A006EBFFB /* SpendStatPointAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */; };
 		DE70122724BDF88D002F7481 /* WaitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70122624BDF88D002F7481 /* WaitAction.swift */; };
+		DE88B2D425A37B2C0016043B /* squirrel.c in Sources */ = {isa = PBXBuildFile; fileRef = DE88B2D225A37B2C0016043B /* squirrel.c */; };
 		DE9C1E0125A2F47300175215 /* PRNGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9C1E0025A2F47300175215 /* PRNGTests.swift */; };
 		DEA17018259DE4A40055295F /* ItemContainerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17017259DE4A40055295F /* ItemContainerComponent.swift */; };
 		DEA1701E259DE73C0055295F /* OpenContainerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA1701D259DE73C0055295F /* OpenContainerAction.swift */; };
 		DEA17022259E111B0055295F /* DropItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17021259E111B0055295F /* DropItemAction.swift */; };
 		DEA17076259F44CE0055295F /* RNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA17073259F44CD0055295F /* RNG.swift */; };
-		DEA17088259F45600055295F /* squirrel.c in Sources */ = {isa = PBXBuildFile; fileRef = DEA17086259F45600055295F /* squirrel.c */; };
-		DEA17089259F45600055295F /* squirrel.c in Sources */ = {isa = PBXBuildFile; fileRef = DEA17086259F45600055295F /* squirrel.c */; };
 		DEA1708F25A0A7960055295F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA1708E25A0A7960055295F /* InfoView.swift */; };
 		DEAB712924D7EC6B0091A40E /* StairsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAB712824D7EC6B0091A40E /* StairsComponent.swift */; };
 		DEB34CC324CC7189001C3721 /* InventoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB34CC224CC7189001C3721 /* InventoryComponent.swift */; };
@@ -137,6 +136,8 @@
 		DE6E987D24C78372006EBFFB /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
 		DE6E987F24C83C0A006EBFFB /* SpendStatPointAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendStatPointAction.swift; sourceTree = "<group>"; };
 		DE70122624BDF88D002F7481 /* WaitAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitAction.swift; sourceTree = "<group>"; };
+		DE88B2D225A37B2C0016043B /* squirrel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = squirrel.c; path = "../../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/test 15.23.27/test/squirrel.c"; sourceTree = "<group>"; };
+		DE88B2D325A37B2C0016043B /* squirrel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = squirrel.h; path = "../../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/test 15.23.27/test/squirrel.h"; sourceTree = "<group>"; };
 		DE9C1E0025A2F47300175215 /* PRNGTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRNGTests.swift; sourceTree = "<group>"; };
 		DEA17017259DE4A40055295F /* ItemContainerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContainerComponent.swift; sourceTree = "<group>"; };
 		DEA1701D259DE73C0055295F /* OpenContainerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenContainerAction.swift; sourceTree = "<group>"; };
@@ -144,8 +145,6 @@
 		DEA17073259F44CD0055295F /* RNG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNG.swift; sourceTree = "<group>"; };
 		DEA17082259F455F0055295F /* Roguelike_iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Roguelike_iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		DEA17083259F455F0055295F /* Roguelike_iOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Roguelike_iOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		DEA17086259F45600055295F /* squirrel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = squirrel.c; path = ../../../../../../Desktop/test/test/squirrel.c; sourceTree = "<group>"; };
-		DEA17087259F45600055295F /* squirrel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = squirrel.h; path = ../../../../../../Desktop/test/test/squirrel.h; sourceTree = "<group>"; };
 		DEA1708E25A0A7960055295F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DEAB712824D7EC6B0091A40E /* StairsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StairsComponent.swift; sourceTree = "<group>"; };
 		DEB34CC224CC7189001C3721 /* InventoryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryComponent.swift; sourceTree = "<group>"; };
@@ -353,8 +352,8 @@
 		DEA1706F259F44B60055295F /* Squirrel */ = {
 			isa = PBXGroup;
 			children = (
-				DEA17086259F45600055295F /* squirrel.c */,
-				DEA17087259F45600055295F /* squirrel.h */,
+				DE88B2D225A37B2C0016043B /* squirrel.c */,
+				DE88B2D325A37B2C0016043B /* squirrel.h */,
 				DEA17073259F44CD0055295F /* RNG.swift */,
 				DEA17082259F455F0055295F /* Roguelike_iOS-Bridging-Header.h */,
 				DEA17083259F455F0055295F /* Roguelike_iOSTests-Bridging-Header.h */,
@@ -506,6 +505,7 @@
 				DE63C28C24B84D24002058BA /* AppDelegate.swift in Sources */,
 				DEA1701E259DE73C0055295F /* OpenContainerAction.swift in Sources */,
 				DE6E987A24C5A582006EBFFB /* StatsComponent.swift in Sources */,
+				DE88B2D425A37B2C0016043B /* squirrel.c in Sources */,
 				DE03AD4F24BB060D00493335 /* WorldBox.swift in Sources */,
 				DE3B6D5524D6A37C00CCE796 /* Rarity.swift in Sources */,
 				DEEFEF6E24BB26F400C59126 /* SpriteUIHandler.swift in Sources */,
@@ -531,7 +531,6 @@
 				DE63C2C924B84DBC002058BA /* Constants.swift in Sources */,
 				DE6E987624C47B98006EBFFB /* LensController.swift in Sources */,
 				DE6E984E24C2D65A006EBFFB /* FXController.swift in Sources */,
-				DEA17088259F45600055295F /* squirrel.c in Sources */,
 				DEBABCD924CEEA160039DC7A /* EquipmentComponent.swift in Sources */,
 				DEB34CC724CCA702001C3721 /* ConsumableEffectComponent.swift in Sources */,
 				DEB34CC324CC7189001C3721 /* InventoryComponent.swift in Sources */,
@@ -556,7 +555,6 @@
 				DE0217DC24D3506000FAAB57 /* LootManagerTests.swift in Sources */,
 				DE6E987C24C781E7006EBFFB /* ComponentTests.swift in Sources */,
 				DE63C2A324B84D27002058BA /* Roguelike_iOSTests.swift in Sources */,
-				DEA17089259F45600055295F /* squirrel.c in Sources */,
 				DE9C1E0125A2F47300175215 /* PRNGTests.swift in Sources */,
 				DE6E987E24C78372006EBFFB /* WorldTests.swift in Sources */,
 				DEBA632024DAB9A8006275C3 /* MobCreatorTests.swift in Sources */,
